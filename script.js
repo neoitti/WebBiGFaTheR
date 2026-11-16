@@ -304,7 +304,6 @@
     const spread = clamp((viewportW - cardWidth * 0.72) * 0.44, 104, cardWidth * 1.18);
     const maxRot = isNarrow ? 14 : 22;
     const maxRy = isNarrow ? 4 : 12;
-    const maxTz = isNarrow ? 0 : 60;
 
     cards.forEach((card, i) => {
       let offset = i - activePos;
@@ -320,7 +319,6 @@
 
       const tx = fanCurve * spread;
       const ty = 26 * (1 - cosT) - 22 * Math.pow(Math.max(0, cosT), 3);
-      const tz = maxTz ? depth * (maxTz * 2) - maxTz : 0;
       const rot = fanCurve * maxRot;
       const ry = -fanCurve * maxRy;
       const scale = 0.76 + 0.28 * Math.pow(depth, 1.35);
@@ -330,7 +328,6 @@
 
       card.style.setProperty("--tx", `${tx.toFixed(2)}px`);
       card.style.setProperty("--ty", `${ty.toFixed(2)}px`);
-      card.style.setProperty("--tz", `${tz.toFixed(2)}px`);
       card.style.setProperty("--rot", `${rot.toFixed(2)}deg`);
       card.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
       card.style.setProperty("--scale", scale.toFixed(4));
