@@ -60,47 +60,29 @@
   let lastClosestIndex = -1;
   let toastTimer = null;
 
-  // --- GPU-Balanced Canvas Deep-Sinking Tunnel Engine ---
+  // --- Unified Single-Image Smooth Tunnel Background Engine ---
   const ctx = tunnelCanvas ? tunnelCanvas.getContext("2d", { alpha: false }) : null;
   const bgImg = new Image();
-  let spriteCanvas = null;
-  let spriteW = 0;
-  let spriteH = 0;
+  let imgReady = false;
   let canvasW = 0;
   let canvasH = 0;
   let canvasDpr = 1;
   let needsCanvasResize = true;
 
-  function buildHollowTunnelSprite() {
-    if (!bgImg.naturalWidth || !bgImg.naturalHeight) return;
-    const maxW = isTouchOnly || window.innerWidth <= 768 ? 720 : 1024;
-    const scale = Math.min(1, maxW / bgImg.naturalWidth);
-    spriteW = Math.round(bgImg.naturalWidth * scale);
-    spriteH = Math.round(bgImg.naturalHeight * scale);
+  // Deterministic radial data sparks that glide smoothly outward along the corridor walls
+  const TUNNEL_SPARKS = Array.from({ length: 18 }, (_, idx) => {
+    const angle = ((idx * 137.5) % 360) * (Math.PI / 180);
+    return {
+      phase: idx / 18,
+      cos: Math.cos(angle),
+      sin: Math.sin(angle),
+      size: idx % 3 === 0 ? 3 : 2,
+    };
+  });
 
-    spriteCanvas = document.createElement("canvas");
-    spriteCanvas.width = spriteW;
-    spriteCanvas.height = spriteH;
-    const sctx = spriteCanvas.getContext("2d");
-
-    sctx.drawImage(bgImg, 0, 0, spriteW, spriteH);
-
-    // Pre-bake hollow center portal cutout ONCE at startup (zero per-frame mask cost)
-    sctx.save();
-    sctx.globalCompositeOperation = "destination-out";
-    const cx = spriteW * 0.5;
-    const cy = spriteH * 0.5;
-    const radius = Math.max(spriteW, spriteH) * 0.2;
-    const grad = sctx.createRadialGradient(cx, cy, radius * 0.36, cx, cy, radius);
-    grad.addColorStop(0, "rgba(0, 0, 0, 1)");
-    grad.addColorStop(0.55, "rgba(0, 0, 0, 0.88)");
-    grad.addColorStop(1, "rgba(0, 0, 0, 0)");
-    sctx.fillStyle = grad;
-    sctx.fillRect(0, 0, spriteW, spriteH);
-    sctx.restore();
-  }
-
-  bgImg.onload = buildHollowTunnelSprite;
+  bgImg.onload = () => {
+    imgReady = true;
+  };
   bgImg.src = "images/bg-tunnel.jpg";
 
   function syncCanvasSize() {
@@ -213,73 +195,73 @@
   }
 
   function renderTunnelCanvas(dt) {
-    if (reducedMotion || !ctx || !spriteCanvas) return;
+    if (reducedMotion || !ctx || !imgReady || !bgImg.naturalWidth) return;
     if (needsCanvasResize) syncCanvasSize();
 
-    // Steady constant tunnel speed independent of scroll-driven card motion
-    tunnelClock = (tunnelClock + dt * 0.11) % 1000;
+    // Steady constant pace completely independent of scroll
+    tunnelClock = (tunnelClock + dt * 0.085) % 1000;
 
-    const coverScale = Math.max(canvasW / spriteW, canvasH / spriteH);
-    const cx = canvasW * 0.5;
-    const cy = canvasH * 0.5;
+    const imgW = bgImg.naturalWidth;
+    const imgH = bgImg.naturalHeight;
+    const coverScale = Math.max(canvasW / imgW, canvasH / imgH);
 
-    ctx.fillStyle = "#04080e";
-    ctx.fillRect(0, 0, canvasW, canvasH);
+    // Smooth single-image breathing zoom & gentle camera float (zero overlapping copies)
+    const breath = 0.5 - 0.5 * Math.cos(tunnelClock * Math.PI * 2);
+    const scale = coverScale * (1.03 + 0.11 * breath);
+    const swayX = Math.sin(tunnelClock * Math.PI * 2) * (canvasW * 0.012);
+    const swayY = Math.sin(tunnelClock * Math.PI * 4) * (canvasH * 0.008);
+    const rot = Math.sin(tunnelClock * Math.PI * 2) * 0.008;
 
-    // Subtle full-bleed base layer so far corners always stay seamless
-    const baseScale = coverScale * 1.06;
-    const bw = spriteW * baseScale;
-    const bh = spriteH * baseScale;
-    ctx.globalAlpha = 0.66;
-    ctx.drawImage(bgImg, cx - bw * 0.5 + currentBgX * 0.4, cy - bh * 0.5 + currentBgY * 0.4, bw, bh);
+    const cx = canvasW * 0.5 + swayX + currentBgX * 0.5;
+    const cy = canvasH * 0.5 + swayY + currentBgY * 0.5;
+    const dw = imgW * scale;
+    const dh = imgH * scale;
 
-    // 3 telescoping depth layers sorted back-to-front
-    const layers = [];
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot);
+    ctx.drawImage(bgImg, -dw * 0.5, -dh * 0.5, dw, dh);
+    ctx.restore();
+
+    // Smooth additive perspective frames + subtle data sparks gliding forward
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+
+    const frameWBase = canvasW * 0.92;
+    const frameHBase = canvasH * 0.92;
+    ctx.lineWidth = 1.4;
     for (let i = 0; i < 3; i++) {
-      layers.push((i / 3 + tunnelClock) % 1);
-    }
-    layers.sort((a, b) => a - b);
-
-    for (let i = 0; i < 3; i++) {
-      const p = layers[i];
-      const scale = 0.24 * Math.pow(9.6, p) * coverScale;
-      const alpha = smoothstep(0.0, 0.16, p) * (1 - smoothstep(0.84, 1.0, p));
-      if (alpha <= 0.005) continue;
-
-      const rot = Math.sin((p + tunnelClock * 0.35) * Math.PI * 2) * 0.006;
-      const dw = spriteW * scale;
-      const dh = spriteH * scale;
-
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.translate(cx + currentBgX * p, cy + currentBgY * p);
-      ctx.rotate(rot);
-      ctx.drawImage(spriteCanvas, -dw * 0.5, -dh * 0.5, dw, dh);
-      ctx.restore();
-    }
-
-    // 3 crisp neon perspective corridor frames (vector strokes = near-zero GPU cost)
-    const frameWBase = canvasW * 0.86;
-    const frameHBase = canvasH * 0.86;
-    ctx.lineWidth = 1.5;
-    for (let i = 0; i < 3; i++) {
-      const fp = (i / 3 + tunnelClock) % 1;
-      const fScale = 0.14 * Math.pow(13, fp);
-      const fOp = smoothstep(0.02, 0.22, fp) * (1 - smoothstep(0.74, 1.0, fp)) * 0.46;
-      if (fOp <= 0.01) continue;
+      const fp = (i / 3 + tunnelClock * 1.45) % 1;
+      const fScale = 0.09 * Math.pow(14, fp);
+      const fOp = smoothstep(0.03, 0.25, fp) * (1 - smoothstep(0.72, 1.0, fp)) * 0.26;
+      if (fOp <= 0.005) continue;
 
       const fw = frameWBase * fScale;
       const fh = frameHBase * fScale;
       ctx.strokeStyle = `rgba(56, 226, 255, ${fOp.toFixed(3)})`;
-      ctx.strokeRect(
-        cx + currentBgX * fp - fw * 0.5,
-        cy + currentBgY * fp - fh * 0.5,
-        fw,
-        fh
-      );
+      ctx.strokeRect(cx - fw * 0.5, cy - fh * 0.5, fw, fh);
     }
 
-    ctx.globalAlpha = 1;
+    const maxRadius = Math.hypot(canvasW, canvasH) * 0.58;
+    for (let i = 0; i < TUNNEL_SPARKS.length; i++) {
+      const s = TUNNEL_SPARKS[i];
+      const sp = (s.phase + tunnelClock * 1.8) % 1;
+      const dist = 16 + Math.pow(sp, 2.1) * maxRadius;
+      const sOp = smoothstep(0.05, 0.28, sp) * (1 - smoothstep(0.76, 1.0, sp)) * 0.45;
+      if (sOp <= 0.01) continue;
+
+      const sx = cx + s.cos * dist;
+      const sy = cy + s.sin * dist;
+      const len = s.size + sp * 10;
+      ctx.strokeStyle = `rgba(125, 243, 255, ${sOp.toFixed(3)})`;
+      ctx.lineWidth = s.size * 0.75;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy);
+      ctx.lineTo(sx + s.cos * len, sy + s.sin * len);
+      ctx.stroke();
+    }
+
+    ctx.restore();
   }
 
   function renderHand(progress) {
@@ -368,11 +350,9 @@
   window.addEventListener(
     "resize",
     () => {
-      const widthChanged = Math.abs(window.innerWidth - canvasW) > 2;
       needsCanvasResize = true;
       forceHandRender = true;
       readScrollProgress();
-      if (widthChanged && bgImg.complete) buildHollowTunnelSprite();
     },
     { passive: true }
   );
@@ -603,7 +583,7 @@
   );
 
   // Initialize
-  if (bgImg.complete) buildHollowTunnelSprite();
+  if (bgImg.complete && bgImg.naturalWidth) imgReady = true;
   syncCanvasSize();
   readScrollProgress();
   currentProgress = targetProgress;
