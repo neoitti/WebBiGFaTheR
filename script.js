@@ -205,15 +205,15 @@
     const imgH = bgImg.naturalHeight;
     const coverScale = Math.max(canvasW / imgW, canvasH / imgH);
 
-    // Smooth single-image breathing zoom & gentle camera float (zero overlapping copies)
+    // Smooth single-image breathing zoom & gentle camera float (1.08x overscan prevents top/bottom edge reveal)
     const breath = 0.5 - 0.5 * Math.cos(tunnelClock * Math.PI * 2);
-    const scale = coverScale * (1.03 + 0.11 * breath);
-    const swayX = Math.sin(tunnelClock * Math.PI * 2) * (canvasW * 0.012);
-    const swayY = Math.sin(tunnelClock * Math.PI * 4) * (canvasH * 0.008);
-    const rot = Math.sin(tunnelClock * Math.PI * 2) * 0.008;
+    const scale = coverScale * (1.08 + 0.1 * breath);
+    const swayX = Math.sin(tunnelClock * Math.PI * 2) * (canvasW * 0.01);
+    const swayY = Math.sin(tunnelClock * Math.PI * 4) * (canvasH * 0.006);
+    const rot = Math.sin(tunnelClock * Math.PI * 2) * 0.006;
 
-    const cx = canvasW * 0.5 + swayX + currentBgX * 0.5;
-    const cy = canvasH * 0.5 + swayY + currentBgY * 0.5;
+    const cx = canvasW * 0.5 + swayX + currentBgX * 0.45;
+    const cy = canvasH * 0.5 + swayY + currentBgY * 0.45;
     const dw = imgW * scale;
     const dh = imgH * scale;
 
@@ -223,31 +223,16 @@
     ctx.drawImage(bgImg, -dw * 0.5, -dh * 0.5, dw, dh);
     ctx.restore();
 
-    // Smooth additive perspective frames + subtle data sparks gliding forward
+    // Subtle radial data sparks gliding smoothly forward (no hard top/bottom rectangle lines)
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
-
-    const frameWBase = canvasW * 0.92;
-    const frameHBase = canvasH * 0.92;
-    ctx.lineWidth = 1.4;
-    for (let i = 0; i < 3; i++) {
-      const fp = (i / 3 + tunnelClock * 1.45) % 1;
-      const fScale = 0.09 * Math.pow(14, fp);
-      const fOp = smoothstep(0.03, 0.25, fp) * (1 - smoothstep(0.72, 1.0, fp)) * 0.26;
-      if (fOp <= 0.005) continue;
-
-      const fw = frameWBase * fScale;
-      const fh = frameHBase * fScale;
-      ctx.strokeStyle = `rgba(56, 226, 255, ${fOp.toFixed(3)})`;
-      ctx.strokeRect(cx - fw * 0.5, cy - fh * 0.5, fw, fh);
-    }
 
     const maxRadius = Math.hypot(canvasW, canvasH) * 0.58;
     for (let i = 0; i < TUNNEL_SPARKS.length; i++) {
       const s = TUNNEL_SPARKS[i];
       const sp = (s.phase + tunnelClock * 1.8) % 1;
       const dist = 16 + Math.pow(sp, 2.1) * maxRadius;
-      const sOp = smoothstep(0.05, 0.28, sp) * (1 - smoothstep(0.76, 1.0, sp)) * 0.45;
+      const sOp = smoothstep(0.05, 0.28, sp) * (1 - smoothstep(0.76, 1.0, sp)) * 0.42;
       if (sOp <= 0.01) continue;
 
       const sx = cx + s.cos * dist;
