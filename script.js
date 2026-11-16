@@ -49,7 +49,6 @@
 
   let targetProgress = 0;
   let currentProgress = 0;
-  let prevProgress = 0;
   let lastRenderedProgress = -1;
   let forceHandRender = true;
   let targetBgX = 0;
@@ -57,7 +56,6 @@
   let currentBgX = 0;
   let currentBgY = 0;
   let tunnelClock = 0;
-  let warpIntensity = 0;
   let lastFrameTime = performance.now();
   let lastClosestIndex = -1;
   let toastTimer = null;
@@ -143,7 +141,6 @@
       window.scrollTo({ top: wrapTop, behavior: "instant" });
       scrollTop = wrapTop;
       currentProgress -= 1;
-      prevProgress -= 1;
       lastRenderedProgress -= 1;
     }
 
@@ -159,14 +156,12 @@
       const wrapTop = maxScroll - 6;
       window.scrollTo({ top: wrapTop, behavior: "instant" });
       currentProgress += 1;
-      prevProgress += 1;
       lastRenderedProgress += 1;
       desiredStep += CARD_COUNT;
     } else if (desiredStep > CARD_COUNT) {
       const wrapTop = 4;
       window.scrollTo({ top: wrapTop, behavior: "instant" });
       currentProgress -= 1;
-      prevProgress -= 1;
       lastRenderedProgress -= 1;
       desiredStep -= CARD_COUNT;
     }
@@ -217,16 +212,14 @@
     });
   }
 
-  function renderTunnelCanvas(dt, scrollDelta) {
+  function renderTunnelCanvas(dt) {
     if (reducedMotion || !ctx || !spriteCanvas) return;
     if (needsCanvasResize) syncCanvasSize();
 
-    const instantSpeed = Math.min(2.0, Math.abs(scrollDelta) * 30);
-    warpIntensity += (instantSpeed - warpIntensity) * 0.12;
-    tunnelClock = (tunnelClock + dt * (0.16 + warpIntensity)) % 1000;
+    // Steady constant tunnel speed independent of scroll-driven card motion
+    tunnelClock = (tunnelClock + dt * 0.16) % 1000;
 
     const coverScale = Math.max(canvasW / spriteW, canvasH / spriteH);
-    const warpZoom = 1 + Math.min(0.14, warpIntensity * 0.08);
     const cx = canvasW * 0.5;
     const cy = canvasH * 0.5;
 
@@ -234,7 +227,7 @@
     ctx.fillRect(0, 0, canvasW, canvasH);
 
     // Subtle full-bleed base layer so far corners always stay seamless
-    const baseScale = coverScale * 1.06 * warpZoom;
+    const baseScale = coverScale * 1.06;
     const bw = spriteW * baseScale;
     const bh = spriteH * baseScale;
     ctx.globalAlpha = 0.66;
@@ -249,7 +242,7 @@
 
     for (let i = 0; i < 3; i++) {
       const p = layers[i];
-      const scale = 0.24 * Math.pow(9.6, p) * coverScale * warpZoom;
+      const scale = 0.24 * Math.pow(9.6, p) * coverScale;
       const alpha = smoothstep(0.0, 0.16, p) * (1 - smoothstep(0.84, 1.0, p));
       if (alpha <= 0.005) continue;
 
@@ -361,10 +354,7 @@
       }
     }
 
-    const scrollDelta = currentProgress - prevProgress;
-    prevProgress = currentProgress;
-
-    renderTunnelCanvas(dt, scrollDelta);
+    renderTunnelCanvas(dt);
 
     if (forceHandRender || Math.abs(currentProgress - lastRenderedProgress) > 0.00005) {
       renderHand(currentProgress);
@@ -396,7 +386,6 @@
         const wrapTop = maxScroll - 6;
         window.scrollTo({ top: wrapTop, behavior: "instant" });
         currentProgress += 1;
-        prevProgress += 1;
         lastRenderedProgress += 1;
       }
     },
@@ -586,13 +575,11 @@
         window.scrollTo({ top: 4, behavior: "instant" });
         touchStartScroll = 4 - dx * sensitivity;
         currentProgress -= 1;
-        prevProgress -= 1;
         lastRenderedProgress -= 1;
       } else if (nextTop <= 2 && dx < 0) {
         window.scrollTo({ top: maxScroll - 6, behavior: "instant" });
         touchStartScroll = maxScroll - 6 - dx * sensitivity;
         currentProgress += 1;
-        prevProgress += 1;
         lastRenderedProgress += 1;
       } else {
         window.scrollTo({
@@ -619,7 +606,6 @@
   syncCanvasSize();
   readScrollProgress();
   currentProgress = targetProgress;
-  prevProgress = currentProgress;
   renderHand(currentProgress);
   lastRenderedProgress = currentProgress;
   forceHandRender = false;
