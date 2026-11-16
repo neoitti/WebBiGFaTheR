@@ -977,18 +977,28 @@ body {
     background: var(--yellow-400);
   }
   .card-inner {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.78);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.72);
   }
   .playing-card.is-active .card-inner {
     box-shadow:
-      0 14px 32px rgba(0, 0, 0, 0.88),
-      0 0 18px rgba(250, 204, 21, 0.38);
+      0 10px 22px rgba(0, 0, 0, 0.84),
+      0 0 14px rgba(250, 204, 21, 0.36);
   }
   .card-rim-beam,
   .card-holo,
   .art-corners,
   .card-art::before {
     display: none;
+  }
+}
+
+/* Pure 2D compositing on narrow / touch screens (faster mobile GPU pass) */
+@media (max-width: 639px), (hover: none) {
+  .playing-card {
+    transform:
+      translate3d(var(--tx, 0px), var(--ty, 0px), 0px)
+      rotateZ(var(--rot, 0deg))
+      scale(var(--scale, 1));
   }
 }
 

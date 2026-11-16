@@ -109,8 +109,8 @@
     if (!tunnelCanvas || !ctx) return;
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    // Cap DPR at 1 on mobile for buttery 60fps fill rate without block stutter
-    canvasDpr = vw <= 768 || isTouchOnly ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+    // Use 0.78x internal canvas resolution on mobile/touch for silky 60fps fill rate
+    canvasDpr = isTouchOnly ? 0.78 : vw <= 768 ? 0.9 : Math.min(window.devicePixelRatio || 1, 1.5);
     canvasW = vw;
     canvasH = vh;
     tunnelCanvas.width = Math.max(1, Math.round(vw * canvasDpr));
@@ -349,10 +349,11 @@
       currentProgress = targetProgress;
     } else {
       const diff = targetProgress - currentProgress;
+      const lerpFactor = isTouchOnly ? 0.45 : 0.16;
       if (Math.abs(diff) < 0.0002) {
         currentProgress = targetProgress;
       } else {
-        currentProgress += diff * 0.16;
+        currentProgress += diff * lerpFactor;
       }
       if (!isTouchOnly) {
         currentBgX += (targetBgX - currentBgX) * 0.08;
