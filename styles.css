@@ -85,100 +85,22 @@ body {
   background-color: #111215;
 }
 
-/* Deep-Sinking Multi-Layer Tunnel Background */
+/* GPU-Balanced Deep-Sinking Tunnel Background */
 .bg-stage {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  perspective: 960px;
   pointer-events: none;
-  background-color: #04080e;
+  background: #04080e url("images/bg-tunnel.jpg") center / cover no-repeat;
 }
 
-.bg-tunnel-wrap {
-  position: absolute;
-  inset: -4%;
-  transform-style: preserve-3d;
-  transform:
-    scale(calc(1.01 + var(--bg-warp, 0) * 0.08))
-    translate3d(var(--bg-px, 0px), var(--bg-py, 0px), 0);
-  will-change: transform;
-}
-
-.bg-tunnel-backdrop {
-  position: absolute;
-  inset: -4%;
-  z-index: 0;
-  background-image: url("images/bg-tunnel.jpg");
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  opacity: 0.72;
-  filter: brightness(0.75) contrast(1.08);
-  transform: scale(1.06);
-}
-
-.bg-tunnel-layer {
+.bg-tunnel-canvas {
   position: absolute;
   inset: 0;
-  background-image: url("images/bg-tunnel.jpg");
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  filter: contrast(1.08) saturate(1.1);
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
-  /* Hollow center portal so deeper tunnel layers emerge seamlessly through the middle */
-  -webkit-mask-image: radial-gradient(
-    ellipse 20% 22% at 50% 50%,
-    transparent 0%,
-    transparent 42%,
-    rgba(0, 0, 0, 0.9) 76%,
-    black 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 20% 22% at 50% 50%,
-    transparent 0%,
-    transparent 42%,
-    rgba(0, 0, 0, 0.9) 76%,
-    black 100%
-  );
-}
-
-/* Expanding neon corridor frames reinforcing 3D forward sink motion */
-.bg-tunnel-frame {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 86vw;
-  height: 86vh;
-  margin-left: -43vw;
-  margin-top: -43vh;
-  border: 1.5px solid rgba(56, 226, 255, 0.42);
-  box-shadow:
-    0 0 24px rgba(34, 211, 238, 0.28),
-    inset 0 0 18px rgba(34, 211, 238, 0.2);
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-.bg-deep-core {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 24vmin;
-  height: 24vmin;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle at center,
-    rgba(103, 232, 249, 0.28) 0%,
-    rgba(6, 182, 212, 0.12) 45%,
-    transparent 75%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* Light edge scrim only — keeps the original background vivid & sharp */
@@ -188,10 +110,10 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(4, 8, 14, 0.46) 0%,
-      rgba(4, 8, 14, 0.08) 24%,
+      rgba(4, 8, 14, 0.44) 0%,
+      rgba(4, 8, 14, 0.06) 24%,
       rgba(4, 8, 14, 0.06) 76%,
-      rgba(4, 8, 14, 0.52) 100%
+      rgba(4, 8, 14, 0.5) 100%
     );
 }
 
@@ -313,6 +235,7 @@ body {
   align-items: center;
   justify-content: center;
   perspective: 1400px;
+  touch-action: pan-y;
 }
 
 .hand-pivot {
@@ -342,7 +265,7 @@ body {
     rotateY(var(--ry, 0deg))
     scale(var(--scale, 1));
   transform-origin: 50% 88%;
-  will-change: transform, filter, opacity;
+  will-change: transform;
 }
 
 .playing-card:hover {
@@ -421,7 +344,6 @@ body {
     0 22px 48px rgba(0, 0, 0, 0.84),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
   overflow: hidden;
-  filter: brightness(var(--bright, 1));
   transform:
     translateY(var(--hover-y, 0px))
     scale(var(--hover-scale, 1))
@@ -430,8 +352,17 @@ body {
   transition:
     border-color 0.25s ease,
     box-shadow 0.28s ease,
-    filter 0.25s ease,
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Lightweight depth-shading overlay (replaces expensive per-frame CSS filter) */
+.card-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #06080c;
+  opacity: var(--dim, 0);
+  pointer-events: none;
 }
 
 /* When actively tracking mouse, remove transform lag for instant 3D tilt */
@@ -440,7 +371,6 @@ body {
   transition:
     border-color 0.25s ease,
     box-shadow 0.28s ease,
-    filter 0.25s ease,
     opacity 0.28s ease,
     transform 0.06s linear;
 }
@@ -479,12 +409,15 @@ body {
 /* Dramatic Hover Lift & Glow for ANY Card (Active or Side) */
 .playing-card:hover .card-inner {
   border: 2.5px solid var(--yellow-300);
-  filter: brightness(1.06);
   box-shadow:
     0 0 0 3px rgba(8, 10, 14, 0.95),
     0 0 42px rgba(250, 204, 21, 0.65),
     0 34px 80px rgba(0, 0, 0, 0.92),
     inset 0 1px 0 rgba(254, 240, 138, 0.85);
+}
+
+.playing-card:hover .card-dim {
+  opacity: 0;
 }
 
 .playing-card:hover .card-inner::before {
@@ -727,10 +660,9 @@ body {
   letter-spacing: 0.1em;
   padding: 3px 7px;
   border-radius: 999px;
-  background: rgba(18, 19, 22, 0.82);
+  background: rgba(12, 14, 18, 0.9);
   color: var(--yellow-400);
   border: 1px solid rgba(250, 204, 21, 0.42);
-  backdrop-filter: blur(6px);
   transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -1029,7 +961,34 @@ body {
   transform: translate(-50%, 0);
 }
 
-/* Mobile Adjustments */
+/* Mobile & Touch GPU Performance Optimizations */
+@media (max-width: 768px), (hover: none) {
+  .deck-status,
+  .pill,
+  .step-btn {
+    backdrop-filter: none;
+    background: rgba(14, 16, 22, 0.92);
+  }
+  .pill.is-active {
+    background: var(--yellow-400);
+  }
+  .card-inner {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.78);
+  }
+  .playing-card.is-active .card-inner {
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.88),
+      0 0 18px rgba(250, 204, 21, 0.38);
+  }
+  .card-rim-beam,
+  .card-holo,
+  .art-corners,
+  .card-art::before {
+    display: none;
+  }
+}
+
+/* Mobile Layout Adjustments */
 @media (max-width: 680px) {
   .brand-sub {
     font-size: 0.56rem;
@@ -1076,12 +1035,7 @@ body {
   .playing-card:hover .card-art::before {
     animation: none;
   }
-  .bg-tunnel-layer,
-  .bg-tunnel-frame {
+  .bg-tunnel-canvas {
     display: none;
-  }
-  .bg-tunnel-backdrop {
-    opacity: 0.9;
-    transform: scale(1.04);
   }
 }

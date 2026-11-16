@@ -11,19 +11,9 @@
   <!-- Scrollable height track that drives the scroll-driven card hand -->
   <div class="scroll-track" id="scrollTrack">
     <div class="stage-sticky">
-      <!-- Deep-Sinking Multi-Layer Animated Tunnel Background -->
+      <!-- GPU-Balanced Deep-Sinking Tunnel Background Canvas -->
       <div class="bg-stage" aria-hidden="true">
-        <div class="bg-tunnel-wrap" id="bgTunnelWrap">
-          <div class="bg-tunnel-backdrop"></div>
-          <div class="bg-tunnel-layer" data-phase="0.00"></div>
-          <div class="bg-tunnel-layer" data-phase="0.25"></div>
-          <div class="bg-tunnel-layer" data-phase="0.50"></div>
-          <div class="bg-tunnel-layer" data-phase="0.75"></div>
-          <div class="bg-tunnel-frame" data-frame="0.00"></div>
-          <div class="bg-tunnel-frame" data-frame="0.33"></div>
-          <div class="bg-tunnel-frame" data-frame="0.66"></div>
-        </div>
-        <div class="bg-deep-core"></div>
+        <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
         <div class="bg-vignette"></div>
       </div>
 
