@@ -217,7 +217,7 @@
     if (needsCanvasResize) syncCanvasSize();
 
     // Steady constant tunnel speed independent of scroll-driven card motion
-    tunnelClock = (tunnelClock + dt * 0.16) % 1000;
+    tunnelClock = (tunnelClock + dt * 0.11) % 1000;
 
     const coverScale = Math.max(canvasW / spriteW, canvasH / spriteH);
     const cx = canvasW * 0.5;
@@ -263,7 +263,7 @@
     const frameHBase = canvasH * 0.86;
     ctx.lineWidth = 1.5;
     for (let i = 0; i < 3; i++) {
-      const fp = (i / 3 + tunnelClock * 1.18) % 1;
+      const fp = (i / 3 + tunnelClock) % 1;
       const fScale = 0.14 * Math.pow(13, fp);
       const fOp = smoothstep(0.02, 0.22, fp) * (1 - smoothstep(0.74, 1.0, fp)) * 0.46;
       if (fOp <= 0.01) continue;
@@ -368,10 +368,11 @@
   window.addEventListener(
     "resize",
     () => {
+      const widthChanged = Math.abs(window.innerWidth - canvasW) > 2;
       needsCanvasResize = true;
       forceHandRender = true;
       readScrollProgress();
-      if (bgImg.complete) buildHollowTunnelSprite();
+      if (widthChanged && bgImg.complete) buildHollowTunnelSprite();
     },
     { passive: true }
   );
