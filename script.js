@@ -4,42 +4,79 @@
       key: "profile",
       index: "01",
       title: "Profile",
-      desc: "ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน",
+      desc: {
+        th: "ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน",
+        en: "Explore identity, vision, and creative works",
+      },
     },
     {
       key: "product",
       index: "02",
       title: "Product",
-      desc: "รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง",
+      desc: {
+        th: "รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง",
+        en: "Curated products and crafted solutions",
+      },
     },
     {
       key: "test",
       index: "03",
       title: "Test",
-      desc: "ทดสอบประสิทธิภาพและมาตรฐานระบบจริง",
+      desc: {
+        th: "ทดสอบประสิทธิภาพและมาตรฐานระบบจริง",
+        en: "Benchmark performance and system quality",
+      },
     },
     {
       key: "download",
       index: "04",
       title: "Download",
-      desc: "ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด",
+      desc: {
+        th: "ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด",
+        en: "Get installers, guides, and latest releases",
+      },
     },
     {
       key: "contact",
       index: "05",
       title: "Contact",
-      desc: "ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา",
+      desc: {
+        th: "ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา",
+        en: "Reach out, schedule, or start a project",
+      },
     },
   ];
+
+  const UI_COPY = {
+    th: {
+      statusLabel: "กำลังดู",
+      scrollHint: "เลื่อน Scroll หรือลากเมาส์เพื่อสลับไพ่ในมือ",
+      openAction: "เปิดเมนู",
+      focusAction: "ดูการ์ด",
+      selectAria: (item) => `เลือกการ์ด ${item.index}: ${item.title}`,
+      toastSelected: (item) => `เลือกการ์ด ${item.index}: ${item.title}`,
+    },
+    en: {
+      statusLabel: "ACTIVE CARD",
+      scrollHint: "Scroll or drag to cycle cards in your hand",
+      openAction: "OPEN MENU",
+      focusAction: "FOCUS",
+      selectAria: (item) => `Select card ${item.index}: ${item.title}`,
+      toastSelected: (item) => `Selected card ${item.index}: ${item.title}`,
+    },
+  };
 
   const scrollTrack = document.getElementById("scrollTrack");
   const handViewport = document.querySelector(".hand-viewport");
   const handPivot = document.getElementById("handPivot");
   const cards = Array.from(document.querySelectorAll(".playing-card"));
   const pills = Array.from(document.querySelectorAll(".pill"));
+  const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
   const tunnelCanvas = document.getElementById("tunnelCanvas");
   const progressFill = document.getElementById("progressFill");
+  const statusLabel = document.getElementById("statusLabel");
   const activeCounter = document.getElementById("activeCounter");
+  const scrollHintText = document.getElementById("scrollHintText");
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const selectionToast = document.getElementById("selectionToast");
@@ -60,10 +97,16 @@
   let lastFrameTime = performance.now();
   let rafId = null;
   let lastClosestIndex = -1;
+  let currentLang = "th";
+  try {
+    const saved = localStorage.getItem("bigfather_lang");
+    if (saved === "en" || saved === "th") currentLang = saved;
+  } catch (_) {}
   let toastTimer = null;
   let snapTimer = null;
   let ignoreSnapUntil = 0;
   let isPointerDown = false;
+  let suppressCardClick = false;
 
   // --- Unified Single-Image Smooth Tunnel Background Engine ---
   const ctx = tunnelCanvas ? tunnelCanvas.getContext("2d", { alpha: false }) : null;
@@ -186,11 +229,47 @@
     }, 2200);
   }
 
+  function applyLanguage(lang) {
+    currentLang = lang === "en" ? "en" : "th";
+    document.documentElement.lang = currentLang;
+
+    try {
+      localStorage.setItem("bigfather_lang", currentLang);
+    } catch (_) {}
+
+    const copy = UI_COPY[currentLang];
+    if (statusLabel) statusLabel.textContent = copy.statusLabel;
+    if (scrollHintText) scrollHintText.textContent = copy.scrollHint;
+
+    langButtons.forEach((btn) => {
+      const isActive = btn.dataset.lang === currentLang;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-pressed", String(isActive));
+    });
+
+    cards.forEach((card, i) => {
+      const item = CARD_DATA[i];
+      const descEl = card.querySelector(".card-desc");
+      if (descEl && item) {
+        descEl.textContent = item.desc[currentLang];
+      }
+      const hitbox = card.querySelector(".card-hitbox");
+      if (hitbox && item) {
+        hitbox.setAttribute("aria-label", copy.selectAria(item));
+      }
+      const actionEl = card.querySelector(".card-action");
+      if (actionEl) {
+        actionEl.textContent = i === lastClosestIndex ? copy.openAction : copy.focusAction;
+      }
+    });
+  }
+
   function updateHeaderAndPills(closestIdx) {
     if (closestIdx === lastClosestIndex) return;
     lastClosestIndex = closestIdx;
 
     const item = CARD_DATA[closestIdx];
+    const copy = UI_COPY[currentLang];
     activeCounter.textContent = `${item.index} / 0${CARD_COUNT}`;
 
     pills.forEach((pill, i) => {
@@ -204,7 +283,7 @@
       card.classList.toggle("is-active", isCardActive);
       const actionEl = card.querySelector(".card-action");
       if (actionEl) {
-        actionEl.textContent = isCardActive ? "OPEN MENU" : "FOCUS";
+        actionEl.textContent = isCardActive ? copy.openAction : copy.focusAction;
       }
     });
   }
@@ -497,6 +576,7 @@
     enhanceCardEffects(card);
 
     card.addEventListener("click", () => {
+      if (suppressCardClick) return;
       if (index !== lastClosestIndex) {
         scrollToCardIndex(index);
       } else {
@@ -504,7 +584,7 @@
         void card.offsetWidth;
         card.classList.add("is-selected");
         const item = CARD_DATA[index];
-        showToast(`เลือกการ์ด ${item.index}: ${item.title}`);
+        showToast(UI_COPY[currentLang].toastSelected(item));
       }
     });
 
@@ -549,6 +629,13 @@
     }
   });
 
+  // Language switcher
+  langButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLanguage(btn.dataset.lang);
+    });
+  });
+
   // Pill navigation
   pills.forEach((pill) => {
     pill.addEventListener("click", () => {
@@ -574,6 +661,85 @@
       scrollToStep(-1);
     }
   });
+
+  // Shared horizontal slide helper for both Mouse Drag and Touch Swipe
+  function applyHorizontalSlideScroll(dx, baseScrollTop, sensitivity) {
+    const nextTop = baseScrollTop + dx * sensitivity;
+    const maxScroll = getMaxScroll();
+
+    if (nextTop >= maxScroll - 3) {
+      window.scrollTo({ top: 4, behavior: "instant" });
+      currentProgress -= 1;
+      lastRenderedProgress -= 1;
+      return 4 - dx * sensitivity;
+    }
+    if (nextTop <= 2 && dx < 0) {
+      window.scrollTo({ top: maxScroll - 6, behavior: "instant" });
+      currentProgress += 1;
+      lastRenderedProgress += 1;
+      return maxScroll - 6 - dx * sensitivity;
+    }
+
+    window.scrollTo({
+      top: clamp(nextTop, 0, maxScroll),
+      behavior: "auto",
+    });
+    return baseScrollTop;
+  }
+
+  // Mouse Drag-to-Slide support on the card hand stage
+  let isMouseDown = false;
+  let isMouseDragging = false;
+  let mouseDragStartX = 0;
+  let mouseDragStartScroll = 0;
+
+  handViewport.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    isMouseDown = true;
+    isMouseDragging = false;
+    suppressCardClick = false;
+    isPointerDown = true;
+    clearTimeout(snapTimer);
+    mouseDragStartX = e.clientX;
+    mouseDragStartScroll = window.scrollY || window.pageYOffset || 0;
+  });
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      if (!isMouseDown || e.pointerType !== "mouse") return;
+      const dx = mouseDragStartX - e.clientX;
+
+      if (!isMouseDragging) {
+        if (Math.abs(dx) <= 6) return;
+        isMouseDragging = true;
+        suppressCardClick = true;
+        handViewport.classList.add("is-dragging");
+      }
+
+      const sensitivity = getMaxScroll() / (window.innerWidth * 1.1);
+      mouseDragStartScroll = applyHorizontalSlideScroll(dx, mouseDragStartScroll, sensitivity);
+    },
+    { passive: true }
+  );
+
+  function endMouseDrag() {
+    if (!isMouseDown) return;
+    isMouseDown = false;
+    isPointerDown = false;
+
+    if (isMouseDragging) {
+      isMouseDragging = false;
+      handViewport.classList.remove("is-dragging");
+      scheduleGentleSnap();
+      setTimeout(() => {
+        suppressCardClick = false;
+      }, 0);
+    }
+  }
+
+  window.addEventListener("pointerup", endMouseDrag);
+  window.addEventListener("pointercancel", endMouseDrag);
 
   // Horizontal-only touch swipe support (never fights native vertical scroll)
   let touchStartX = null;
@@ -613,25 +779,7 @@
       }
 
       const sensitivity = getMaxScroll() / (window.innerWidth * 1.4);
-      const nextTop = touchStartScroll + dx * sensitivity;
-      const maxScroll = getMaxScroll();
-
-      if (nextTop >= maxScroll - 3) {
-        window.scrollTo({ top: 4, behavior: "instant" });
-        touchStartScroll = 4 - dx * sensitivity;
-        currentProgress -= 1;
-        lastRenderedProgress -= 1;
-      } else if (nextTop <= 2 && dx < 0) {
-        window.scrollTo({ top: maxScroll - 6, behavior: "instant" });
-        touchStartScroll = maxScroll - 6 - dx * sensitivity;
-        currentProgress += 1;
-        lastRenderedProgress += 1;
-      } else {
-        window.scrollTo({
-          top: clamp(nextTop, 0, maxScroll),
-          behavior: "auto",
-        });
-      }
+      touchStartScroll = applyHorizontalSlideScroll(dx, touchStartScroll, sensitivity);
     },
     { passive: true }
   );
@@ -649,6 +797,7 @@
   );
 
   // Initialize (with smooth first-load card deal spread)
+  applyLanguage(currentLang);
   if (bgImg.complete && bgImg.naturalWidth) imgReady = true;
   syncCanvasSize();
   readScrollProgress();

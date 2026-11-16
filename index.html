@@ -15,12 +15,12 @@
     content="เมนูการ์ดไพ่แบบ Scroll-Driven พร้อมภาพประกอบและแอนิเมชัน 3 มิติ"
   />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="images/og-preview.jpg" />
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+  <meta property="og:image" content="images/og-preview.jpg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=12" />
 </head>
 <body>
   <!-- Scrollable height track that drives the scroll-driven card hand -->
@@ -35,19 +35,29 @@
       <!-- Minimal Top Bar -->
       <header class="topbar">
         <div class="brand">
-          <span class="brand-mark" aria-hidden="true">
-            <span class="brand-card back"></span>
-            <span class="brand-card front"></span>
-          </span>
+          <img
+            src="images/brand-icon.png?v=3"
+            alt="BIGFATHER logo"
+            class="brand-logo"
+            width="38"
+            height="38"
+          />
           <div class="brand-text">
             <span class="brand-title">BIGFATHER</span>
             <span class="brand-sub">INTERACTIVE HUB</span>
           </div>
         </div>
 
-        <div class="deck-status" aria-live="polite">
-          <span class="status-label">ACTIVE CARD</span>
-          <span class="status-value" id="activeCounter">01 / 05</span>
+        <div class="topbar-right">
+          <div class="lang-switch" role="group" aria-label="Language switcher">
+            <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
+            <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+
+          <div class="deck-status" aria-live="polite">
+            <span class="status-label" id="statusLabel">กำลังดู</span>
+            <span class="status-value" id="activeCounter">01 / 05</span>
+          </div>
         </div>
       </header>
 
@@ -297,7 +307,7 @@
         <div class="hud-controls">
           <div class="scroll-hint">
             <span class="mouse-icon" aria-hidden="true"><span class="mouse-wheel"></span></span>
-            <span>เลื่อนหน้าจอ (Scroll) เพื่อสลับไพ่ในมือ</span>
+            <span id="scrollHintText">เลื่อน Scroll หรือลากเมาส์เพื่อสลับไพ่ในมือ</span>
           </div>
 
           <div class="progress-wrap" aria-hidden="true">
@@ -318,6 +328,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=9"></script>
+  <script src="script.js?v=12"></script>
 </body>
 </html>
