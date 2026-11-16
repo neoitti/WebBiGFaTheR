@@ -20,7 +20,7 @@
   --yellow-soft: rgba(250, 204, 21, 0.12);
 
   /* Card proportions responsive to both viewport width & height */
-  --card-w: clamp(196px, min(56vw, 35vh), 315px);
+  --card-w: clamp(164px, min(44vw, 35vh), 315px);
   --card-h: calc(var(--card-w) * 1.42);
 
   --font-display: "Space Grotesk", "Noto Sans Thai", system-ui, sans-serif;
@@ -1026,6 +1026,27 @@ body {
   }
   .selection-toast {
     bottom: 126px;
+  }
+}
+
+@media (max-width: 540px) {
+  .card-inner {
+    padding: 8px;
+  }
+  .card-body {
+    padding: 6px 8px 4px 2px;
+    gap: 2px;
+  }
+  .card-title {
+    font-size: 1.02rem;
+  }
+  .card-desc {
+    font-size: 0.65rem;
+    line-height: 1.35;
+  }
+  .card-footer {
+    margin-top: 2px;
+    font-size: 0.56rem;
   }
 }
 

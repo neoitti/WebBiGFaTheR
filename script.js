@@ -301,9 +301,11 @@
     const cardWidth = cards[0] ? cards[0].offsetWidth : 240;
     const viewportW = window.innerWidth;
     const isNarrow = viewportW < 640;
-    const spread = clamp((viewportW - cardWidth * 0.72) * 0.44, 104, cardWidth * 1.18);
-    const maxRot = isNarrow ? 14 : 22;
-    const maxRy = isNarrow ? 4 : 12;
+    const maxRot = isNarrow ? 11 : 22;
+    const maxRy = isNarrow ? 0 : 10;
+    // Bound horizontal spread by viewport half-width so outer fanned cards never clip at edges
+    const maxSafeSpread = Math.max(48, (viewportW * 0.5 - 16 - cardWidth * 0.56) / 0.946);
+    const spread = clamp(maxSafeSpread, 48, cardWidth * 1.18);
 
     cards.forEach((card, i) => {
       let offset = i - activePos;
@@ -377,6 +379,7 @@
     () => {
       needsCanvasResize = true;
       forceHandRender = true;
+      readScrollProgress();
       if (bgImg.complete) buildHollowTunnelSprite();
     },
     { passive: true }
