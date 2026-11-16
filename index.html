@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Hand Menu — Scroll-Driven Deck</title>
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Scrollable height track that drives the scroll-driven card hand -->
+  <div class="scroll-track" id="scrollTrack">
+    <div class="stage-sticky">
+      <!-- Deep-Sinking Multi-Layer Animated Tunnel Background -->
+      <div class="bg-stage" aria-hidden="true">
+        <div class="bg-tunnel-wrap" id="bgTunnelWrap">
+          <div class="bg-tunnel-backdrop"></div>
+          <div class="bg-tunnel-layer" data-phase="0.00"></div>
+          <div class="bg-tunnel-layer" data-phase="0.25"></div>
+          <div class="bg-tunnel-layer" data-phase="0.50"></div>
+          <div class="bg-tunnel-layer" data-phase="0.75"></div>
+          <div class="bg-tunnel-frame" data-frame="0.00"></div>
+          <div class="bg-tunnel-frame" data-frame="0.33"></div>
+          <div class="bg-tunnel-frame" data-frame="0.66"></div>
+        </div>
+        <div class="bg-deep-core"></div>
+        <div class="bg-vignette"></div>
+      </div>
+
+      <!-- Minimal Top Bar -->
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <span class="brand-card back"></span>
+            <span class="brand-card front"></span>
+          </span>
+          <div class="brand-text">
+            <span class="brand-title">DECK MENU</span>
+            <span class="brand-sub">SCROLL-DRIVEN HAND</span>
+          </div>
+        </div>
+
+        <div class="deck-status" aria-live="polite">
+          <span class="status-label">ACTIVE CARD</span>
+          <span class="status-value" id="activeCounter">01 / 05</span>
+        </div>
+      </header>
+
+      <!-- Main Card Hand Stage -->
+      <main class="main-layout">
+        <!-- Hand of Cards Container -->
+        <section class="hand-viewport" aria-label="Menu cards arranged like a hand of playing cards">
+          <div class="hand-pivot" id="handPivot">
+            <!-- Card 01: Profile -->
+            <article
+              class="playing-card"
+              data-index="0"
+              data-key="profile"
+              tabindex="0"
+              role="button"
+              aria-label="Card 01: Profile"
+            >
+              <div class="card-inner">
+                <div class="card-foil" aria-hidden="true"></div>
+
+                <!-- Top-left playing card corner -->
+                <div class="card-corner corner-top">
+                  <span class="corner-num">01</span>
+                  <span class="corner-suit" aria-hidden="true">◆</span>
+                </div>
+
+                <!-- Artwork Frame -->
+                <div class="card-art">
+                  <img
+                    src="images/card-profile.jpg?v=2"
+                    alt="Profile — Sculptural portrait bust in charcoal gray and golden yellow rim light"
+                    style="object-position: 50% 35%;"
+                    loading="eager"
+                  />
+                  <span class="card-tag">IDENTITY</span>
+                </div>
+
+                <!-- Card Content -->
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span class="card-code">PR / 01</span>
+                    <span class="card-dot"></span>
+                  </div>
+                  <h2 class="card-title">Profile</h2>
+                  <p class="card-desc">
+                    ทำความรู้จักตัวตน วิสัยทัศน์ ประสบการณ์ และเส้นทางการทำงาน
+                  </p>
+                  <div class="card-footer">
+                    <span class="card-action">SELECT CARD</span>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+
+                <!-- Bottom-right inverted playing card corner -->
+                <div class="card-corner corner-bottom" aria-hidden="true">
+                  <span class="corner-num">01</span>
+                  <span class="corner-suit">◆</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 02: Product -->
+            <article
+              class="playing-card"
+              data-index="1"
+              data-key="product"
+              tabindex="0"
+              role="button"
+              aria-label="Card 02: Product"
+            >
+              <div class="card-inner">
+                <div class="card-foil" aria-hidden="true"></div>
+
+                <div class="card-corner corner-top">
+                  <span class="corner-num">02</span>
+                  <span class="corner-suit" aria-hidden="true">▲</span>
+                </div>
+
+                <div class="card-art">
+                  <img
+                    src="images/card-product.jpg"
+                    alt="Product — Modular industrial hardware device in slate gray and amber yellow"
+                    loading="eager"
+                  />
+                  <span class="card-tag">SHOWCASE</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span class="card-code">PD / 02</span>
+                    <span class="card-dot"></span>
+                  </div>
+                  <h2 class="card-title">Product</h2>
+                  <p class="card-desc">
+                    รวมผลิตภัณฑ์ โซลูชัน และงานออกแบบที่พัฒนาอย่างพิถีพิถัน
+                  </p>
+                  <div class="card-footer">
+                    <span class="card-action">SELECT CARD</span>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+
+                <div class="card-corner corner-bottom" aria-hidden="true">
+                  <span class="corner-num">02</span>
+                  <span class="corner-suit">▲</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 03: Test -->
+            <article
+              class="playing-card"
+              data-index="2"
+              data-key="test"
+              tabindex="0"
+              role="button"
+              aria-label="Card 03: Test"
+            >
+              <div class="card-inner">
+                <div class="card-foil" aria-hidden="true"></div>
+
+                <div class="card-corner corner-top">
+                  <span class="corner-num">03</span>
+                  <span class="corner-suit" aria-hidden="true">●</span>
+                </div>
+
+                <div class="card-art">
+                  <img
+                    src="images/card-test.jpg"
+                    alt="Test — Precision calibration optics with yellow laser grid"
+                    loading="eager"
+                  />
+                  <span class="card-tag">LAB &amp; QA</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span class="card-code">TS / 03</span>
+                    <span class="card-dot"></span>
+                  </div>
+                  <h2 class="card-title">Test</h2>
+                  <p class="card-desc">
+                    ห้องทดลอง ทดสอบประสิทธิภาพ และตรวจสอบมาตรฐานระบบแบบเรียลไทม์
+                  </p>
+                  <div class="card-footer">
+                    <span class="card-action">SELECT CARD</span>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+
+                <div class="card-corner corner-bottom" aria-hidden="true">
+                  <span class="corner-num">03</span>
+                  <span class="corner-suit">●</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 04: Download -->
+            <article
+              class="playing-card"
+              data-index="3"
+              data-key="download"
+              tabindex="0"
+              role="button"
+              aria-label="Card 04: Download"
+            >
+              <div class="card-inner">
+                <div class="card-foil" aria-hidden="true"></div>
+
+                <div class="card-corner corner-top">
+                  <span class="corner-num">04</span>
+                  <span class="corner-suit" aria-hidden="true">▼</span>
+                </div>
+
+                <div class="card-art">
+                  <img
+                    src="images/card-download.jpg"
+                    alt="Download — Layered gray monoliths with glowing yellow download beam"
+                    loading="eager"
+                  />
+                  <span class="card-tag">RESOURCES</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span class="card-code">DL / 04</span>
+                    <span class="card-dot"></span>
+                  </div>
+                  <h2 class="card-title">Download</h2>
+                  <p class="card-desc">
+                    ดาวน์โหลดไฟล์ติดตั้ง เอกสารคู่มือ และแพ็กเกจเวอร์ชันล่าสุด
+                  </p>
+                  <div class="card-footer">
+                    <span class="card-action">SELECT CARD</span>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+
+                <div class="card-corner corner-bottom" aria-hidden="true">
+                  <span class="corner-num">04</span>
+                  <span class="corner-suit">▼</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 05: Contact -->
+            <article
+              class="playing-card"
+              data-index="4"
+              data-key="contact"
+              tabindex="0"
+              role="button"
+              aria-label="Card 05: Contact"
+            >
+              <div class="card-inner">
+                <div class="card-foil" aria-hidden="true"></div>
+
+                <div class="card-corner corner-top">
+                  <span class="corner-num">05</span>
+                  <span class="corner-suit" aria-hidden="true">✦</span>
+                </div>
+
+                <div class="card-art">
+                  <img
+                    src="images/card-contact.jpg"
+                    alt="Contact — Minimalist signal beacon in gray concrete and yellow light"
+                    loading="eager"
+                  />
+                  <span class="card-tag">CONNECT</span>
+                </div>
+
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span class="card-code">CT / 05</span>
+                    <span class="card-dot"></span>
+                  </div>
+                  <h2 class="card-title">Contact</h2>
+                  <p class="card-desc">
+                    ช่องทางติดต่อ สอบถามข้อมูล นัดหมาย และเริ่มต้นโปรเจกต์ร่วมกัน
+                  </p>
+                  <div class="card-footer">
+                    <span class="card-action">SELECT CARD</span>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                  </div>
+                </div>
+
+                <div class="card-corner corner-bottom" aria-hidden="true">
+                  <span class="corner-num">05</span>
+                  <span class="corner-suit">✦</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <!-- Bottom HUD: Scroll progress, quick-jump pills & arrows -->
+      <footer class="bottom-hud">
+        <div class="nav-pills" role="tablist" aria-label="Jump to menu card">
+          <button class="pill is-active" data-target="0" role="tab" aria-selected="true">
+            <span class="pill-idx">01</span> Profile
+          </button>
+          <button class="pill" data-target="1" role="tab" aria-selected="false">
+            <span class="pill-idx">02</span> Product
+          </button>
+          <button class="pill" data-target="2" role="tab" aria-selected="false">
+            <span class="pill-idx">03</span> Test
+          </button>
+          <button class="pill" data-target="3" role="tab" aria-selected="false">
+            <span class="pill-idx">04</span> Download
+          </button>
+          <button class="pill" data-target="4" role="tab" aria-selected="false">
+            <span class="pill-idx">05</span> Contact
+          </button>
+        </div>
+
+        <div class="hud-controls">
+          <div class="scroll-hint">
+            <span class="mouse-icon" aria-hidden="true"><span class="mouse-wheel"></span></span>
+            <span>เลื่อนหน้าจอ (Scroll) เพื่อสลับไพ่ในมือ</span>
+          </div>
+
+          <div class="progress-wrap" aria-hidden="true">
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <div class="step-buttons">
+            <button class="step-btn" id="prevBtn" type="button" aria-label="Previous card">←</button>
+            <button class="step-btn" id="nextBtn" type="button" aria-label="Next card">→</button>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Subtle Toast Feedback when clicking the active front card -->
+      <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
