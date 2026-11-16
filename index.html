@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Card Hand Menu — Scroll-Driven Deck</title>
+  <title>BIGFATHER — Interactive Card Deck</title>
+  <meta
+    name="description"
+    content="BIGFATHER — ศูนย์รวมข้อมูลตัวตน ผลิตภัณฑ์ ห้องทดลอง ดาวน์โหลด และช่องทางติดต่อ ในรูปแบบเมนูการ์ดไพ่ 3 มิติ"
+  />
+  <meta name="theme-color" content="#121316" />
+  <meta property="og:title" content="BIGFATHER — Interactive Card Deck" />
+  <meta
+    property="og:description"
+    content="เมนูการ์ดไพ่แบบ Scroll-Driven พร้อมภาพประกอบและแอนิเมชัน 3 มิติ"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-preview.jpg" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
   <!-- Scrollable height track that drives the scroll-driven card hand -->
@@ -25,8 +40,8 @@
             <span class="brand-card front"></span>
           </span>
           <div class="brand-text">
-            <span class="brand-title">DECK MENU</span>
-            <span class="brand-sub">SCROLL-DRIVEN HAND</span>
+            <span class="brand-title">BIGFATHER</span>
+            <span class="brand-sub">INTERACTIVE HUB</span>
           </div>
         </div>
 
@@ -42,21 +57,15 @@
         <section class="hand-viewport" aria-label="Menu cards arranged like a hand of playing cards">
           <div class="hand-pivot" id="handPivot">
             <!-- Card 01: Profile -->
-            <article
-              class="playing-card"
-              data-index="0"
-              data-key="profile"
-              tabindex="0"
-              role="button"
-              aria-label="Card 01: Profile"
-            >
+            <article class="playing-card" data-index="0" data-key="profile" aria-labelledby="card-title-01">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 01: Profile"></button>
 
                 <!-- Top-left playing card corner -->
-                <div class="card-corner corner-top">
+                <div class="card-corner corner-top" aria-hidden="true">
                   <span class="corner-num">01</span>
-                  <span class="corner-suit" aria-hidden="true">◆</span>
+                  <span class="corner-suit">◆</span>
                 </div>
 
                 <!-- Artwork Frame -->
@@ -76,13 +85,13 @@
                     <span class="card-code">PR / 01</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title">Profile</h2>
+                  <h2 class="card-title" id="card-title-01">Profile</h2>
                   <p class="card-desc">
-                    ทำความรู้จักตัวตน วิสัยทัศน์ ประสบการณ์ และเส้นทางการทำงาน
+                    ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน
                   </p>
-                  <div class="card-footer">
-                    <span class="card-action">SELECT CARD</span>
-                    <span class="card-arrow" aria-hidden="true">→</span>
+                  <div class="card-footer" aria-hidden="true">
+                    <span class="card-action">OPEN MENU</span>
+                    <span class="card-arrow">→</span>
                   </div>
                 </div>
 
@@ -95,20 +104,14 @@
             </article>
 
             <!-- Card 02: Product -->
-            <article
-              class="playing-card"
-              data-index="1"
-              data-key="product"
-              tabindex="0"
-              role="button"
-              aria-label="Card 02: Product"
-            >
+            <article class="playing-card" data-index="1" data-key="product" aria-labelledby="card-title-02">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 02: Product"></button>
 
-                <div class="card-corner corner-top">
+                <div class="card-corner corner-top" aria-hidden="true">
                   <span class="corner-num">02</span>
-                  <span class="corner-suit" aria-hidden="true">▲</span>
+                  <span class="corner-suit">▲</span>
                 </div>
 
                 <div class="card-art">
@@ -125,13 +128,13 @@
                     <span class="card-code">PD / 02</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title">Product</h2>
+                  <h2 class="card-title" id="card-title-02">Product</h2>
                   <p class="card-desc">
-                    รวมผลิตภัณฑ์ โซลูชัน และงานออกแบบที่พัฒนาอย่างพิถีพิถัน
+                    รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง
                   </p>
-                  <div class="card-footer">
-                    <span class="card-action">SELECT CARD</span>
-                    <span class="card-arrow" aria-hidden="true">→</span>
+                  <div class="card-footer" aria-hidden="true">
+                    <span class="card-action">FOCUS</span>
+                    <span class="card-arrow">→</span>
                   </div>
                 </div>
 
@@ -143,20 +146,14 @@
             </article>
 
             <!-- Card 03: Test -->
-            <article
-              class="playing-card"
-              data-index="2"
-              data-key="test"
-              tabindex="0"
-              role="button"
-              aria-label="Card 03: Test"
-            >
+            <article class="playing-card" data-index="2" data-key="test" aria-labelledby="card-title-03">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 03: Test"></button>
 
-                <div class="card-corner corner-top">
+                <div class="card-corner corner-top" aria-hidden="true">
                   <span class="corner-num">03</span>
-                  <span class="corner-suit" aria-hidden="true">●</span>
+                  <span class="corner-suit">●</span>
                 </div>
 
                 <div class="card-art">
@@ -173,13 +170,13 @@
                     <span class="card-code">TS / 03</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title">Test</h2>
+                  <h2 class="card-title" id="card-title-03">Test</h2>
                   <p class="card-desc">
-                    ห้องทดลอง ทดสอบประสิทธิภาพ และตรวจสอบมาตรฐานระบบแบบเรียลไทม์
+                    ทดสอบประสิทธิภาพและมาตรฐานระบบจริง
                   </p>
-                  <div class="card-footer">
-                    <span class="card-action">SELECT CARD</span>
-                    <span class="card-arrow" aria-hidden="true">→</span>
+                  <div class="card-footer" aria-hidden="true">
+                    <span class="card-action">FOCUS</span>
+                    <span class="card-arrow">→</span>
                   </div>
                 </div>
 
@@ -191,20 +188,14 @@
             </article>
 
             <!-- Card 04: Download -->
-            <article
-              class="playing-card"
-              data-index="3"
-              data-key="download"
-              tabindex="0"
-              role="button"
-              aria-label="Card 04: Download"
-            >
+            <article class="playing-card" data-index="3" data-key="download" aria-labelledby="card-title-04">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 04: Download"></button>
 
-                <div class="card-corner corner-top">
+                <div class="card-corner corner-top" aria-hidden="true">
                   <span class="corner-num">04</span>
-                  <span class="corner-suit" aria-hidden="true">▼</span>
+                  <span class="corner-suit">▼</span>
                 </div>
 
                 <div class="card-art">
@@ -221,13 +212,13 @@
                     <span class="card-code">DL / 04</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title">Download</h2>
+                  <h2 class="card-title" id="card-title-04">Download</h2>
                   <p class="card-desc">
-                    ดาวน์โหลดไฟล์ติดตั้ง เอกสารคู่มือ และแพ็กเกจเวอร์ชันล่าสุด
+                    ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด
                   </p>
-                  <div class="card-footer">
-                    <span class="card-action">SELECT CARD</span>
-                    <span class="card-arrow" aria-hidden="true">→</span>
+                  <div class="card-footer" aria-hidden="true">
+                    <span class="card-action">FOCUS</span>
+                    <span class="card-arrow">→</span>
                   </div>
                 </div>
 
@@ -239,20 +230,14 @@
             </article>
 
             <!-- Card 05: Contact -->
-            <article
-              class="playing-card"
-              data-index="4"
-              data-key="contact"
-              tabindex="0"
-              role="button"
-              aria-label="Card 05: Contact"
-            >
+            <article class="playing-card" data-index="4" data-key="contact" aria-labelledby="card-title-05">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 05: Contact"></button>
 
-                <div class="card-corner corner-top">
+                <div class="card-corner corner-top" aria-hidden="true">
                   <span class="corner-num">05</span>
-                  <span class="corner-suit" aria-hidden="true">✦</span>
+                  <span class="corner-suit">✦</span>
                 </div>
 
                 <div class="card-art">
@@ -269,13 +254,13 @@
                     <span class="card-code">CT / 05</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title">Contact</h2>
+                  <h2 class="card-title" id="card-title-05">Contact</h2>
                   <p class="card-desc">
-                    ช่องทางติดต่อ สอบถามข้อมูล นัดหมาย และเริ่มต้นโปรเจกต์ร่วมกัน
+                    ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา
                   </p>
-                  <div class="card-footer">
-                    <span class="card-action">SELECT CARD</span>
-                    <span class="card-arrow" aria-hidden="true">→</span>
+                  <div class="card-footer" aria-hidden="true">
+                    <span class="card-action">FOCUS</span>
+                    <span class="card-arrow">→</span>
                   </div>
                 </div>
 
@@ -291,23 +276,23 @@
 
       <!-- Bottom HUD: Scroll progress, quick-jump pills & arrows -->
       <footer class="bottom-hud">
-        <div class="nav-pills" role="tablist" aria-label="Jump to menu card">
-          <button class="pill is-active" data-target="0" role="tab" aria-selected="true">
+        <nav class="nav-pills" aria-label="Menu navigation">
+          <button type="button" class="pill is-active" data-target="0" aria-pressed="true">
             <span class="pill-idx">01</span> Profile
           </button>
-          <button class="pill" data-target="1" role="tab" aria-selected="false">
+          <button type="button" class="pill" data-target="1" aria-pressed="false">
             <span class="pill-idx">02</span> Product
           </button>
-          <button class="pill" data-target="2" role="tab" aria-selected="false">
+          <button type="button" class="pill" data-target="2" aria-pressed="false">
             <span class="pill-idx">03</span> Test
           </button>
-          <button class="pill" data-target="3" role="tab" aria-selected="false">
+          <button type="button" class="pill" data-target="3" aria-pressed="false">
             <span class="pill-idx">04</span> Download
           </button>
-          <button class="pill" data-target="4" role="tab" aria-selected="false">
+          <button type="button" class="pill" data-target="4" aria-pressed="false">
             <span class="pill-idx">05</span> Contact
           </button>
-        </div>
+        </nav>
 
         <div class="hud-controls">
           <div class="scroll-hint">
@@ -333,6 +318,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=9"></script>
 </body>
 </html>

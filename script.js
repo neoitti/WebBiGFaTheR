@@ -4,36 +4,37 @@
       key: "profile",
       index: "01",
       title: "Profile",
-      desc: "ข้อมูลตัวตน แนวคิดการทำงาน และเบื้องหลังการสร้างสรรค์ผลงาน",
+      desc: "ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน",
     },
     {
       key: "product",
       index: "02",
       title: "Product",
-      desc: "รวมผลิตภัณฑ์ โซลูชัน และงานออกแบบที่พัฒนาอย่างพิถีพิถัน",
+      desc: "รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง",
     },
     {
       key: "test",
       index: "03",
       title: "Test",
-      desc: "ห้องทดลอง ทดสอบประสิทธิภาพ และตรวจสอบมาตรฐานระบบแบบเรียลไทม์",
+      desc: "ทดสอบประสิทธิภาพและมาตรฐานระบบจริง",
     },
     {
       key: "download",
       index: "04",
       title: "Download",
-      desc: "ดาวน์โหลดไฟล์ติดตั้ง เอกสารคู่มือ และแพ็กเกจเวอร์ชันล่าสุด",
+      desc: "ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด",
     },
     {
       key: "contact",
       index: "05",
       title: "Contact",
-      desc: "ช่องทางติดต่อ สอบถามข้อมูล นัดหมาย และเริ่มต้นโปรเจกต์ร่วมกัน",
+      desc: "ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา",
     },
   ];
 
   const scrollTrack = document.getElementById("scrollTrack");
   const handViewport = document.querySelector(".hand-viewport");
+  const handPivot = document.getElementById("handPivot");
   const cards = Array.from(document.querySelectorAll(".playing-card"));
   const pills = Array.from(document.querySelectorAll(".pill"));
   const tunnelCanvas = document.getElementById("tunnelCanvas");
@@ -57,8 +58,12 @@
   let currentBgY = 0;
   let tunnelClock = 0;
   let lastFrameTime = performance.now();
+  let rafId = null;
   let lastClosestIndex = -1;
   let toastTimer = null;
+  let snapTimer = null;
+  let ignoreSnapUntil = 0;
+  let isPointerDown = false;
 
   // --- Unified Single-Image Smooth Tunnel Background Engine ---
   const ctx = tunnelCanvas ? tunnelCanvas.getContext("2d", { alpha: false }) : null;
@@ -69,14 +74,17 @@
   let canvasDpr = 1;
   let needsCanvasResize = true;
 
-  // Deterministic radial data sparks that glide smoothly outward along the corridor walls
-  const TUNNEL_SPARKS = Array.from({ length: 18 }, (_, idx) => {
-    const angle = ((idx * 137.5) % 360) * (Math.PI / 180);
+  // Deterministic short radial cyan/blue sparks streaming from back portal to front
+  const STREAK_COUNT = isTouchOnly ? 45 : 80;
+  const TUNNEL_SPARKS = Array.from({ length: STREAK_COUNT }, (_, idx) => {
+    const angle = ((idx * 137.508) % 360) * (Math.PI / 180);
     return {
-      phase: idx / 18,
+      phase: idx / STREAK_COUNT,
       cos: Math.cos(angle),
       sin: Math.sin(angle),
+      speed: 0.78 + ((idx * 37) % 10) * 0.08,
       size: idx % 3 === 0 ? 3 : 2,
+      hue: idx % 3 === 0 ? "56, 226, 255" : idx % 3 === 1 ? "34, 211, 238" : "96, 195, 255",
     };
   });
 
@@ -149,6 +157,8 @@
     }
 
     const targetY = clamp((desiredStep / CARD_COUNT) * maxScroll, 0, maxScroll);
+    ignoreSnapUntil = Date.now() + 600;
+    clearTimeout(snapTimer);
     window.scrollTo({
       top: targetY,
       behavior: reducedMotion ? "auto" : "smooth",
@@ -186,12 +196,38 @@
     pills.forEach((pill, i) => {
       const isActive = i === closestIdx;
       pill.classList.toggle("is-active", isActive);
-      pill.setAttribute("aria-selected", String(isActive));
+      pill.setAttribute("aria-pressed", String(isActive));
     });
 
     cards.forEach((card, i) => {
-      card.classList.toggle("is-active", i === closestIdx);
+      const isCardActive = i === closestIdx;
+      card.classList.toggle("is-active", isCardActive);
+      const actionEl = card.querySelector(".card-action");
+      if (actionEl) {
+        actionEl.textContent = isCardActive ? "OPEN MENU" : "FOCUS";
+      }
     });
+  }
+
+  function scheduleGentleSnap() {
+    clearTimeout(snapTimer);
+    if (Date.now() < ignoreSnapUntil || isPointerDown) return;
+
+    snapTimer = setTimeout(() => {
+      if (isPointerDown || Date.now() < ignoreSnapUntil) return;
+      const maxScroll = getMaxScroll();
+      const scrollTop = window.scrollY || window.pageYOffset || 0;
+      const exactStep = (scrollTop / maxScroll) * CARD_COUNT;
+      const nearestStep = Math.round(exactStep);
+      if (Math.abs(exactStep - nearestStep) < 0.03) return;
+
+      ignoreSnapUntil = Date.now() + 500;
+      const snapY = clamp((nearestStep / CARD_COUNT) * maxScroll, 0, maxScroll);
+      window.scrollTo({
+        top: snapY,
+        behavior: reducedMotion ? "auto" : "smooth",
+      });
+    }, 190);
   }
 
   function renderTunnelCanvas(dt) {
@@ -223,26 +259,54 @@
     ctx.drawImage(bgImg, -dw * 0.5, -dh * 0.5, dw, dh);
     ctx.restore();
 
-    // Subtle radial data sparks gliding smoothly forward (no hard top/bottom rectangle lines)
+    // Glowing cyan/blue light beams streaming from the back portal toward the viewer
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
+    ctx.lineCap = "round";
 
-    const maxRadius = Math.hypot(canvasW, canvasH) * 0.58;
+    // Soft pulsing cyan aura at the deep portal center
+    const pulse = 0.5 + 0.5 * Math.sin(tunnelClock * Math.PI * 6);
+    const coreR = Math.min(canvasW, canvasH) * (0.24 + 0.05 * pulse);
+    const coreGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, coreR);
+    coreGrad.addColorStop(0, `rgba(125, 243, 255, ${(0.24 + 0.1 * pulse).toFixed(3)})`);
+    coreGrad.addColorStop(0.45, `rgba(34, 211, 238, ${(0.1 + 0.05 * pulse).toFixed(3)})`);
+    coreGrad.addColorStop(1, "rgba(34, 211, 238, 0)");
+    ctx.fillStyle = coreGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+    ctx.fill();
+
+    const maxRadius = Math.hypot(canvasW, canvasH) * 0.62;
     for (let i = 0; i < TUNNEL_SPARKS.length; i++) {
       const s = TUNNEL_SPARKS[i];
-      const sp = (s.phase + tunnelClock * 1.8) % 1;
-      const dist = 16 + Math.pow(sp, 2.1) * maxRadius;
-      const sOp = smoothstep(0.05, 0.28, sp) * (1 - smoothstep(0.76, 1.0, sp)) * 0.42;
+      const sp = (s.phase + tunnelClock * 2.15 * s.speed) % 1;
+      const dist = 12 + Math.pow(sp, 2.45) * maxRadius;
+      const sOp = smoothstep(0.03, 0.24, sp) * (1 - smoothstep(0.76, 1.0, sp)) * 0.72;
       if (sOp <= 0.01) continue;
 
+      const len = s.size + sp * 10;
       const sx = cx + s.cos * dist;
       const sy = cy + s.sin * dist;
-      const len = s.size + sp * 10;
-      ctx.strokeStyle = `rgba(125, 243, 255, ${sOp.toFixed(3)})`;
-      ctx.lineWidth = s.size * 0.75;
+      const ex = cx + s.cos * (dist + len);
+      const ey = cy + s.sin * (dist + len);
+      const lw = s.size * (0.65 + sp * 0.45);
+
+      // Short electric-cyan spark trail
+      ctx.strokeStyle = `rgba(${s.hue}, ${sOp.toFixed(3)})`;
+      ctx.lineWidth = lw;
       ctx.beginPath();
       ctx.moveTo(sx, sy);
-      ctx.lineTo(sx + s.cos * len, sy + s.sin * len);
+      ctx.lineTo(ex, ey);
+      ctx.stroke();
+
+      // Bright white-cyan spark head
+      const tipX = sx + s.cos * (len * 0.55);
+      const tipY = sy + s.sin * (len * 0.55);
+      ctx.strokeStyle = `rgba(224, 252, 255, ${(sOp * 0.85).toFixed(3)})`;
+      ctx.lineWidth = Math.max(0.9, lw * 0.52);
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY);
+      ctx.lineTo(ex, ey);
       ctx.stroke();
     }
 
@@ -300,6 +364,11 @@
   }
 
   function tick(now) {
+    if (document.hidden) {
+      rafId = null;
+      return;
+    }
+
     const dt = Math.min(0.05, Math.max(0.001, (now - lastFrameTime) / 1000));
     lastFrameTime = now;
 
@@ -329,8 +398,21 @@
       forceHandRender = false;
     }
 
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
   }
+
+  // Pause animation loop when tab is hidden to save battery & CPU
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    } else if (rafId === null) {
+      lastFrameTime = performance.now();
+      rafId = requestAnimationFrame(tick);
+    }
+  });
 
   window.addEventListener(
     "resize",
@@ -465,13 +547,6 @@
         card.style.setProperty("--img-py", "0px");
       });
     }
-
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        card.click();
-      }
-    });
   });
 
   // Pill navigation
@@ -506,10 +581,14 @@
   let touchStartScroll = 0;
   let swipeLocked = false;
 
+  window.addEventListener("scroll", scheduleGentleSnap, { passive: true });
+
   handViewport.addEventListener(
     "touchstart",
     (e) => {
       if (e.touches.length !== 1) return;
+      isPointerDown = true;
+      clearTimeout(snapTimer);
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
       touchStartScroll = window.scrollY;
@@ -560,20 +639,44 @@
   handViewport.addEventListener(
     "touchend",
     () => {
+      isPointerDown = false;
       touchStartX = null;
       touchStartY = null;
       swipeLocked = false;
+      scheduleGentleSnap();
     },
     { passive: true }
   );
 
-  // Initialize
+  // Initialize (with smooth first-load card deal spread)
   if (bgImg.complete && bgImg.naturalWidth) imgReady = true;
   syncCanvasSize();
   readScrollProgress();
   currentProgress = targetProgress;
-  renderHand(currentProgress);
   lastRenderedProgress = currentProgress;
   forceHandRender = false;
-  requestAnimationFrame(tick);
+
+  if (!reducedMotion && handPivot) {
+    handPivot.classList.add("is-dealing");
+    cards.forEach((card) => {
+      card.style.setProperty("--tx", "0px");
+      card.style.setProperty("--ty", "26px");
+      card.style.setProperty("--rot", "0deg");
+      card.style.setProperty("--scale", "0.86");
+    });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        renderHand(currentProgress);
+      });
+    });
+    setTimeout(() => {
+      handPivot.classList.remove("is-dealing");
+    }, 720);
+  } else {
+    renderHand(currentProgress);
+  }
+
+  if (!document.hidden) {
+    rafId = requestAnimationFrame(tick);
+  }
 })();
