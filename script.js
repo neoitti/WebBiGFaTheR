@@ -4,6 +4,7 @@
       key: "profile",
       index: "01",
       title: "Profile",
+      href: "profile.html",
       desc: {
         th: "ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน",
         en: "Explore identity, vision, and creative works",
@@ -13,15 +14,17 @@
       key: "product",
       index: "02",
       title: "Product",
+      href: "product.html",
       desc: {
         th: "รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง",
         en: "Curated products and crafted solutions",
       },
     },
     {
-      key: "test",
+      key: "sample",
       index: "03",
-      title: "Test",
+      title: "Sample",
+      href: "sample.html",
       desc: {
         th: "ทดสอบประสิทธิภาพและมาตรฐานระบบจริง",
         en: "Benchmark performance and system quality",
@@ -31,6 +34,7 @@
       key: "download",
       index: "04",
       title: "Download",
+      href: "download.html",
       desc: {
         th: "ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด",
         en: "Get installers, guides, and latest releases",
@@ -40,6 +44,7 @@
       key: "contact",
       index: "05",
       title: "Contact",
+      href: "contact.html",
       desc: {
         th: "ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา",
         en: "Reach out, schedule, or start a project",
@@ -53,16 +58,16 @@
       scrollHint: "เลื่อน Scroll หรือลากเมาส์เพื่อสลับไพ่ในมือ",
       openAction: "เปิดเมนู",
       focusAction: "ดูการ์ด",
-      selectAria: (item) => `เลือกการ์ด ${item.index}: ${item.title}`,
-      toastSelected: (item) => `เลือกการ์ด ${item.index}: ${item.title}`,
+      selectAria: (item) => `เลือกการ์ด: ${item.title}`,
+      toastSelected: (item) => `เลือกการ์ด: ${item.title}`,
     },
     en: {
       statusLabel: "ACTIVE CARD",
       scrollHint: "Scroll or drag to cycle cards in your hand",
       openAction: "OPEN MENU",
       focusAction: "FOCUS",
-      selectAria: (item) => `Select card ${item.index}: ${item.title}`,
-      toastSelected: (item) => `Selected card ${item.index}: ${item.title}`,
+      selectAria: (item) => `Select card: ${item.title}`,
+      toastSelected: (item) => `Selected card: ${item.title}`,
     },
   };
 
@@ -270,7 +275,7 @@
 
     const item = CARD_DATA[closestIdx];
     const copy = UI_COPY[currentLang];
-    activeCounter.textContent = `${item.index} / 0${CARD_COUNT}`;
+    activeCounter.textContent = item.title;
 
     pills.forEach((pill, i) => {
       const isActive = i === closestIdx;
@@ -585,6 +590,11 @@
         card.classList.add("is-selected");
         const item = CARD_DATA[index];
         showToast(UI_COPY[currentLang].toastSelected(item));
+        if (item && item.href) {
+          setTimeout(() => {
+            window.location.href = item.href;
+          }, 220);
+        }
       }
     });
 
@@ -636,11 +646,15 @@
     });
   });
 
-  // Pill navigation
+  // Pill navigation (focuses card; clicking already-active pill opens its page)
   pills.forEach((pill) => {
     pill.addEventListener("click", () => {
       const targetIdx = Number(pill.dataset.target);
-      scrollToCardIndex(targetIdx);
+      if (targetIdx === lastClosestIndex && CARD_DATA[targetIdx]?.href) {
+        window.location.href = CARD_DATA[targetIdx].href;
+      } else {
+        scrollToCardIndex(targetIdx);
+      }
     });
   });
 

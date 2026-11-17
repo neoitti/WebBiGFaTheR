@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
   <!-- Scrollable height track that drives the scroll-driven card hand -->
@@ -48,6 +48,24 @@
           </div>
         </div>
 
+        <nav class="nav-pills" aria-label="Menu navigation">
+          <button type="button" class="pill is-active" data-target="0" aria-pressed="true">
+            Profile
+          </button>
+          <button type="button" class="pill" data-target="1" aria-pressed="false">
+            Product
+          </button>
+          <button type="button" class="pill" data-target="2" aria-pressed="false">
+            Sample
+          </button>
+          <button type="button" class="pill" data-target="3" aria-pressed="false">
+            Download
+          </button>
+          <button type="button" class="pill" data-target="4" aria-pressed="false">
+            Contact
+          </button>
+        </nav>
+
         <div class="topbar-right">
           <div class="lang-switch" role="group" aria-label="Language switcher">
             <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
@@ -56,7 +74,7 @@
 
           <div class="deck-status" aria-live="polite">
             <span class="status-label" id="statusLabel">กำลังดู</span>
-            <span class="status-value" id="activeCounter">01 / 05</span>
+            <span class="status-value" id="activeCounter">Profile</span>
           </div>
         </div>
       </header>
@@ -66,15 +84,14 @@
         <!-- Hand of Cards Container -->
         <section class="hand-viewport" aria-label="Menu cards arranged like a hand of playing cards">
           <div class="hand-pivot" id="handPivot">
-            <!-- Card 01: Profile -->
-            <article class="playing-card" data-index="0" data-key="profile" aria-labelledby="card-title-01">
+            <!-- Card: Profile -->
+            <article class="playing-card" data-index="0" data-key="profile" aria-labelledby="card-title-profile">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
-                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 01: Profile"></button>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด: Profile"></button>
 
                 <!-- Top-left playing card corner -->
                 <div class="card-corner corner-top" aria-hidden="true">
-                  <span class="corner-num">01</span>
                   <span class="corner-suit">◆</span>
                 </div>
 
@@ -92,10 +109,10 @@
                 <!-- Card Content -->
                 <div class="card-body">
                   <div class="card-meta">
-                    <span class="card-code">PR / 01</span>
+                    <span class="card-code">PR</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title" id="card-title-01">Profile</h2>
+                  <h2 class="card-title" id="card-title-profile">Profile</h2>
                   <p class="card-desc">
                     ทำความรู้จักตัวตน วิสัยทัศน์ และผลงาน
                   </p>
@@ -107,20 +124,18 @@
 
                 <!-- Bottom-right inverted playing card corner -->
                 <div class="card-corner corner-bottom" aria-hidden="true">
-                  <span class="corner-num">01</span>
                   <span class="corner-suit">◆</span>
                 </div>
               </div>
             </article>
 
-            <!-- Card 02: Product -->
-            <article class="playing-card" data-index="1" data-key="product" aria-labelledby="card-title-02">
+            <!-- Card: Product -->
+            <article class="playing-card" data-index="1" data-key="product" aria-labelledby="card-title-product">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
-                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 02: Product"></button>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด: Product"></button>
 
                 <div class="card-corner corner-top" aria-hidden="true">
-                  <span class="corner-num">02</span>
                   <span class="corner-suit">▲</span>
                 </div>
 
@@ -135,10 +150,10 @@
 
                 <div class="card-body">
                   <div class="card-meta">
-                    <span class="card-code">PD / 02</span>
+                    <span class="card-code">PD</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title" id="card-title-02">Product</h2>
+                  <h2 class="card-title" id="card-title-product">Product</h2>
                   <p class="card-desc">
                     รวมผลิตภัณฑ์และงานออกแบบคุณภาพสูง
                   </p>
@@ -149,27 +164,25 @@
                 </div>
 
                 <div class="card-corner corner-bottom" aria-hidden="true">
-                  <span class="corner-num">02</span>
                   <span class="corner-suit">▲</span>
                 </div>
               </div>
             </article>
 
-            <!-- Card 03: Test -->
-            <article class="playing-card" data-index="2" data-key="test" aria-labelledby="card-title-03">
+            <!-- Card: Sample -->
+            <article class="playing-card" data-index="2" data-key="sample" aria-labelledby="card-title-sample">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
-                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 03: Test"></button>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด: Sample"></button>
 
                 <div class="card-corner corner-top" aria-hidden="true">
-                  <span class="corner-num">03</span>
                   <span class="corner-suit">●</span>
                 </div>
 
                 <div class="card-art">
                   <img
                     src="images/card-test.jpg"
-                    alt="Test — Precision calibration optics with yellow laser grid"
+                    alt="Sample — Precision calibration optics with yellow laser grid"
                     loading="eager"
                   />
                   <span class="card-tag">LAB &amp; QA</span>
@@ -177,10 +190,10 @@
 
                 <div class="card-body">
                   <div class="card-meta">
-                    <span class="card-code">TS / 03</span>
+                    <span class="card-code">SM</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title" id="card-title-03">Test</h2>
+                  <h2 class="card-title" id="card-title-sample">Sample</h2>
                   <p class="card-desc">
                     ทดสอบประสิทธิภาพและมาตรฐานระบบจริง
                   </p>
@@ -191,20 +204,18 @@
                 </div>
 
                 <div class="card-corner corner-bottom" aria-hidden="true">
-                  <span class="corner-num">03</span>
                   <span class="corner-suit">●</span>
                 </div>
               </div>
             </article>
 
-            <!-- Card 04: Download -->
-            <article class="playing-card" data-index="3" data-key="download" aria-labelledby="card-title-04">
+            <!-- Card: Download -->
+            <article class="playing-card" data-index="3" data-key="download" aria-labelledby="card-title-download">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
-                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 04: Download"></button>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด: Download"></button>
 
                 <div class="card-corner corner-top" aria-hidden="true">
-                  <span class="corner-num">04</span>
                   <span class="corner-suit">▼</span>
                 </div>
 
@@ -219,10 +230,10 @@
 
                 <div class="card-body">
                   <div class="card-meta">
-                    <span class="card-code">DL / 04</span>
+                    <span class="card-code">DL</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title" id="card-title-04">Download</h2>
+                  <h2 class="card-title" id="card-title-download">Download</h2>
                   <p class="card-desc">
                     ดาวน์โหลดไฟล์ติดตั้งและคู่มือล่าสุด
                   </p>
@@ -233,20 +244,18 @@
                 </div>
 
                 <div class="card-corner corner-bottom" aria-hidden="true">
-                  <span class="corner-num">04</span>
                   <span class="corner-suit">▼</span>
                 </div>
               </div>
             </article>
 
-            <!-- Card 05: Contact -->
-            <article class="playing-card" data-index="4" data-key="contact" aria-labelledby="card-title-05">
+            <!-- Card: Contact -->
+            <article class="playing-card" data-index="4" data-key="contact" aria-labelledby="card-title-contact">
               <div class="card-inner">
                 <div class="card-foil" aria-hidden="true"></div>
-                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด 05: Contact"></button>
+                <button type="button" class="card-hitbox" aria-label="เลือกการ์ด: Contact"></button>
 
                 <div class="card-corner corner-top" aria-hidden="true">
-                  <span class="corner-num">05</span>
                   <span class="corner-suit">✦</span>
                 </div>
 
@@ -261,10 +270,10 @@
 
                 <div class="card-body">
                   <div class="card-meta">
-                    <span class="card-code">CT / 05</span>
+                    <span class="card-code">CT</span>
                     <span class="card-dot"></span>
                   </div>
-                  <h2 class="card-title" id="card-title-05">Contact</h2>
+                  <h2 class="card-title" id="card-title-contact">Contact</h2>
                   <p class="card-desc">
                     ติดต่อสอบถาม นัดหมาย และร่วมงานกับเรา
                   </p>
@@ -275,7 +284,6 @@
                 </div>
 
                 <div class="card-corner corner-bottom" aria-hidden="true">
-                  <span class="corner-num">05</span>
                   <span class="corner-suit">✦</span>
                 </div>
               </div>
@@ -284,26 +292,8 @@
         </section>
       </main>
 
-      <!-- Bottom HUD: Scroll progress, quick-jump pills & arrows -->
+      <!-- Bottom HUD: Scroll progress & step arrows -->
       <footer class="bottom-hud">
-        <nav class="nav-pills" aria-label="Menu navigation">
-          <button type="button" class="pill is-active" data-target="0" aria-pressed="true">
-            <span class="pill-idx">01</span> Profile
-          </button>
-          <button type="button" class="pill" data-target="1" aria-pressed="false">
-            <span class="pill-idx">02</span> Product
-          </button>
-          <button type="button" class="pill" data-target="2" aria-pressed="false">
-            <span class="pill-idx">03</span> Test
-          </button>
-          <button type="button" class="pill" data-target="3" aria-pressed="false">
-            <span class="pill-idx">04</span> Download
-          </button>
-          <button type="button" class="pill" data-target="4" aria-pressed="false">
-            <span class="pill-idx">05</span> Contact
-          </button>
-        </nav>
-
         <div class="hud-controls">
           <div class="scroll-hint">
             <span class="mouse-icon" aria-hidden="true"><span class="mouse-wheel"></span></span>
@@ -328,6 +318,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=12"></script>
+  <script src="tunnel-bg.js?v=1"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>

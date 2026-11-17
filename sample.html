@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAMPLE — BIGFATHER</title>
+  <meta name="description" content="BIGFATHER — ทดสอบประสิทธิภาพ QA Lab และมาตรฐานระบบจริง" />
+  <meta name="theme-color" content="#121316" />
+  <meta property="og:title" content="SAMPLE — BIGFATHER" />
+  <meta property="og:description" content="BIGFATHER — ทดสอบประสิทธิภาพ QA Lab และมาตรฐานระบบจริง" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-preview.jpg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="subpage.css?v=11" />
+</head>
+<body class="is-subpage" data-page="sample">
+  <!-- Identical Deep-Sinking Cyan Tunnel Background -->
+  <div class="bg-stage bg-stage-fixed" aria-hidden="true">
+    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <div class="subpage-shell">
+    <!-- Topbar -->
+    <header class="topbar">
+      <a href="index.html" class="brand brand-link" aria-label="Back to BIGFATHER Home">
+        <img
+          src="images/brand-icon.png?v=3"
+          alt="BIGFATHER logo"
+          class="brand-logo"
+          width="38"
+          height="38"
+        />
+        <div class="brand-text">
+          <span class="brand-title">BIGFATHER</span>
+          <span class="brand-sub">INTERACTIVE HUB</span>
+        </div>
+      </a>
+
+      <nav class="nav-pills top-nav-pills" aria-label="Menu navigation">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="profile.html">Profile</a>
+        <a class="pill" href="product.html">Product</a>
+        <a class="pill is-active" href="sample.html" aria-current="page">Sample</a>
+        <a class="pill" href="download.html">Download</a>
+        <a class="pill" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <div class="deck-status">
+          <span class="status-label" data-th="กำลังดู" data-en="ACTIVE">กำลังดู</span>
+          <span class="status-value">SAMPLE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Test Lab HUD -->
+    <main class="subpage-main test-main">
+      <section class="test-layout">
+        <!-- Top-Left Hero Title -->
+        <header class="page-hero test-hero">
+          <div class="page-hero-titles">
+            <h1 class="page-title">SAMPLE</h1>
+            <p class="page-subtitle" data-th="ตัวอย่างระบบและ QA LAB" data-en="LAB &amp; QA TESTING">ตัวอย่างระบบและ QA LAB</p>
+          </div>
+        </header>
+
+        <!-- Left Stage: Exploded 3D Calibration Cube + Floating Console Dock -->
+        <div class="test-center-col">
+          <div class="calibration-viewport-card" id="calibrationCore">
+            <canvas class="cube-core-canvas" id="cubeCoreCanvas" aria-label="Interactive 3D Calibration Cube Core"></canvas>
+          </div>
+
+          <div class="console-dock" role="group" aria-label="Test Console Controls">
+            <span class="console-label">CONSOLE</span>
+            <div class="console-buttons">
+              <button type="button" class="console-btn is-active" data-console-cmd="PLAY">PLAY</button>
+              <button type="button" class="console-btn" data-console-cmd="INSTALL">INSTALL</button>
+              <button type="button" class="console-btn" data-console-cmd="TEST">TEST</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle-Right: 3D Wireframe Cube Card + System Telemetry Card -->
+        <div class="test-right-cards">
+          <article class="wireframe-card" aria-label="3D Wireframe Blueprint Scan">
+            <canvas class="wire-canvas" id="wireCubeCanvas"></canvas>
+          </article>
+
+          <article class="telemetry-card" aria-label="System Telemetry">
+            <div class="telemetry-header">
+              <span class="telemetry-title" data-th="สถานะระบบเรียลไทม์" data-en="SYSTEM TELEMETRY">สถานะระบบเรียลไทม์</span>
+            </div>
+
+            <div class="telemetry-hud-grid">
+              <!-- Left: Segmented Vertical Equalizer Columns -->
+              <div class="seg-eq" id="telemetrySegEq" aria-hidden="true">
+                <div class="seg-col" data-level="4">
+                  <div class="seg-stack">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="seg-num">15</span>
+                </div>
+                <div class="seg-col" data-level="6">
+                  <div class="seg-stack">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="seg-num">10</span>
+                </div>
+                <div class="seg-col" data-level="8">
+                  <div class="seg-stack">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="seg-num">70</span>
+                </div>
+                <div class="seg-col" data-level="7">
+                  <div class="seg-stack">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="seg-num">65</span>
+                </div>
+                <div class="seg-col" data-level="5">
+                  <div class="seg-stack">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="seg-num">18</span>
+                </div>
+              </div>
+
+              <!-- Center: Multi-Ring Radial Telemetry Gauge -->
+              <div class="radial-gauge-wrap" id="telemetryGauge">
+                <svg class="radial-gauge-svg" viewBox="0 0 110 110" aria-hidden="true">
+                  <circle class="rg-track" cx="55" cy="55" r="44" />
+                  <circle class="rg-ticks" cx="55" cy="55" r="49" />
+                  <circle class="rg-arc" id="telemetryArc" cx="55" cy="55" r="44" />
+                  <circle class="rg-inner-ring" cx="55" cy="55" r="33" />
+                </svg>
+                <div class="radial-gauge-center">
+                  <span class="radial-gauge-pct" id="telemetryPct">98%</span>
+                  <span class="radial-gauge-state" id="telemetryState">READY</span>
+                </div>
+              </div>
+
+              <!-- Right: Horizontal Progress Bars + Mini Spectrum Histogram -->
+              <div class="telemetry-right-stack" aria-hidden="true">
+                <div class="h-bars">
+                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:76%;"></div></div></div>
+                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:92%;"></div></div></div>
+                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:64%;"></div></div></div>
+                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:85%;"></div></div></div>
+                </div>
+                <div class="mini-spectrum" id="telemetrySpectrum">
+                  <span style="height:45%;"></span>
+                  <span style="height:70%;"></span>
+                  <span style="height:38%;"></span>
+                  <span style="height:82%;"></span>
+                  <span style="height:56%;"></span>
+                  <span style="height:94%;"></span>
+                  <span style="height:66%;"></span>
+                  <span style="height:50%;"></span>
+                  <span style="height:88%;"></span>
+                  <span style="height:72%;"></span>
+                  <span style="height:42%;"></span>
+                  <span style="height:78%;"></span>
+                  <span style="height:60%;"></span>
+                  <span style="height:90%;"></span>
+                  <span style="height:52%;"></span>
+                  <span style="height:68%;"></span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Bottom-Right: Primary TEST NOW CTA -->
+        <div class="test-cta-row">
+          <button type="button" class="btn-gold test-now-btn" id="testNowBtn" data-th="เริ่มทดสอบเลย" data-en="TEST NOW">เริ่มทดสอบเลย</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
+
+  <script src="tunnel-bg.js?v=1"></script>
+  <script src="subpage.js?v=10"></script>
+</body>
+</html>

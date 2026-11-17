@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTACT — BIGFATHER</title>
+  <meta name="description" content="BIGFATHER — ติดต่อสอบถาม นัดหมาย และร่วมงานสร้างสรรค์โปรเจกต์" />
+  <meta name="theme-color" content="#121316" />
+  <meta property="og:title" content="CONTACT — BIGFATHER" />
+  <meta property="og:description" content="BIGFATHER — ติดต่อสอบถาม นัดหมาย และร่วมงานสร้างสรรค์โปรเจกต์" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-preview.jpg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="subpage.css?v=10" />
+</head>
+<body class="is-subpage" data-page="contact">
+  <!-- Identical Deep-Sinking Cyan Tunnel Background (Unchanged) -->
+  <div class="bg-stage bg-stage-fixed" aria-hidden="true">
+    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <!-- Far-Right Edge Gold Accent Bar (HUD Detail) -->
+  <div class="contact-edge-bar" aria-hidden="true"></div>
+
+  <div class="subpage-shell">
+    <!-- Topbar -->
+    <header class="topbar">
+      <a href="index.html" class="brand brand-link" aria-label="Back to BIGFATHER Home">
+        <img
+          src="images/brand-icon.png?v=3"
+          alt="BIGFATHER logo"
+          class="brand-logo"
+          width="38"
+          height="38"
+        />
+        <div class="brand-text">
+          <span class="brand-title">BIGFATHER</span>
+          <span class="brand-sub">INTERACTIVE HUB</span>
+        </div>
+      </a>
+
+      <nav class="nav-pills top-nav-pills" aria-label="Menu navigation">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="profile.html">Profile</a>
+        <a class="pill" href="product.html">Product</a>
+        <a class="pill" href="sample.html">Sample</a>
+        <a class="pill" href="download.html">Download</a>
+        <a class="pill is-active" href="contact.html" aria-current="page">Contact</a>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <div class="deck-status">
+          <span class="status-label" data-th="เชื่อมต่อ" data-en="CONNECT">เชื่อมต่อ</span>
+          <span class="status-value">CONTACT</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Contact Uplink HUD -->
+    <main class="subpage-main contact-main">
+      <!-- Top Hero Header -->
+      <section class="page-hero contact-hero">
+        <div class="page-hero-titles">
+          <h1 class="page-title">CONTACT</h1>
+          <p class="page-subtitle" data-th="เชื่อมต่อ / ร่วมงานกับเรา" data-en="CONNECT / HIRE ME">เชื่อมต่อ / ร่วมงานกับเรา</p>
+        </div>
+        <div class="page-hero-meta">
+          <span class="contact-status-pill">
+            <span class="cpill-muted">CONNECT /</span>
+            <span class="cpill-gold">HIRE ME</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- 2-Panel Contact HUD Stage -->
+      <section class="contact-stage-grid" aria-label="Contact Hub &amp; Message Console">
+        <!-- Left Panel: 3D Holographic Signal Core + Contact Details + Send Signal CTA -->
+        <article class="contact-card contact-hub-card" id="contactHubCard" aria-label="Communication Hub &amp; Direct Contact Info">
+          <div class="hub-canvas-wrap">
+            <canvas class="contact-hub-canvas" id="holoBeaconCanvas" aria-label="Interactive 3D Holographic Signal Core"></canvas>
+          </div>
+
+          <div class="hub-contact-info">
+            <div class="hub-contact-heading">
+              <svg class="hub-contact-ico is-title" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6.5C4 5.12 5.12 4 6.5 4h11C18.88 4 20 5.12 20 6.5v7c0 1.38-1.12 2.5-2.5 2.5H10l-4.5 3.5V16H6.5C5.12 16 4 14.88 4 13.5v-7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                <circle cx="9" cy="10" r="1" fill="currentColor" />
+                <circle cx="12" cy="10" r="1" fill="currentColor" />
+                <circle cx="15" cy="10" r="1" fill="currentColor" />
+              </svg>
+              <span data-th="ติดต่อฉัน" data-en="Contact Me">ติดต่อฉัน</span>
+            </div>
+
+            <ul class="hub-contact-list">
+              <li class="hub-contact-row">
+                <span class="hub-contact-key">
+                  <svg class="hub-contact-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7" />
+                    <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Email</span>
+                </span>
+                <a class="hub-contact-val" href="mailto:neoitti@gmail.com">neoitti@gmail.com</a>
+              </li>
+              <li class="hub-contact-row">
+                <span class="hub-contact-key">
+                  <svg class="hub-contact-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M6.6 4.5h3l1.4 3.8-1.8 1.4a13.2 13.2 0 0 0 5.1 5.1l1.4-1.8 3.8 1.4v3a1.8 1.8 0 0 1-1.9 1.8A15.4 15.4 0 0 1 4.8 6.4 1.8 1.8 0 0 1 6.6 4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                  </svg>
+                  <span>Tel.</span>
+                </span>
+                <a class="hub-contact-val" href="tel:0951848636">095-1848636</a>
+              </li>
+              <li class="hub-contact-row">
+                <span class="hub-contact-key">
+                  <svg class="hub-contact-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" />
+                    <path d="M14.8 8.5h-1.6c-.8 0-1.2.4-1.2 1.2V11h2.7l-.4 2.6H12V20.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Facebook</span>
+                </span>
+                <a class="hub-contact-val is-url" href="https://www.facebook.com/ittipong.khawsamang" target="_blank" rel="noopener noreferrer">https://www.facebook.com/ittipong.khawsamang</a>
+              </li>
+              <li class="hub-contact-row">
+                <span class="hub-contact-key">
+                  <svg class="hub-contact-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 20.5s6-5.2 6-10.2a6 6 0 1 0-12 0c0 5 6 10.2 6 10.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+                    <circle cx="12" cy="10.2" r="2.2" stroke="currentColor" stroke-width="1.7" />
+                  </svg>
+                  <span>Location</span>
+                </span>
+                <span class="hub-contact-val" data-th="กรุงเทพมหานคร, ประเทศไทย" data-en="Bangkok, Thailand">กรุงเทพมหานคร, ประเทศไทย</span>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="btn-gold contact-signal-btn hub-signal-btn" id="sendSignalBtn" data-th="ส่งสัญญาณติดต่อ" data-en="SEND SIGNAL">ส่งสัญญาณติดต่อ</button>
+        </article>
+
+        <!-- Vertical Gold Divider Line -->
+        <div class="contact-v-rail" aria-hidden="true"></div>
+
+        <!-- Right Panel: Clean Direct Message Form + Submit Button -->
+        <article class="contact-card contact-form-card">
+          <form class="contact-form" id="contactForm">
+            <input
+              type="text"
+              class="contact-input"
+              name="name"
+              required
+              autocomplete="name"
+              placeholder="ชื่อของคุณ"
+              aria-label="Name"
+              data-ph-th="ชื่อของคุณ"
+              data-ph-en="Name"
+            />
+            <input
+              type="email"
+              class="contact-input"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="อีเมลติดต่อ"
+              aria-label="Email"
+              data-ph-th="อีเมลติดต่อ"
+              data-ph-en="Email"
+            />
+            <textarea
+              class="contact-textarea"
+              name="message"
+              required
+              placeholder="รายละเอียดโปรเจกต์หรือข้อความ"
+              aria-label="Message"
+              data-ph-th="รายละเอียดโปรเจกต์หรือข้อความ"
+              data-ph-en="Message"
+            ></textarea>
+            <button type="submit" class="btn-gold contact-transmit-btn" id="transmitMsgBtn" data-th="ส่งข้อความ" data-en="TRANSMIT MESSAGE">
+              ส่งข้อความ
+            </button>
+          </form>
+        </article>
+      </section>
+
+      <!-- Bottom Callout & Network Constellation -->
+      <section class="contact-bottom-row">
+        <!-- Bottom-Left: Collaborate & Hire -->
+        <div class="contact-callout-block">
+          <span class="contact-callout-kicker" data-th="ร่วมงานและจ้างงาน" data-en="COLLABORATE &amp; HIRE">ร่วมงานและจ้างงาน</span>
+          <h2 class="contact-callout-title" data-th="สนใจพัฒนาแอปหรือโปรเจกต์ใหม่?" data-en="Interested in building an app?">สนใจพัฒนาแอปหรือโปรเจกต์ใหม่?</h2>
+        </div>
+
+        <!-- Bottom-Right: Gold Circuit Leader Line + Network Node Constellation -->
+        <div class="contact-network-col" id="contactNetworkCol" aria-hidden="true">
+          <svg class="contact-circuit-svg" viewBox="0 0 120 42" fill="none">
+            <polyline points="0,34 74,34 106,10" stroke="#facc15" stroke-width="1.4" stroke-opacity="0.72" />
+            <circle cx="108" cy="9" r="3.5" fill="#fde047" />
+          </svg>
+          <svg class="contact-constellation-svg" viewBox="0 0 190 96" fill="none">
+            <g stroke="#facc15" stroke-width="1" stroke-opacity="0.52">
+              <line x1="34" y1="16" x2="80" y2="28" />
+              <line x1="34" y1="16" x2="54" y2="48" />
+              <line x1="34" y1="16" x2="16" y2="68" />
+              <line x1="54" y1="48" x2="80" y2="28" />
+              <line x1="54" y1="48" x2="112" y2="42" />
+              <line x1="54" y1="48" x2="86" y2="74" />
+              <line x1="16" y1="68" x2="54" y2="48" />
+              <line x1="16" y1="68" x2="86" y2="74" />
+              <line x1="80" y1="28" x2="112" y2="42" />
+              <line x1="112" y1="42" x2="146" y2="24" />
+              <line x1="112" y1="42" x2="152" y2="54" />
+              <line x1="112" y1="42" x2="124" y2="78" />
+              <line x1="86" y1="74" x2="124" y2="78" />
+              <line x1="152" y1="54" x2="146" y2="24" />
+              <line x1="152" y1="54" x2="176" y2="44" />
+              <line x1="124" y1="78" x2="152" y2="54" />
+            </g>
+            <!-- Concentric Ring Nodes -->
+            <circle cx="34" cy="16" r="5" fill="rgba(250,204,21,0.12)" stroke="#fde047" stroke-width="1.2" />
+            <circle cx="34" cy="16" r="2" fill="#fef08a" />
+
+            <circle cx="80" cy="28" r="6" fill="rgba(250,204,21,0.14)" stroke="#fde047" stroke-width="1.2" />
+            <circle cx="80" cy="28" r="2.2" fill="#fef08a" />
+
+            <circle cx="54" cy="48" r="4.5" fill="rgba(250,204,21,0.12)" stroke="#facc15" stroke-width="1.1" />
+
+            <circle cx="16" cy="68" r="7.5" fill="rgba(250,204,21,0.1)" stroke="#facc15" stroke-width="1.2" />
+            <circle cx="16" cy="68" r="3.2" fill="rgba(253,224,71,0.45)" stroke="#fef08a" stroke-width="1" />
+
+            <circle cx="112" cy="42" r="8.5" fill="rgba(250,204,21,0.16)" stroke="#fde047" stroke-width="1.3" />
+            <circle cx="112" cy="42" r="3.4" fill="#fef08a" />
+
+            <circle cx="86" cy="74" r="6" fill="rgba(250,204,21,0.12)" stroke="#facc15" stroke-width="1.1" />
+            <circle cx="86" cy="74" r="2" fill="#fde047" />
+
+            <circle cx="146" cy="24" r="4.5" fill="rgba(250,204,21,0.14)" stroke="#fde047" stroke-width="1.1" />
+            <circle cx="152" cy="54" r="5" fill="rgba(250,204,21,0.14)" stroke="#fde047" stroke-width="1.1" />
+            <circle cx="124" cy="78" r="3.5" fill="#fde047" opacity="0.85" />
+            <circle cx="176" cy="44" r="3.5" fill="#fef08a" opacity="0.8" />
+          </svg>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
+
+  <script src="tunnel-bg.js?v=1"></script>
+  <script src="subpage.js?v=10"></script>
+</body>
+</html>

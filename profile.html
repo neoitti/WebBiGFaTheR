@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROFILE — BIGFATHER</title>
+  <meta name="description" content="BIGFATHER — ตัวตน วิสัยทัศน์ ทักษะ และเส้นทางผลงาน" />
+  <meta name="theme-color" content="#121316" />
+  <meta property="og:title" content="PROFILE — BIGFATHER" />
+  <meta property="og:description" content="BIGFATHER — ตัวตน วิสัยทัศน์ ทักษะ และเส้นทางผลงาน" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-preview.jpg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="subpage.css?v=12" />
+</head>
+<body class="is-subpage" data-page="profile">
+  <!-- Identical Deep-Sinking Cyan Tunnel Background -->
+  <div class="bg-stage bg-stage-fixed" aria-hidden="true">
+    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <div class="subpage-shell">
+    <!-- Topbar -->
+    <header class="topbar">
+      <a href="index.html" class="brand brand-link" aria-label="Back to BIGFATHER Home">
+        <img
+          src="images/brand-icon.png?v=3"
+          alt="BIGFATHER logo"
+          class="brand-logo"
+          width="38"
+          height="38"
+        />
+        <div class="brand-text">
+          <span class="brand-title">BIGFATHER</span>
+          <span class="brand-sub">INTERACTIVE HUB</span>
+        </div>
+      </a>
+
+      <nav class="nav-pills top-nav-pills" aria-label="Menu navigation">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill is-active" href="profile.html" aria-current="page">Profile</a>
+        <a class="pill" href="product.html">Product</a>
+        <a class="pill" href="sample.html">Sample</a>
+        <a class="pill" href="download.html">Download</a>
+        <a class="pill" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <div class="deck-status">
+          <span class="status-label" data-th="กำลังดู" data-en="ACTIVE">กำลังดู</span>
+          <span class="status-value">PROFILE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Profile HUD -->
+    <main class="subpage-main">
+      <section class="page-hero">
+        <div class="page-hero-titles">
+          <h1 class="page-title">PROFILE</h1>
+          <p class="page-subtitle" data-th="IDENTITY / ตัวตน วิสัยทัศน์ และผลงาน" data-en="IDENTITY / VISION &amp; CREATIVE WORKS">IDENTITY / ตัวตน วิสัยทัศน์ และผลงาน</p>
+        </div>
+        <div class="page-hero-meta">
+          <span class="live-chip">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span data-th="สถานะ: พร้อมร่วมโปรเจกต์" data-en="STATUS: AVAILABLE FOR COLLAB">สถานะ: พร้อมร่วมโปรเจกต์</span>
+          </span>
+        </div>
+      </section>
+
+      <section class="profile-grid">
+        <!-- Left Panel: Identity Dossier -->
+        <article class="hud-panel is-accent">
+          <div class="panel-header">
+            <span class="panel-kicker">IDENTITY DOSSIER</span>
+            <span class="panel-badge">PR</span>
+          </div>
+
+          <div class="profile-avatar-wrap">
+            <div class="profile-portrait">
+              <img src="images/card-profile.jpg?v=2" alt="BIGFATHER Creator Portrait" />
+            </div>
+            <div class="profile-id-meta">
+              <h2 class="profile-name">BIGFATHER</h2>
+              <span class="profile-role" data-th="CREATIVE TECHNOLOGIST" data-en="CREATIVE TECHNOLOGIST">CREATIVE TECHNOLOGIST</span>
+              <div class="cyber-tags">
+                <span class="cyber-tag is-active">ARCHITECT</span>
+                <span class="cyber-tag">UI / 3D</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-bio-group">
+            <p class="profile-bio-lead" data-th="อิฐิพงษ์ ขาวสำอางค์ | Ex-IT Programmer (10+ Years) &amp; AI Developer" data-en="Ittipong Khawsamang | Ex-IT Programmer (10+ Years) &amp; AI Developer">
+              อิฐิพงษ์ ขาวสำอางค์ | Ex-IT Programmer (10+ Years) &amp; AI Developer
+            </p>
+            <p class="profile-bio" data-th="จากประสบการณ์สายโปรแกรมเมอร์กว่า 10 ปี สู่บทบาทพ่อบ้านยุคใหม่ ที่นำเทคโนโลยี AI มาพัฒนาเป็น Web และ Application เพื่อสร้างสรรค์ผลงานที่ใช้งานได้จริง" data-en="Over 10 years of IT programming experience evolved into a modern family man harnessing AI to build practical Web and Application products.">
+              จากประสบการณ์สายโปรแกรมเมอร์กว่า 10 ปี สู่บทบาทพ่อบ้านยุคใหม่ ที่นำเทคโนโลยี AI มาพัฒนาเป็น Web และ Application เพื่อสร้างสรรค์ผลงานที่ใช้งานได้จริง
+            </p>
+          </div>
+
+          <div class="stat-trio">
+            <div class="stat-box">
+              <div class="stat-val">10+</div>
+              <div class="stat-lbl" data-th="ปีประสบการณ์" data-en="YEARS EXP">ปีประสบการณ์</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val">40+</div>
+              <div class="stat-lbl" data-th="โปรเจกต์" data-en="PROJECTS">โปรเจกต์</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val">99%</div>
+              <div class="stat-lbl" data-th="QA SCORE" data-en="QA SCORE">QA SCORE</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Center Panel: Interactive Vision / Tech Matrix / Timeline -->
+        <article class="hud-panel">
+          <div class="panel-header">
+            <span class="panel-kicker" data-th="CORE ARCHITECTURE" data-en="CORE ARCHITECTURE">CORE ARCHITECTURE</span>
+            <div class="tab-switch" role="tablist">
+              <button type="button" class="tab-btn is-active" id="tabBtnSkills" role="tab" aria-selected="true" aria-controls="tabPaneSkills" data-tab="skills" data-th="ทักษะ" data-en="STACK">ทักษะ</button>
+              <button type="button" class="tab-btn" id="tabBtnVision" role="tab" aria-selected="false" aria-controls="tabPaneVision" data-tab="vision" data-th="วิสัยทัศน์" data-en="VISION">วิสัยทัศน์</button>
+              <button type="button" class="tab-btn" id="tabBtnTimeline" role="tab" aria-selected="false" aria-controls="tabPaneTimeline" data-tab="timeline" data-th="เส้นทาง" data-en="TIMELINE">เส้นทาง</button>
+            </div>
+          </div>
+
+          <div class="profile-tab-pane is-active" id="tabPaneSkills" role="tabpanel" aria-labelledby="tabBtnSkills" data-pane="skills">
+            <div class="skill-row">
+              <div class="skill-top">
+                <span data-th="Interactive UI/UX &amp; Design Systems" data-en="Interactive UI/UX &amp; Design Systems">Interactive UI/UX &amp; Design Systems</span>
+                <span class="skill-pct">96%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" style="width: 96%;"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top">
+                <span data-th="Canvas 2D / WebGL &amp; 60fps Motion" data-en="Canvas 2D / WebGL &amp; 60fps Motion">Canvas 2D / WebGL &amp; 60fps Motion</span>
+                <span class="skill-pct">94%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" style="width: 94%;"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top">
+                <span data-th="Full-Stack Web &amp; App Engineering" data-en="Full-Stack Web &amp; App Engineering">Full-Stack Web &amp; App Engineering</span>
+                <span class="skill-pct">92%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" style="width: 92%;"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top">
+                <span data-th="QA Testing &amp; System Optimization" data-en="QA Testing &amp; System Optimization">QA Testing &amp; System Optimization</span>
+                <span class="skill-pct">95%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
+            </div>
+
+            <div class="cyber-tags" style="margin-top: 6px;">
+              <span class="cyber-tag is-active">HTML5 CANVAS</span>
+              <span class="cyber-tag">TYPESCRIPT</span>
+              <span class="cyber-tag">3D UI/UX</span>
+              <span class="cyber-tag">SYSTEM QA</span>
+            </div>
+          </div>
+
+          <div class="profile-tab-pane" id="tabPaneVision" role="tabpanel" aria-labelledby="tabBtnVision" data-pane="vision">
+            <div class="vision-card">
+              <p class="vision-quote" data-th="“สร้างซอฟต์แวร์ที่ให้ความรู้สึกเหมือนงานศิลปะเชิงโต้ตอบ — รวดเร็ว คมชัด และใช้งานง่ายบนทุกหน้าจอ”" data-en="“Crafting software that feels like living interactive art — fast, sharp, and effortless across every screen.”">
+                “สร้างซอฟต์แวร์ที่ให้ความรู้สึกเหมือนงานศิลปะเชิงโต้ตอบ — รวดเร็ว คมชัด และใช้งานง่ายบนทุกหน้าจอ”
+              </p>
+              <div class="principle-grid">
+                <div class="principle-box">
+                  <strong>PERFORMANCE</strong>
+                  <span data-th="แอนิเมชันลื่นไหลและประหยัด GPU บนมือถือ" data-en="60fps fluidity with mobile GPU guardrails">แอนิเมชันลื่นไหลและประหยัด GPU บนมือถือ</span>
+                </div>
+                <div class="principle-box">
+                  <strong>CLARITY</strong>
+                  <span data-th="คอนทราสต์คมชัด อ่านง่ายทุกสภาพแสง" data-en="High-contrast slate &amp; gold visual hierarchy">คอนทราสต์คมชัด อ่านง่ายทุกสภาพแสง</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-tab-pane" id="tabPaneTimeline" role="tabpanel" aria-labelledby="tabBtnTimeline" data-pane="timeline">
+            <div class="timeline-list">
+              <div class="timeline-item">
+                <div class="timeline-yr">2026 // CURRENT</div>
+                <div class="timeline-title">BIGFATHER Interactive Hub</div>
+                <div class="timeline-desc" data-th="เปิดตัวแพลตฟอร์มการ์ด 3 มิติพร้อมระบบ Subpage HUD เต็มรูปแบบ" data-en="Launched 3D card-deck platform with unified HUD subpage architecture.">เปิดตัวแพลตฟอร์มการ์ด 3 มิติพร้อมระบบ Subpage HUD เต็มรูปแบบ</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-yr">2024 // SUITE</div>
+                <div class="timeline-title">Modular Product &amp; QA Lab</div>
+                <div class="timeline-desc" data-th="พัฒนาระบบ UI Kit, App Installers และห้องทดลองประสิทธิภาพอัตโนมัติ" data-en="Built modular UI kits, installers, and automated telemetry QA labs.">พัฒนาระบบ UI Kit, App Installers และห้องทดลองประสิทธิภาพอัตโนมัติ</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right Panel: Hologram Identity Crest & Quick Actions -->
+        <article class="hud-panel">
+          <div class="panel-header">
+            <span class="panel-kicker" data-th="CAPABILITY MATRIX" data-en="CAPABILITY MATRIX">CAPABILITY MATRIX</span>
+            <span class="panel-badge">SYNCED</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+            <svg viewBox="0 0 220 150" width="210" height="144" aria-hidden="true">
+              <defs>
+                <radialGradient id="profGlow" cx="50%" cy="76%" r="50%">
+                  <stop offset="0%" stop-color="rgba(250,204,21,0.45)" />
+                  <stop offset="100%" stop-color="rgba(250,204,21,0)" />
+                </radialGradient>
+              </defs>
+              <ellipse cx="110" cy="122" rx="84" ry="18" fill="url(#profGlow)" stroke="#facc15" stroke-width="1.6" />
+              <ellipse cx="110" cy="122" rx="56" ry="11" fill="none" stroke="rgba(56,226,255,0.65)" stroke-width="1" stroke-dasharray="4 4" />
+              <polygon points="110,20 154,46 154,94 110,120 66,94 66,46" fill="rgba(250,204,21,0.08)" stroke="#fde047" stroke-width="2" />
+              <polygon points="110,36 140,54 140,88 110,106 80,88 80,54" fill="rgba(56,226,255,0.12)" stroke="#38e2ff" stroke-width="1.4" />
+              <line x1="110" y1="20" x2="110" y2="120" stroke="rgba(250,204,21,0.45)" stroke-width="1" />
+              <line x1="66" y1="46" x2="154" y2="94" stroke="rgba(250,204,21,0.35)" stroke-width="1" />
+              <line x1="154" y1="46" x2="66" y2="94" stroke="rgba(250,204,21,0.35)" stroke-width="1" />
+              <circle cx="110" cy="70" r="8" fill="#fde047" />
+            </svg>
+
+            <div style="width:100%; display:flex; flex-direction:column; gap:8px;">
+              <a href="product.html" class="btn-outline" style="width:100%;" data-th="ดูผลงานทั้งหมด →" data-en="EXPLORE PRODUCTS →">
+                ดูผลงานทั้งหมด →
+              </a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Bottom Summary Strip -->
+      <section class="section-callout-bar">
+        <div class="callout-copy">
+          <span class="callout-kicker" data-th="CREATIVE IDENTITY" data-en="CREATIVE IDENTITY">CREATIVE IDENTITY</span>
+          <h2 class="callout-title" data-th="ตัวตนและสถาปัตยกรรมงานสร้างสรรค์" data-en="Architecting Digital Experiences">ตัวตนและสถาปัตยกรรมงานสร้างสรรค์</h2>
+          <p class="callout-sub" data-th="ผสานดีไซน์ยุคใหม่กับระบบที่มีประสิทธิภาพสูง" data-en="Design, Code &amp; Interactive Systems Showcase">ผสานดีไซน์ยุคใหม่กับระบบที่มีประสิทธิภาพสูง</p>
+        </div>
+        <div class="callout-actions">
+          <a href="contact.html" class="btn-gold" data-th="Contact" data-en="Contact">Contact</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
+
+  <script src="tunnel-bg.js?v=1"></script>
+  <script src="subpage.js?v=10"></script>
+</body>
+</html>

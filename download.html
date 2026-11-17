@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOWNLOAD — BIGFATHER</title>
+  <meta name="description" content="BIGFATHER — ดาวน์โหลดแอปพลิเคชัน แพ็กเกจติดตั้ง คู่มือ และดูตัวอย่างหน้าจอของแต่ละผลิตภัณฑ์" />
+  <meta name="theme-color" content="#121316" />
+  <meta property="og:title" content="DOWNLOAD — BIGFATHER" />
+  <meta property="og:description" content="BIGFATHER — ดาวน์โหลดแอปพลิเคชัน แพ็กเกจติดตั้ง คู่มือ และดูตัวอย่างหน้าจอของแต่ละผลิตภัณฑ์" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og-preview.jpg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
+  <link rel="stylesheet" href="fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="subpage.css?v=10" />
+</head>
+<body class="is-subpage" data-page="download">
+  <!-- Identical Deep-Sinking Cyan Tunnel Background -->
+  <div class="bg-stage bg-stage-fixed" aria-hidden="true">
+    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <div class="bg-vignette"></div>
+  </div>
+
+  <div class="subpage-shell">
+    <!-- Topbar -->
+    <header class="topbar">
+      <a href="index.html" class="brand brand-link" aria-label="Back to BIGFATHER Home">
+        <img
+          src="images/brand-icon.png?v=3"
+          alt="BIGFATHER logo"
+          class="brand-logo"
+          width="38"
+          height="38"
+        />
+        <div class="brand-text">
+          <span class="brand-title">BIGFATHER</span>
+          <span class="brand-sub">INTERACTIVE HUB</span>
+        </div>
+      </a>
+
+      <nav class="nav-pills top-nav-pills" aria-label="Menu navigation">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="profile.html">Profile</a>
+        <a class="pill" href="product.html">Product</a>
+        <a class="pill" href="sample.html">Sample</a>
+        <a class="pill is-active" href="download.html" aria-current="page">Download</a>
+        <a class="pill" href="contact.html">Contact</a>
+      </nav>
+
+      <div class="topbar-right">
+        <div class="lang-switch" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn is-active" data-lang="th" aria-pressed="true">TH</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <div class="deck-status">
+          <span class="status-label" data-th="คลังไฟล์" data-en="RESOURCES">คลังไฟล์</span>
+          <span class="status-value">DOWNLOAD</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Download Center HUD -->
+    <main class="subpage-main download-main">
+      <!-- Top Hero Header -->
+      <section class="page-hero download-hero">
+        <div class="page-hero-titles">
+          <h1 class="page-title">DOWNLOAD</h1>
+          <p class="page-subtitle" data-th="RESOURCES / FILE HUB" data-en="RESOURCES / FILE HUB">RESOURCES / FILE HUB</p>
+        </div>
+        <div class="page-hero-meta">
+          <span class="dl-resource-pill">
+            <span class="dl-pill-muted">RESOURCES /</span>
+            <span class="dl-pill-gold">APP CATALOG</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- 3-Zone Main Stage -->
+      <section class="download-grid">
+        <!-- Left Panel: Classic Hierarchical Expandable Tree View -->
+        <aside class="dl-tree-card" aria-label="App Category Tree View">
+          <div class="dl-tree-header">
+            <svg class="dl-folder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 6.5C3 5.4 3.9 4.5 5 4.5H9.6L11.5 6.8H19C20.1 6.8 21 7.7 21 8.8V17.5C21 18.6 20.1 19.5 19 19.5H5C3.9 19.5 3 18.6 3 17.5V6.5Z" stroke="#facc15" stroke-width="1.6" stroke-linejoin="round" fill="rgba(250, 204, 21, 0.14)" />
+              <path d="M3 9.5H21" stroke="rgba(250, 204, 21, 0.5)" stroke-width="1.2" />
+            </svg>
+            <span class="dl-tree-heading" data-th="หมวดหมู่แอปพลิเคชัน" data-en="APP CATEGORIES">หมวดหมู่แอปพลิเคชัน</span>
+            <span class="dl-tree-count">8 APPS</span>
+          </div>
+
+          <ul class="tv-root" id="appTreeView" role="tree" aria-label="Application Categories">
+            <!-- Category 1 -->
+            <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+              <div class="tv-folder-row">
+                <button type="button" class="tv-toggle" aria-label="Toggle Creative &amp; UI Apps">−</button>
+                <button type="button" class="tv-folder-btn">
+                  <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.25)" stroke="#facc15" stroke-width="1.35" />
+                  </svg>
+                  <span class="tv-label">Creative &amp; UI Apps</span>
+                </button>
+              </div>
+
+              <ul class="tv-children" role="group">
+                <!-- Subcategory 1A -->
+                <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+                  <div class="tv-folder-row">
+                    <button type="button" class="tv-toggle" aria-label="Toggle Desktop Suites">−</button>
+                    <button type="button" class="tv-folder-btn">
+                      <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.2)" stroke="#facc15" stroke-width="1.3" />
+                      </svg>
+                      <span class="tv-label">Desktop Suites</span>
+                    </button>
+                  </div>
+
+                  <ul class="tv-children" role="group">
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn is-active" data-app="deck-engine">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Deck Engine Pro</span>
+                        <span class="tv-product-meta">32 MB</span>
+                      </button>
+                    </li>
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="holo-mockup">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Holo Mockup Studio</span>
+                        <span class="tv-product-meta">24 MB</span>
+                      </button>
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Subcategory 1B -->
+                <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+                  <div class="tv-folder-row">
+                    <button type="button" class="tv-toggle" aria-label="Toggle 3D &amp; Spatial">−</button>
+                    <button type="button" class="tv-folder-btn">
+                      <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.2)" stroke="#facc15" stroke-width="1.3" />
+                      </svg>
+                      <span class="tv-label">3D &amp; Spatial</span>
+                    </button>
+                  </div>
+
+                  <ul class="tv-children" role="group">
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="spatial-ui">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Spatial UI Builder</span>
+                        <span class="tv-product-meta">38 MB</span>
+                      </button>
+                    </li>
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="cyber-shader">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Cyber Shader Lab</span>
+                        <span class="tv-product-meta">19 MB</span>
+                      </button>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Category 2 -->
+            <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+              <div class="tv-folder-row">
+                <button type="button" class="tv-toggle" aria-label="Toggle System &amp; Automation">−</button>
+                <button type="button" class="tv-folder-btn">
+                  <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.25)" stroke="#facc15" stroke-width="1.35" />
+                  </svg>
+                  <span class="tv-label">System &amp; Automation</span>
+                </button>
+              </div>
+
+              <ul class="tv-children" role="group">
+                <!-- Subcategory 2A -->
+                <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+                  <div class="tv-folder-row">
+                    <button type="button" class="tv-toggle" aria-label="Toggle Core Engines">−</button>
+                    <button type="button" class="tv-folder-btn">
+                      <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.2)" stroke="#facc15" stroke-width="1.3" />
+                      </svg>
+                      <span class="tv-label">Core Engines</span>
+                    </button>
+                  </div>
+
+                  <ul class="tv-children" role="group">
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="system-core">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">System Core CLI</span>
+                        <span class="tv-product-meta">16 MB</span>
+                      </button>
+                    </li>
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="signal-hud">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Signal Telemetry HUD</span>
+                        <span class="tv-product-meta">22 MB</span>
+                      </button>
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Subcategory 2B -->
+                <li class="tv-branch" role="treeitem" aria-expanded="false">
+                  <div class="tv-folder-row">
+                    <button type="button" class="tv-toggle" aria-label="Toggle QA &amp; Utilities">+</button>
+                    <button type="button" class="tv-folder-btn">
+                      <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.2)" stroke="#facc15" stroke-width="1.3" />
+                      </svg>
+                      <span class="tv-label">QA &amp; Utilities</span>
+                    </button>
+                  </div>
+
+                  <ul class="tv-children" role="group">
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="qa-runner">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">QA Runner Pro</span>
+                        <span class="tv-product-meta">28 MB</span>
+                      </button>
+                    </li>
+                    <li class="tv-leaf" role="treeitem">
+                      <button type="button" class="tv-product-btn" data-app="theme-tokens">
+                        <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                          <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                          <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                        </svg>
+                        <span class="tv-product-name">Theme Token Pack</span>
+                        <span class="tv-product-meta">12 MB</span>
+                      </button>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Promotional Showcase Frame (placed directly after App Categories) -->
+        <aside class="app-promo-stage" id="appPromoStage" aria-label="Selected App Promotional Showcase">
+          <div class="promo-frame">
+            <div class="promo-frame-top">
+              <span class="promo-ad-top-tag" data-th="ภาพโปรโมท" data-en="PROMO SHOWCASE">ภาพโปรโมท</span>
+              <span class="promo-os-badge" id="promoOsBadge">WIN / MAC</span>
+            </div>
+
+            <div class="promo-viewport" id="promoViewport">
+              <!-- Dynamic Promotional Poster rendered by subpage.js -->
+            </div>
+
+            <div class="promo-frame-footer">
+              <div class="promo-footer-text">
+                <span class="promo-footer-kicker" id="promoFooterKicker">PROMO SHOWCASE // v3.2.0</span>
+                <strong class="promo-footer-headline" id="promoFooterHeadline">Interactive 3D Card Engine</strong>
+              </div>
+              <span class="promo-live-tag" id="promoLiveTag">v3.2</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- 3 Cascading Frames (Top: 5-Card Previews, Middle: Manual, Bottom: App Content) -->
+        <div class="cascade-stage" id="cascadeStage" aria-label="Selected App Previews, Manual, and Overview">
+          <!-- Frame 1 (Top): Fanned Playing-Card App Preview Screens (5 Cards) -->
+          <article class="cascade-win is-cards" id="cardsWin" role="region" aria-label="App Preview Screen Cards">
+            <div class="win-cards-header">
+              <div class="win-cards-title-group">
+                <span class="win-mini-icon" aria-hidden="true">♠</span>
+                <span class="win-cards-kicker" data-th="ตัวอย่างหน้าจอแอป" data-en="APP PREVIEW DECK">ตัวอย่างหน้าจอแอป</span>
+                <span class="win-cards-count">5 CARDS</span>
+              </div>
+              <div class="win-cards-actions">
+                <span class="win-cards-hint" id="activeCardLabel">CARD STAGE</span>
+                <button type="button" class="win-action-btn" id="shuffleCardsBtn" data-th="สลับไพ่" data-en="SHUFFLE">สลับไพ่</button>
+              </div>
+            </div>
+
+            <div class="preview-card-hand" id="previewCardHand">
+              <!-- 5 cards populated & updated per selected app by subpage.js -->
+            </div>
+          </article>
+
+          <!-- Frame 2 (Middle): App Manual & Quick-Start Guide -->
+          <article class="cascade-win is-manual" id="manualWin" role="region" aria-label="App Manual &amp; Guide">
+            <div class="win-topbar">
+              <div class="win-tag">
+                <span class="win-mini-icon" aria-hidden="true">▤</span>
+                <span id="appManualTag" data-th="คู่มือการใช้งาน" data-en="APP // MANUAL">คู่มือการใช้งาน</span>
+              </div>
+              <div class="win-topbar-right">
+                <span class="win-ver-badge" id="appManualBadge">3 STEPS</span>
+              </div>
+            </div>
+
+            <div class="win-manual-body" id="appManualSteps">
+              <!-- 3 app-specific manual steps populated by subpage.js -->
+            </div>
+          </article>
+
+          <!-- Frame 3 (Bottom/Front): App Content / Overview -->
+          <article class="cascade-win is-overview is-focused" id="overviewWin" role="region" aria-label="Selected App Details">
+            <div class="win-topbar">
+              <div class="win-tag">
+                <span class="win-mini-icon" aria-hidden="true">◫</span>
+                <span id="appOverviewTag">APP // DETAILS</span>
+              </div>
+              <div class="win-topbar-right">
+                <span class="win-ver-badge" id="appVersionBadge">v3.2.0</span>
+                <div class="win-dots" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="win-overview-body">
+              <div class="app-overview-head">
+                <h2 class="win-gold-title" id="appOverviewTitle">Deck Engine Pro</h2>
+                <span class="app-cat-pill" id="appCategoryPill">DESKTOP SUITE</span>
+              </div>
+              <p class="app-overview-desc" id="appOverviewDesc">
+                เอนจินแสดงผลการ์ดเมนู 3 มิติพร้อมแอนิเมชัน Tunnel FX 60fps และระบบสลับภาษาในตัว
+              </p>
+              <div class="app-spec-chips" id="appSpecChips">
+                <span class="app-spec-chip">WIN 11 / macOS</span>
+                <span class="app-spec-chip">60FPS GPU</span>
+                <span class="app-spec-chip">SHA256 VERIFIED</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Bottom Callout, Telemetry Meter & Download CTA Strip -->
+      <section class="dl-bottom-bar">
+        <!-- Bottom-Left: Callout Title + GET ASSETS Pill -->
+        <div class="dl-callout-block">
+          <span class="callout-kicker" id="dlCategoryKicker">CREATIVE &amp; UI APPS // DESKTOP SUITES</span>
+          <h2 class="dl-callout-title" id="dlCalloutTitle">Deck Engine Pro</h2>
+          <button type="button" class="btn-gold dl-get-assets-btn" id="getAssetsBtn" data-th="GET ASSETS" data-en="GET ASSETS">GET ASSETS</button>
+        </div>
+
+        <!-- Bottom-Center-Left: Crest Icon + Dual Progress Bars -->
+        <div class="dl-telemetry-widget" aria-label="Package Integrity &amp; Transfer Meter">
+          <div class="dl-crest-box">
+            <svg class="dl-crest-svg" viewBox="0 0 36 32" fill="none" aria-hidden="true">
+              <path d="M6 10L18 4L30 10L25 22L18 26L11 22L6 10Z" stroke="#facc15" stroke-width="1.5" fill="rgba(250, 204, 21, 0.1)" />
+              <path d="M18 10V20M14 16L18 20L22 16" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="dl-crest-code" id="dlBuildCode">v3.2</span>
+          </div>
+
+          <div class="dl-dual-bars">
+            <div class="dl-track">
+              <div class="dl-fill" id="dlProgressFill"></div>
+            </div>
+            <div class="dl-track is-secondary">
+              <div class="dl-fill is-secondary" id="dlProgressFillSub"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom-Center-Right: Size & Download Count Readout -->
+        <div class="dl-stats-readout">
+          <div class="dl-stat-line">
+            <span class="dl-stat-key">SIZE:</span>
+            <span class="dl-stat-val" id="dlSizeLabel">32.00 MB</span>
+          </div>
+          <div class="dl-stat-line">
+            <span class="dl-stat-key">DOWNLOAD:</span>
+            <span class="dl-stat-val" id="dlCountLabel">1,488</span>
+          </div>
+        </div>
+
+        <!-- Bottom-Right: Outlined Gold DOWNLOAD >> Pill + Circular >> Button -->
+        <div class="dl-cta-pair">
+          <button type="button" class="dl-pill-btn" id="downloadNowBtn">
+            <span>DOWNLOAD</span>
+            <span class="dl-chevrons" aria-hidden="true">»</span>
+          </button>
+          <button type="button" class="dl-circle-btn" id="downloadQuickBtn" aria-label="Quick download selected package">
+            <span class="dl-chevrons" aria-hidden="true">»</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
+
+  <script src="tunnel-bg.js?v=1"></script>
+  <script src="subpage.js?v=10"></script>
+</body>
+</html>

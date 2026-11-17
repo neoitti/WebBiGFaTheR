@@ -121,9 +121,16 @@ body {
   position: relative;
   z-index: 20;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 10px;
+}
+
+.topbar .nav-pills {
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 .brand {
@@ -1000,7 +1007,7 @@ body {
 .selection-toast {
   position: fixed;
   left: 50%;
-  bottom: 108px;
+  bottom: 72px;
   z-index: 40;
   transform: translate(-50%, 14px);
   padding: 10px 18px;
@@ -1059,6 +1066,15 @@ body {
   }
 }
 
+/* Wrap top navigation pills cleanly on narrower desktop / tablet / mobile */
+@media (max-width: 1060px) {
+  .topbar .nav-pills {
+    order: 3;
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+}
+
 /* Mobile Layout Adjustments */
 @media (max-width: 680px) {
   .brand-logo {
@@ -1103,7 +1119,7 @@ body {
     padding: 8px 10px 8px 2px;
   }
   .selection-toast {
-    bottom: 126px;
+    bottom: 76px;
   }
 }
 
@@ -1180,6 +1196,17 @@ body {
   .step-btn {
     width: 30px;
     height: 30px;
+  }
+}
+
+@media (max-height: 620px) and (min-width: 820px) {
+  .topbar .nav-pills {
+    order: 0;
+    flex: 1 1 auto;
+  }
+  .pill {
+    padding: 4px 8px;
+    font-size: 0.68rem;
   }
 }
 
