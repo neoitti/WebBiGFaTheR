@@ -306,22 +306,16 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 
-  /* Driven smoothly per frame by scroll-driven JS variables */
+  /* Driven directly per frame by script.js inline transforms */
   /* Flat pivot + per-card perspective prevents 3D plane slicing/tearing across mobile & PC */
-  z-index: var(--z, 1);
-  transform:
-    perspective(1200px)
-    translate3d(var(--tx, 0px), var(--ty, 0px), 0px)
-    rotateZ(var(--rot, 0deg))
-    rotateY(var(--ry, 0deg))
-    scale(var(--scale, 1));
+  z-index: 1;
   transform-origin: 50% 88%;
   will-change: transform;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .playing-card:hover {
-    z-index: 120;
+    z-index: 120 !important;
     --hover-y: -16px;
     --hover-scale: 1.045;
     --img-scale: 1.13;
@@ -413,7 +407,7 @@ body {
   inset: 0;
   z-index: 5;
   background: #06080c;
-  opacity: var(--dim, 0);
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -481,7 +475,7 @@ body {
 }
 
 .playing-card:hover .card-dim {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .playing-card:hover .card-inner::before {
@@ -499,7 +493,7 @@ body {
     rgba(255, 255, 255, 0.05) 42%,
     transparent 68%
   );
-  opacity: var(--active-strength, 0);
+  opacity: 0;
   pointer-events: none;
   z-index: 3;
   mix-blend-mode: screen;
@@ -507,7 +501,7 @@ body {
 }
 
 .playing-card:hover .card-foil {
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 /* Prismatic Holographic Foil Interference Layer */
@@ -1050,19 +1044,10 @@ body {
   }
   .card-rim-beam,
   .card-holo,
+  .card-foil,
   .art-corners,
   .card-art::before {
     display: none;
-  }
-}
-
-/* Pure 2D compositing on narrow / touch screens (faster mobile GPU pass) */
-@media (max-width: 639px), (hover: none) {
-  .playing-card {
-    transform:
-      translate3d(var(--tx, 0px), var(--ty, 0px), 0px)
-      rotateZ(var(--rot, 0deg))
-      scale(var(--scale, 1));
   }
 }
 

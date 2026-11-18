@@ -121,6 +121,21 @@
   let canvasH = 0;
   let canvasDpr = 1;
   let needsCanvasResize = true;
+  let canvasFrameAccum = 0.1;
+
+  // Pre-render soft cyan radial portal glow once onto an offscreen 128x128 sprite
+  const glowSprite = document.createElement("canvas");
+  glowSprite.width = 128;
+  glowSprite.height = 128;
+  const glowCtx = glowSprite.getContext("2d");
+  if (glowCtx) {
+    const g = glowCtx.createRadialGradient(64, 64, 2, 64, 64, 64);
+    g.addColorStop(0, "rgba(125, 243, 255, 0.34)");
+    g.addColorStop(0.45, "rgba(34, 211, 238, 0.15)");
+    g.addColorStop(1, "rgba(34, 211, 238, 0)");
+    glowCtx.fillStyle = g;
+    glowCtx.fillRect(0, 0, 128, 128);
+  }
 
   // Deterministic short radial cyan/blue sparks streaming from back portal to front
   const STREAK_COUNT = isTouchOnly ? 45 : 80;
@@ -297,6 +312,7 @@
     clearTimeout(snapTimer);
     if (Date.now() < ignoreSnapUntil || isPointerDown) return;
 
+    const snapDelay = isTouchOnly ? 360 : 190;
     snapTimer = setTimeout(() => {
       if (isPointerDown || Date.now() < ignoreSnapUntil) return;
       const maxScroll = getMaxScroll();
@@ -311,7 +327,7 @@
         top: snapY,
         behavior: reducedMotion ? "auto" : "smooth",
       });
-    }, 190);
+    }, snapDelay);
   }
 
   function renderTunnelCanvas(dt) {
@@ -348,17 +364,12 @@
     ctx.globalCompositeOperation = "lighter";
     ctx.lineCap = "round";
 
-    // Soft pulsing cyan aura at the deep portal center
+    // Soft pulsing cyan aura at the deep portal center (pre-rendered offscreen sprite)
     const pulse = 0.5 + 0.5 * Math.sin(tunnelClock * Math.PI * 6);
     const coreR = Math.min(canvasW, canvasH) * (0.24 + 0.05 * pulse);
-    const coreGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, coreR);
-    coreGrad.addColorStop(0, `rgba(125, 243, 255, ${(0.24 + 0.1 * pulse).toFixed(3)})`);
-    coreGrad.addColorStop(0.45, `rgba(34, 211, 238, ${(0.1 + 0.05 * pulse).toFixed(3)})`);
-    coreGrad.addColorStop(1, "rgba(34, 211, 238, 0)");
-    ctx.fillStyle = coreGrad;
-    ctx.beginPath();
-    ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.globalAlpha = 0.72 + 0.28 * pulse;
+    ctx.drawImage(glowSprite, cx - coreR, cy - coreR, coreR * 2, coreR * 2);
+    ctx.globalAlpha = 1;
 
     const maxRadius = Math.hypot(canvasW, canvasH) * 0.62;
     for (let i = 0; i < TUNNEL_SPARKS.length; i++) {
@@ -383,15 +394,17 @@
       ctx.lineTo(ex, ey);
       ctx.stroke();
 
-      // Bright white-cyan spark head
-      const tipX = sx + s.cos * (len * 0.55);
-      const tipY = sy + s.sin * (len * 0.55);
-      ctx.strokeStyle = `rgba(224, 252, 255, ${(sOp * 0.85).toFixed(3)})`;
-      ctx.lineWidth = Math.max(0.9, lw * 0.52);
-      ctx.beginPath();
-      ctx.moveTo(tipX, tipY);
-      ctx.lineTo(ex, ey);
-      ctx.stroke();
+      // Bright white-cyan spark head (desktop only to halve mobile canvas stroke calls)
+      if (!isTouchOnly) {
+        const tipX = sx + s.cos * (len * 0.55);
+        const tipY = sy + s.sin * (len * 0.55);
+        ctx.strokeStyle = `rgba(224, 252, 255, ${(sOp * 0.85).toFixed(3)})`;
+        ctx.lineWidth = Math.max(0.9, lw * 0.52);
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY);
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+      }
     }
 
     ctx.restore();
@@ -436,14 +449,27 @@
       const dim = (1 - Math.pow(depth, 0.85)) * 0.34;
       const activeStrength = Math.pow(clamp(1 - Math.abs(offset) * 1.35, 0, 1), 1.5);
 
-      card.style.setProperty("--tx", `${tx.toFixed(2)}px`);
-      card.style.setProperty("--ty", `${ty.toFixed(2)}px`);
-      card.style.setProperty("--rot", `${rot.toFixed(2)}deg`);
-      card.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
-      card.style.setProperty("--scale", scale.toFixed(4));
-      card.style.setProperty("--z", String(zIndex));
-      card.style.setProperty("--dim", dim.toFixed(3));
-      card.style.setProperty("--active-strength", activeStrength.toFixed(3));
+      if (isNarrow || isTouchOnly) {
+        card.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0px) rotateZ(${rot.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      } else {
+        card.style.transform = `perspective(1200px) translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0px) rotateZ(${rot.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
+      }
+
+      const meta = cardMeta[i];
+      if (meta) {
+        if (zIndex !== meta.lastZ) {
+          card.style.zIndex = String(zIndex);
+          meta.lastZ = zIndex;
+        }
+        if (meta.dimEl && Math.abs(dim - meta.lastDim) > 0.006) {
+          meta.dimEl.style.opacity = dim.toFixed(3);
+          meta.lastDim = dim;
+        }
+        if (!isTouchOnly && meta.foilEl && Math.abs(activeStrength - meta.lastFoil) > 0.008) {
+          meta.foilEl.style.opacity = activeStrength.toFixed(3);
+          meta.lastFoil = activeStrength;
+        }
+      }
     });
   }
 
@@ -462,8 +488,8 @@
       currentProgress = targetProgress;
     } else {
       const diff = targetProgress - currentProgress;
-      const lerpFactor = isTouchOnly ? 0.45 : 0.16;
-      if (Math.abs(diff) < 0.0002) {
+      const lerpFactor = isTouchOnly ? 1 : 0.16;
+      if (lerpFactor >= 1 || Math.abs(diff) < 0.0002) {
         currentProgress = targetProgress;
       } else {
         currentProgress += diff * lerpFactor;
@@ -474,7 +500,15 @@
       }
     }
 
-    renderTunnelCanvas(dt);
+    if (isTouchOnly) {
+      canvasFrameAccum += dt;
+      if (canvasFrameAccum >= 0.032) {
+        renderTunnelCanvas(canvasFrameAccum);
+        canvasFrameAccum = 0;
+      }
+    } else {
+      renderTunnelCanvas(dt);
+    }
 
     if (forceHandRender || Math.abs(currentProgress - lastRenderedProgress) > 0.00005) {
       renderHand(currentProgress);
@@ -539,14 +573,25 @@
     );
   }
 
+  const cardMeta = [];
+
   function enhanceCardEffects(card) {
     const cardInner = card.querySelector(".card-inner");
+    let dimOverlay = null;
     if (cardInner) {
-      const dimOverlay = document.createElement("div");
+      dimOverlay = document.createElement("div");
       dimOverlay.className = "card-dim";
       dimOverlay.setAttribute("aria-hidden", "true");
       cardInner.appendChild(dimOverlay);
     }
+    const foilEl = card.querySelector(".card-foil");
+    cardMeta.push({
+      dimEl: dimOverlay,
+      foilEl,
+      lastZ: -1,
+      lastDim: -1,
+      lastFoil: -1,
+    });
 
     if (isTouchOnly) return;
 
@@ -694,10 +739,14 @@
       return maxScroll - 6 - dx * sensitivity;
     }
 
-    window.scrollTo({
-      top: clamp(nextTop, 0, maxScroll),
-      behavior: "auto",
-    });
+    const clampedTop = clamp(nextTop, 0, maxScroll);
+    const currentScrollY = window.scrollY || window.pageYOffset || 0;
+    if (Math.abs(clampedTop - currentScrollY) >= 1) {
+      window.scrollTo({
+        top: clampedTop,
+        behavior: "auto",
+      });
+    }
     return baseScrollTop;
   }
 
@@ -822,10 +871,7 @@
   if (!reducedMotion && handPivot) {
     handPivot.classList.add("is-dealing");
     cards.forEach((card) => {
-      card.style.setProperty("--tx", "0px");
-      card.style.setProperty("--ty", "26px");
-      card.style.setProperty("--rot", "0deg");
-      card.style.setProperty("--scale", "0.86");
+      card.style.transform = "translate3d(0px, 26px, 0px) rotateZ(0deg) scale(0.86)";
     });
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
