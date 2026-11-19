@@ -2,3 +2,6 @@ imgSample/
 *.md
 .DS_Store
 Thumbs.db
+
+# Antigravity Conversation Logs
+Conversation/

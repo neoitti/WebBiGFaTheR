@@ -14,13 +14,24 @@
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=12" />
-  <link rel="stylesheet" href="subpage.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="subpage.css?v=13" />
 </head>
 <body class="is-subpage" data-page="contact">
-  <!-- Identical Deep-Sinking Cyan Tunnel Background (Unchanged) -->
+  <!-- Deep-Sinking Cyan Tunnel Background Video -->
   <div class="bg-stage bg-stage-fixed" aria-hidden="true">
-    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <video
+      class="bg-tunnel-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      poster="images/bg-tunnel.jpg"
+      aria-hidden="true"
+    >
+      <source src="images/bg-tunnel.webm" type="video/webm" />
+      <source src="images/bg-tunnel.mp4" type="video/mp4" />
+    </video>
     <div class="bg-vignette"></div>
   </div>
 
@@ -81,12 +92,51 @@
         </div>
       </section>
 
-      <!-- 2-Panel Contact HUD Stage -->
-      <section class="contact-stage-grid" aria-label="Contact Hub &amp; Message Console">
-        <!-- Left Panel: 3D Holographic Signal Core + Contact Details + Send Signal CTA -->
+      <!-- Contact HUD Stage (Single Panel) -->
+      <section class="contact-stage-grid" aria-label="Communication Hub &amp; Direct Contact">
+        <!-- Holographic Signal Core + Contact Details + Send Signal CTA -->
         <article class="contact-card contact-hub-card" id="contactHubCard" aria-label="Communication Hub &amp; Direct Contact Info">
-          <div class="hub-canvas-wrap">
-            <canvas class="contact-hub-canvas" id="holoBeaconCanvas" aria-label="Interactive 3D Holographic Signal Core"></canvas>
+          <div class="hub-holo-stage">
+            <div class="hub-holo-head" aria-hidden="true">
+              <span class="hub-holo-tag">COMMUNICATION HUB</span>
+              <span class="hub-holo-live"><i class="hub-live-dot"></i>LINK // LIVE</span>
+            </div>
+            <div class="hub-holo-visual" aria-hidden="true">
+              <div class="holo-pulse-ring is-outer"></div>
+              <div class="holo-pulse-ring is-inner"></div>
+              <svg class="hub-holo-svg" viewBox="0 0 280 210" fill="none">
+                <defs>
+                  <linearGradient id="holoConeGrad" x1="140" y1="22" x2="140" y2="178" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="rgba(56, 232, 255, 0.34)" />
+                    <stop offset="55%" stop-color="rgba(56, 232, 255, 0.08)" />
+                    <stop offset="100%" stop-color="rgba(255, 79, 216, 0.03)" />
+                  </linearGradient>
+                  <radialGradient id="holoOrbGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="38%" stop-color="#58e6ff" />
+                    <stop offset="100%" stop-color="rgba(56, 232, 255, 0)" />
+                  </radialGradient>
+                </defs>
+                <!-- Projection cone -->
+                <polygon points="72,174 208,174 172,38 108,38" fill="url(#holoConeGrad)" />
+                <line x1="72" y1="174" x2="108" y2="38" stroke="rgba(56, 232, 255, 0.35)" stroke-width="1" />
+                <line x1="208" y1="174" x2="172" y2="38" stroke="rgba(255, 79, 216, 0.3)" stroke-width="1" />
+                <!-- Pedestal base ellipses -->
+                <ellipse cx="140" cy="176" rx="76" ry="15" stroke="rgba(56, 232, 255, 0.55)" stroke-width="1.3" />
+                <ellipse cx="140" cy="176" rx="52" ry="9" stroke="rgba(255, 79, 216, 0.5)" stroke-width="1" stroke-dasharray="4 4" />
+                <ellipse cx="140" cy="176" rx="26" ry="4.5" fill="rgba(56, 232, 255, 0.25)" />
+                <!-- Floating wireframe cube -->
+                <g class="holo-wire-cube" stroke="#58e6ff" stroke-width="1.35" stroke-linejoin="round">
+                  <polygon points="140,46 178,68 178,112 140,134 102,112 102,68" fill="rgba(10, 32, 54, 0.35)" />
+                  <polyline points="102,68 140,90 178,68" />
+                  <line x1="140" y1="90" x2="140" y2="134" />
+                  <polyline points="102,112 140,90 178,112" stroke="#ff5ee4" stroke-dasharray="3 3" opacity="0.65" />
+                  <line x1="140" y1="46" x2="140" y2="90" stroke="#ff5ee4" stroke-dasharray="3 3" opacity="0.65" />
+                </g>
+                <!-- Glowing core orb -->
+                <circle cx="140" cy="90" r="18" fill="url(#holoOrbGrad)" class="holo-core-orb" />
+              </svg>
+            </div>
           </div>
 
           <div class="hub-contact-info">
@@ -144,49 +194,6 @@
           </div>
 
           <button type="button" class="btn-gold contact-signal-btn hub-signal-btn" id="sendSignalBtn" data-th="ส่งสัญญาณติดต่อ" data-en="SEND SIGNAL">ส่งสัญญาณติดต่อ</button>
-        </article>
-
-        <!-- Vertical Gold Divider Line -->
-        <div class="contact-v-rail" aria-hidden="true"></div>
-
-        <!-- Right Panel: Clean Direct Message Form + Submit Button -->
-        <article class="contact-card contact-form-card">
-          <form class="contact-form" id="contactForm">
-            <input
-              type="text"
-              class="contact-input"
-              name="name"
-              required
-              autocomplete="name"
-              placeholder="ชื่อของคุณ"
-              aria-label="Name"
-              data-ph-th="ชื่อของคุณ"
-              data-ph-en="Name"
-            />
-            <input
-              type="email"
-              class="contact-input"
-              name="email"
-              required
-              autocomplete="email"
-              placeholder="อีเมลติดต่อ"
-              aria-label="Email"
-              data-ph-th="อีเมลติดต่อ"
-              data-ph-en="Email"
-            />
-            <textarea
-              class="contact-textarea"
-              name="message"
-              required
-              placeholder="รายละเอียดโปรเจกต์หรือข้อความ"
-              aria-label="Message"
-              data-ph-th="รายละเอียดโปรเจกต์หรือข้อความ"
-              data-ph-en="Message"
-            ></textarea>
-            <button type="submit" class="btn-gold contact-transmit-btn" id="transmitMsgBtn" data-th="ส่งข้อความ" data-en="TRANSMIT MESSAGE">
-              ส่งข้อความ
-            </button>
-          </form>
         </article>
       </section>
 
@@ -253,7 +260,6 @@
 
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="tunnel-bg.js?v=1"></script>
-  <script src="subpage.js?v=10"></script>
+  <script src="subpage.js?v=13"></script>
 </body>
 </html>

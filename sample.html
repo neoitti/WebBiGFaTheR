@@ -14,13 +14,24 @@
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=12" />
-  <link rel="stylesheet" href="subpage.css?v=11" />
+  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="subpage.css?v=13" />
 </head>
 <body class="is-subpage" data-page="sample">
-  <!-- Identical Deep-Sinking Cyan Tunnel Background -->
+  <!-- Deep-Sinking Cyan Tunnel Background Video -->
   <div class="bg-stage bg-stage-fixed" aria-hidden="true">
-    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <video
+      class="bg-tunnel-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      poster="images/bg-tunnel.jpg"
+      aria-hidden="true"
+    >
+      <source src="images/bg-tunnel.webm" type="video/webm" />
+      <source src="images/bg-tunnel.mp4" type="video/mp4" />
+    </video>
     <div class="bg-vignette"></div>
   </div>
 
@@ -75,8 +86,45 @@
 
         <!-- Left Stage: Exploded 3D Calibration Cube + Floating Console Dock -->
         <div class="test-center-col">
-          <div class="calibration-viewport-card" id="calibrationCore">
-            <canvas class="cube-core-canvas" id="cubeCoreCanvas" aria-label="Interactive 3D Calibration Cube Core"></canvas>
+          <div class="calibration-viewport-card" id="calibrationCore" data-mode="PLAY">
+            <div class="cal-stage" role="img" aria-label="Interactive 3D Calibration Cube Core">
+              <div class="cal-chamber-bg" aria-hidden="true"></div>
+              <svg class="cal-beams-svg" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="calBeamCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="rgba(56, 232, 255, 0)" />
+                    <stop offset="50%" stop-color="rgba(56, 232, 255, 0.55)" />
+                    <stop offset="100%" stop-color="rgba(56, 232, 255, 0)" />
+                  </linearGradient>
+                  <linearGradient id="calBeamMagenta" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="rgba(255, 79, 216, 0)" />
+                    <stop offset="50%" stop-color="rgba(255, 79, 216, 0.45)" />
+                    <stop offset="100%" stop-color="rgba(255, 79, 216, 0)" />
+                  </linearGradient>
+                </defs>
+                <line x1="20" y1="20" x2="260" y2="180" stroke="url(#calBeamCyan)" stroke-width="1.2" />
+                <line x1="580" y1="20" x2="340" y2="180" stroke="url(#calBeamMagenta)" stroke-width="1.2" />
+                <line x1="20" y1="380" x2="260" y2="220" stroke="url(#calBeamMagenta)" stroke-width="1.2" />
+                <line x1="580" y1="380" x2="340" y2="220" stroke="url(#calBeamCyan)" stroke-width="1.2" />
+                <circle cx="300" cy="200" r="142" fill="none" stroke="rgba(56, 232, 255, 0.16)" stroke-dasharray="6 8" />
+                <circle cx="300" cy="200" r="176" fill="none" stroke="rgba(255, 79, 216, 0.12)" stroke-dasharray="3 9" />
+              </svg>
+              <div class="cal-lens-ring is-ring-1" aria-hidden="true"></div>
+              <div class="cal-lens-ring is-ring-2" aria-hidden="true"></div>
+              <div class="cal-lens-ring is-ring-3" aria-hidden="true"></div>
+              <div class="cal-lens-ring is-ring-4" aria-hidden="true"></div>
+              <div class="cal-cube-drag">
+                <div class="cal-cube-3d" aria-hidden="true">
+                  <div class="cal-face is-front"></div>
+                  <div class="cal-face is-back"></div>
+                  <div class="cal-face is-right"></div>
+                  <div class="cal-face is-left"></div>
+                  <div class="cal-face is-top"></div>
+                  <div class="cal-face is-bottom"></div>
+                  <div class="cal-core-orb"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="console-dock" role="group" aria-label="Test Console Controls">
@@ -92,7 +140,29 @@
         <!-- Middle-Right: 3D Wireframe Cube Card + System Telemetry Card -->
         <div class="test-right-cards">
           <article class="wireframe-card" aria-label="3D Wireframe Blueprint Scan">
-            <canvas class="wire-canvas" id="wireCubeCanvas"></canvas>
+            <div class="wire-blueprint">
+              <ul class="wire-meta-list" aria-hidden="true">
+                <li><span>MESH //</span><strong>OCTA_NODE_04</strong></li>
+                <li><span>VERTICES //</span><strong>248 NODES</strong></li>
+                <li><span>TOPOLOGY //</span><strong>MANIFOLD_OK</strong></li>
+                <li><span>PIPELINE //</span><strong>CSS_3D / SVG</strong></li>
+                <li><span>AXIS_LOCK //</span><strong>X:35° Y:-45°</strong></li>
+                <li><span>RENDER //</span><strong>GPU_COMPOSITE</strong></li>
+                <li><span>STATE //</span><strong>LOCKED</strong></li>
+              </ul>
+              <svg class="wire-cube-svg" viewBox="0 0 180 180" role="img" aria-label="Wireframe Blueprint Cube">
+                <g class="wire-cube-geo" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+                  <polygon points="90,22 146,54 146,118 90,150 34,118 34,54" opacity="0.92" />
+                  <polyline points="34,54 90,86 146,54" opacity="0.95" />
+                  <line x1="90" y1="86" x2="90" y2="150" opacity="0.95" />
+                  <polyline points="34,118 90,86 146,118" stroke-dasharray="3 3" opacity="0.45" />
+                  <line x1="90" y1="22" x2="90" y2="86" stroke-dasharray="3 3" opacity="0.45" />
+                  <polygon points="90,48 122,67 122,105 90,124 58,105 58,67" opacity="0.68" />
+                  <circle cx="90" cy="86" r="4.5" fill="currentColor" stroke="none" />
+                </g>
+                <text x="90" y="170" text-anchor="middle" class="wire-cube-label">NODE // CORE</text>
+              </svg>
+            </div>
           </article>
 
           <article class="telemetry-card" aria-label="System Telemetry">
@@ -190,7 +260,6 @@
 
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="tunnel-bg.js?v=1"></script>
-  <script src="subpage.js?v=10"></script>
+  <script src="subpage.js?v=13"></script>
 </body>
 </html>

@@ -94,18 +94,22 @@ body {
   background: #04080e url("images/bg-tunnel.jpg") center / cover no-repeat;
 }
 
-.bg-tunnel-canvas {
-  position: absolute;
+.bg-tunnel-video {
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Light edge scrim only — keeps the original background vivid & sharp */
 .bg-vignette {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background:
     linear-gradient(
       180deg,
@@ -1217,8 +1221,5 @@ body {
   .card-rim-beam::before,
   .playing-card:hover .card-art::before {
     animation: none;
-  }
-  .bg-tunnel-canvas {
-    display: none;
   }
 }

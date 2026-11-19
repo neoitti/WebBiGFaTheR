@@ -1,7 +1,45 @@
 (() => {
-  if (window.BigFatherTunnel) {
-    window.BigFatherTunnel.startStandaloneLoop();
+  const bgVideo = document.querySelector(".bg-tunnel-video");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let reducedMotion = reducedMotionQuery.matches;
+
+  function syncBackgroundVideo() {
+    document.body.classList.toggle("is-page-hidden", document.hidden);
+    if (!bgVideo) return;
+    if (reducedMotion || document.hidden) {
+      bgVideo.pause();
+    } else {
+      const playPromise = bgVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {});
+      }
+    }
   }
+
+  function initBackgroundVideo() {
+    document.body.classList.toggle("is-page-hidden", document.hidden);
+    if (!bgVideo) return;
+    if (reducedMotion) {
+      bgVideo.removeAttribute("autoplay");
+      bgVideo.pause();
+    } else {
+      syncBackgroundVideo();
+    }
+    bgVideo.addEventListener("play", () => {
+      if (reducedMotion || document.hidden) {
+        bgVideo.pause();
+      }
+    });
+    if (typeof reducedMotionQuery.addEventListener === "function") {
+      reducedMotionQuery.addEventListener("change", (e) => {
+        reducedMotion = e.matches;
+        syncBackgroundVideo();
+      });
+    }
+  }
+
+  initBackgroundVideo();
+  document.addEventListener("visibilitychange", syncBackgroundVideo);
 
   const pageKey = document.body.dataset.page || "";
   const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
@@ -175,13 +213,11 @@
   }
 
   // ========================================================================
-  // PAGE 03: SAMPLE (Binary Matrix, Exploded 3D Calibration Cube, Wireframe & Telemetry)
+  // PAGE 03: SAMPLE (CSS 3D Calibration Cube, SVG Wireframe Blueprint & Telemetry)
   // ========================================================================
   if (pageKey === "sample") {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const cubeCanvas = document.getElementById("cubeCoreCanvas");
-    const wireCanvas = document.getElementById("wireCubeCanvas");
     const coreCardEl = document.getElementById("calibrationCore");
+    const coreDragEl = coreCardEl ? coreCardEl.querySelector(".cal-cube-drag") : null;
     const gaugeEl = document.getElementById("telemetryGauge");
     const gaugeArcEl = document.getElementById("telemetryArc");
     const gaugeValEl = document.getElementById("telemetryPct");
@@ -192,27 +228,10 @@
     const consoleBtns = Array.from(document.querySelectorAll(".console-btn[data-console-cmd]"));
     const testNowBtn = document.getElementById("testNowBtn");
 
-    let activeMode = "PLAY";
-    let boostEnergy = 0;
-    let scanSweep = -1;
-
-    function syncCanvasSize(canvas, fallbackW, fallbackH) {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = canvas.clientWidth || fallbackW;
-      const h = canvas.clientHeight || fallbackH;
-      const targetW = Math.round(w * dpr);
-      const targetH = Math.round(h * dpr);
-      if (canvas.width !== targetW || canvas.height !== targetH) {
-        canvas.width = targetW;
-        canvas.height = targetH;
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      return { ctx, w, h };
-    }
+    let runTimer = null;
 
     // ----------------------------------------------------------------------
-    // 1. Center Stage: 3D Exploded Mechanical Calibration Cube + Optical Lenses
+    // 1. Center Stage: Interactive CSS 3D Mechanical Calibration Cube Drag
     // ----------------------------------------------------------------------
     let dragRotX = 0;
     let dragRotY = 0;
@@ -220,426 +239,32 @@
     let lastPtrX = 0;
     let lastPtrY = 0;
 
-    if (cubeCanvas) {
-      cubeCanvas.addEventListener("pointerdown", (e) => {
+    if (coreCardEl && coreDragEl) {
+      coreCardEl.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
         isDragging = true;
         lastPtrX = e.clientX;
         lastPtrY = e.clientY;
-        cubeCanvas.setPointerCapture(e.pointerId);
+        coreCardEl.setPointerCapture(e.pointerId);
       });
-      cubeCanvas.addEventListener("pointermove", (e) => {
+      coreCardEl.addEventListener("pointermove", (e) => {
         if (!isDragging) return;
         const dx = e.clientX - lastPtrX;
         const dy = e.clientY - lastPtrY;
         lastPtrX = e.clientX;
         lastPtrY = e.clientY;
-        dragRotY += dx * 0.008;
-        dragRotX = Math.max(-0.9, Math.min(0.9, dragRotX + dy * 0.008));
+        dragRotY += dx * 0.45;
+        dragRotX = Math.max(-42, Math.min(42, dragRotX - dy * 0.45));
+        coreDragEl.style.setProperty("--drag-rx", `${dragRotX.toFixed(1)}deg`);
+        coreDragEl.style.setProperty("--drag-ry", `${dragRotY.toFixed(1)}deg`);
       });
       const stopDrag = () => { isDragging = false; };
-      cubeCanvas.addEventListener("pointerup", stopDrag);
-      cubeCanvas.addEventListener("pointercancel", stopDrag);
-    }
-
-    const cubeVerts = [
-      [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-      [-1, -1, 1],  [1, -1, 1],  [1, 1, 1],  [-1, 1, 1],
-    ];
-    const cubeFaces = [
-      { idx: [0, 1, 2, 3], n: [0, 0, -1] },
-      { idx: [4, 5, 6, 7], n: [0, 0, 1] },
-      { idx: [0, 4, 7, 3], n: [-1, 0, 0] },
-      { idx: [1, 5, 6, 2], n: [1, 0, 0] },
-      { idx: [3, 2, 6, 7], n: [0, 1, 0] },
-      { idx: [0, 1, 5, 4], n: [0, -1, 0] },
-    ];
-    const lensAxes = [
-      { n: [0, -1, 0], u: [1, 0, 0], v: [0, 0, 1], rings: [1.55, 2.02, 2.52, 2.98] },
-      { n: [0, 1, 0],  u: [1, 0, 0], v: [0, 0, 1], rings: [1.55, 2.02, 2.52, 2.98] },
-      { n: [-1, 0, 0], u: [0, 1, 0], v: [0, 0, 1], rings: [1.55, 2.05, 2.58] },
-      { n: [1, 0, 0],  u: [0, 1, 0], v: [0, 0, 1], rings: [1.55, 2.05, 2.58] },
-    ];
-    const motes = Array.from({ length: 24 }, (_, i) => ({
-      angle: (i / 24) * Math.PI * 2,
-      dist: 0.22 + (i % 5) * 0.14,
-      speed: 0.4 + (i % 4) * 0.25,
-      size: 1 + (i % 3) * 0.7,
-    }));
-
-    function rotVec([x, y, z], rx, ry) {
-      const cy = Math.cos(ry);
-      const sy = Math.sin(ry);
-      const x1 = x * cy - z * sy;
-      const z1 = x * sy + z * cy;
-      const cx = Math.cos(rx);
-      const sx = Math.sin(rx);
-      const y2 = y * cx - z1 * sx;
-      const z2 = y * sx + z1 * cx;
-      return [x1, y2, z2];
-    }
-
-    function projVec([x, y, z], cx, cy, scale) {
-      const p = scale / (6.4 + z);
-      return [cx + x * p, cy + y * p, z, p];
-    }
-
-    function drawCalibrationCore(timeSec) {
-      if (!cubeCanvas) return;
-      const { ctx, w, h } = syncCanvasSize(cubeCanvas, 420, 410);
-      ctx.clearRect(0, 0, w, h);
-
-      const cx = w * 0.5;
-      const cy = h * 0.48;
-      const baseScale = Math.min(w, h) * 0.9;
-
-      // Dark architectural test chamber backdrop
-      const chamberBg = ctx.createRadialGradient(cx, cy, 18, cx, cy, Math.max(w, h) * 0.65);
-      chamberBg.addColorStop(0, `rgba(42, 46, 58, ${0.42 + boostEnergy * 0.2})`);
-      chamberBg.addColorStop(0.45, "rgba(16, 19, 27, 0.78)");
-      chamberBg.addColorStop(1, "rgba(7, 9, 14, 0.96)");
-      ctx.fillStyle = chamberBg;
-      ctx.fillRect(0, 0, w, h);
-
-      // Subtle architectural vertical chamber pillars
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.045)";
-      ctx.lineWidth = 1;
-      for (const px of [0.14, 0.26, 0.74, 0.86]) {
-        ctx.beginPath();
-        ctx.moveTo(w * px, 0);
-        ctx.lineTo(w * px, h);
-        ctx.stroke();
-      }
-
-      // Warm golden core aura behind the cube
-      const aura = ctx.createRadialGradient(cx, cy, 4, cx, cy, baseScale * 0.56);
-      aura.addColorStop(0, `rgba(254, 240, 138, ${0.34 + boostEnergy * 0.28})`);
-      aura.addColorStop(0.35, `rgba(250, 204, 21, ${0.14 + boostEnergy * 0.14})`);
-      aura.addColorStop(1, "rgba(250, 204, 21, 0)");
-      ctx.fillStyle = aura;
-      ctx.fillRect(0, 0, w, h);
-
-      const rx = 0.5 + Math.sin(timeSec * 0.55) * 0.04 + dragRotX;
-      const ry = 0.74 + (activeMode === "TEST" ? timeSec * 0.35 : Math.sin(timeSec * 0.4) * 0.12) + dragRotY + boostEnergy * 0.9;
-      const explodeFactor = activeMode === "INSTALL"
-        ? 0.86 + Math.sin(timeSec * 3.2) * 0.04
-        : 1 + Math.sin(timeSec * 1.4) * 0.03 + boostEnergy * 0.1;
-
-      // Radiating Golden Laser Beams aligned directly along the 6 face/lens axes
-      const beamDirs = [
-        [0, -1, 0], [0, 1, 0],
-        [-1, 0, 0], [1, 0, 0],
-        [0, 0, -1], [0, 0, 1],
-      ];
-      ctx.save();
-      ctx.globalCompositeOperation = "screen";
-      beamDirs.forEach((dir) => {
-        const rd = rotVec(dir, rx, ry);
-        const end = projVec([rd[0] * 5.2, rd[1] * 5.2, rd[2] * 5.2], cx, cy, baseScale);
-        const beamGrad = ctx.createLinearGradient(cx, cy, end[0], end[1]);
-        beamGrad.addColorStop(0, `rgba(254, 249, 195, ${0.9 + boostEnergy * 0.1})`);
-        beamGrad.addColorStop(0.38, `rgba(250, 204, 21, ${0.65 + boostEnergy * 0.2})`);
-        beamGrad.addColorStop(1, "rgba(250, 204, 21, 0)");
-
-        ctx.strokeStyle = beamGrad;
-        ctx.lineWidth = 4.2 + boostEnergy * 2.5;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(end[0], end[1]);
-        ctx.stroke();
-
-        ctx.strokeStyle = `rgba(255, 251, 235, ${0.88 + boostEnergy * 0.12})`;
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(end[0], end[1]);
-        ctx.stroke();
-      });
-      ctx.restore();
-
-      // Build depth-sorted draw queue (cube faces + exploded optical lens discs)
-      const drawItems = [];
-      const rotatedVerts = cubeVerts.map((v) => rotVec(v, rx, ry));
-
-      cubeFaces.forEach((face) => {
-        const rn = rotVec(face.n, rx, ry);
-        const pts = face.idx.map((i) => projVec(rotatedVerts[i], cx, cy, baseScale));
-        const avgZ = pts.reduce((sum, p) => sum + p[2], 0) / 4;
-        drawItems.push({ kind: "face", z: avgZ, pts, rn, faceIdx: face.idx });
-      });
-
-      lensAxes.forEach((axis) => {
-        const rn = rotVec(axis.n, rx, ry);
-        const ru = rotVec(axis.u, rx, ry);
-        const rv = rotVec(axis.v, rx, ry);
-        axis.rings.forEach((dist, rIdx) => {
-          const d = dist * explodeFactor;
-          const center3 = [rn[0] * d, rn[1] * d, rn[2] * d];
-          const center2 = projVec(center3, cx, cy, baseScale);
-          const radius = Math.max(0.38, 0.8 - rIdx * 0.12);
-          drawItems.push({
-            kind: "lens",
-            z: center3[2],
-            center3,
-            center2,
-            ru,
-            rv,
-            radius,
-            rIdx,
-          });
-        });
-      });
-
-      // Back-to-front painter sort (larger z = farther away)
-      drawItems.sort((a, b) => b.z - a.z);
-
-      drawItems.forEach((item) => {
-        if (item.kind === "face") {
-          const { pts, rn } = item;
-          if (rn[2] > 0.12) return;
-
-          const light = Math.max(0.15, Math.min(1, 0.48 - rn[1] * 0.42 - rn[0] * 0.25));
-          const shade = Math.round(28 + light * 48);
-
-          // Outer dark metallic face plate
-          ctx.beginPath();
-          pts.forEach((p, idx) => (idx === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1])));
-          ctx.closePath();
-          ctx.fillStyle = `rgb(${shade}, ${shade + 4}, ${shade + 12})`;
-          ctx.fill();
-          ctx.strokeStyle = `rgba(235, 242, 250, ${0.46 + light * 0.4})`;
-          ctx.lineWidth = 1.8;
-          ctx.stroke();
-
-          // Recessed inner mechanical plate + cross-slits + pinpoint golden emitter
-          const faceCx = pts.reduce((s, p) => s + p[0], 0) / 4;
-          const faceCy = pts.reduce((s, p) => s + p[1], 0) / 4;
-          const innerPts = pts.map(([px, py]) => [
-            faceCx + (px - faceCx) * 0.64,
-            faceCy + (py - faceCy) * 0.64,
-          ]);
-          ctx.beginPath();
-          innerPts.forEach((p, idx) => (idx === 0 ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1])));
-          ctx.closePath();
-          ctx.fillStyle = "rgba(10, 13, 20, 0.92)";
-          ctx.fill();
-          ctx.strokeStyle = "rgba(250, 204, 21, 0.58)";
-          ctx.lineWidth = 1.1;
-          ctx.stroke();
-
-          // Mechanical aperture cross-lines
-          ctx.strokeStyle = "rgba(253, 224, 71, 0.35)";
-          ctx.lineWidth = 1;
-          for (let k = 0; k < 2; k++) {
-            const m1x = (pts[k][0] + pts[k + 1][0]) * 0.5;
-            const m1y = (pts[k][1] + pts[k + 1][1]) * 0.5;
-            const m2x = (pts[k + 2][0] + pts[(k + 3) % 4][0]) * 0.5;
-            const m2y = (pts[k + 2][1] + pts[(k + 3) % 4][1]) * 0.5;
-            ctx.beginPath();
-            ctx.moveTo(m1x, m1y);
-            ctx.lineTo(m2x, m2y);
-            ctx.stroke();
-          }
-
-          // Sharp glowing core pinpoint on each visible face
-          const coreGlow = ctx.createRadialGradient(faceCx, faceCy, 0.5, faceCx, faceCy, 12);
-          coreGlow.addColorStop(0, "rgba(255, 253, 232, 1)");
-          coreGlow.addColorStop(0.3, "rgba(253, 224, 71, 0.8)");
-          coreGlow.addColorStop(1, "rgba(250, 204, 21, 0)");
-          ctx.fillStyle = coreGlow;
-          ctx.beginPath();
-          ctx.arc(faceCx, faceCy, 12, 0, Math.PI * 2);
-          ctx.fill();
-        } else {
-          const { center3, ru, rv, radius, rIdx } = item;
-          const segs = 28;
-          ctx.beginPath();
-          for (let i = 0; i <= segs; i++) {
-            const a = (i / segs) * Math.PI * 2;
-            const ca = Math.cos(a) * radius;
-            const sa = Math.sin(a) * radius;
-            const p3 = [
-              center3[0] + ru[0] * ca + rv[0] * sa,
-              center3[1] + ru[1] * ca + rv[1] * sa,
-              center3[2] + ru[2] * ca + rv[2] * sa,
-            ];
-            const p2 = projVec(p3, cx, cy, baseScale);
-            if (i === 0) ctx.moveTo(p2[0], p2[1]);
-            else ctx.lineTo(p2[0], p2[1]);
-          }
-          ctx.closePath();
-          ctx.fillStyle = rIdx % 2 === 0 ? "rgba(186, 230, 253, 0.08)" : "rgba(250, 204, 21, 0.05)";
-          ctx.fill();
-          ctx.strokeStyle = rIdx === 0 ? "rgba(253, 224, 71, 0.62)" : "rgba(210, 230, 245, 0.56)";
-          ctx.lineWidth = rIdx === 0 ? 1.5 : 1.15;
-          ctx.stroke();
-
-          // Inner optical aperture ring
-          const innerR = radius * 0.56;
-          ctx.beginPath();
-          for (let i = 0; i <= segs; i++) {
-            const a = (i / segs) * Math.PI * 2;
-            const ca = Math.cos(a) * innerR;
-            const sa = Math.sin(a) * innerR;
-            const p3 = [
-              center3[0] + ru[0] * ca + rv[0] * sa,
-              center3[1] + ru[1] * ca + rv[1] * sa,
-              center3[2] + ru[2] * ca + rv[2] * sa,
-            ];
-            const p2 = projVec(p3, cx, cy, baseScale);
-            if (i === 0) ctx.moveTo(p2[0], p2[1]);
-            else ctx.lineTo(p2[0], p2[1]);
-          }
-          ctx.closePath();
-          ctx.strokeStyle = "rgba(250, 204, 21, 0.36)";
-          ctx.lineWidth = 0.9;
-          ctx.stroke();
-        }
-      });
-
-      // Floating golden calibration motes
-      motes.forEach((m) => {
-        const a = m.angle + timeSec * m.speed * 0.3;
-        const r = baseScale * m.dist;
-        const mx = cx + Math.cos(a) * r;
-        const my = cy + Math.sin(a * 1.15) * r * 0.72;
-        ctx.fillStyle = `rgba(254, 240, 138, ${0.38 + 0.32 * Math.sin(timeSec * 3 + m.angle)})`;
-        ctx.beginPath();
-        ctx.arc(mx, my, m.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      coreCardEl.addEventListener("pointerup", stopDrag);
+      coreCardEl.addEventListener("pointercancel", stopDrag);
     }
 
     // ----------------------------------------------------------------------
-    // 3. Top-Right Panel: 3D Nested Golden Wireframe Cube + Blueprint Code
-    // ----------------------------------------------------------------------
-    const blueprintLines = [
-      "SYS_CALIB // CORE",
-      "MESH_LOD : 4.2",
-      "AXIS_LOCK: TRUE",
-      "OPTICS_V : 3.2.8",
-      "QA_SYNC  : PASS",
-      "LATENCY  : 4.1ms",
-      "CORE_HEX : FACC15",
-    ];
-    const outerVerts = [
-      [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-      [-1, -1, 1],  [1, -1, 1],  [1, 1, 1],  [-1, 1, 1],
-    ];
-    const innerVerts = outerVerts.map(([x, y, z]) => [x * 0.54, y * 0.54, z * 0.54]);
-    const boxEdges = [
-      [0, 1], [1, 2], [2, 3], [3, 0],
-      [4, 5], [5, 6], [6, 7], [7, 4],
-      [0, 4], [1, 5], [2, 6], [3, 7],
-    ];
-
-    function drawWireframeBlueprint(timeSec) {
-      if (!wireCanvas) return;
-      const { ctx, w, h } = syncCanvasSize(wireCanvas, 320, 200);
-      ctx.clearRect(0, 0, w, h);
-
-      // Faint cyan/slate blueprint code on left side
-      ctx.font = '600 9.5px "JetBrains Mono", monospace';
-      ctx.textAlign = "left";
-      ctx.textBaseline = "top";
-      blueprintLines.forEach((txt, i) => {
-        ctx.fillStyle = i === 0 ? "rgba(253, 224, 71, 0.72)" : "rgba(165, 232, 250, 0.48)";
-        ctx.fillText(txt, 14, 18 + i * 18);
-      });
-
-      const cubeCx = w * 0.56;
-      const cubeCy = h * 0.54;
-      const scale = Math.min(w, h) * 1.24;
-
-      // Warm golden radial glow behind wireframe cube
-      const glow = ctx.createRadialGradient(cubeCx, cubeCy, 6, cubeCx, cubeCy, scale * 0.58);
-      glow.addColorStop(0, `rgba(250, 204, 21, ${0.3 + boostEnergy * 0.2})`);
-      glow.addColorStop(0.55, "rgba(250, 204, 21, 0.08)");
-      glow.addColorStop(1, "rgba(250, 204, 21, 0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, w, h);
-
-      const rx = 0.52 + Math.sin(timeSec * 0.5) * 0.07;
-      const ry = 0.68 + timeSec * 0.35 + boostEnergy * 0.7;
-
-      const pOuter = outerVerts.map((v) => projVec(rotVec(v, rx, ry), cubeCx, cubeCy, scale));
-      const pInner = innerVerts.map((v) => projVec(rotVec(v, rx, ry), cubeCx, cubeCy, scale));
-
-      // Subdivided face cross-grid lines on outer cube
-      ctx.strokeStyle = "rgba(250, 204, 21, 0.25)";
-      ctx.lineWidth = 0.85;
-      cubeFaces.forEach((f) => {
-        const [a, b, c, d] = f.idx.map((idx) => pOuter[idx]);
-        ctx.beginPath();
-        ctx.moveTo((a[0] + b[0]) * 0.5, (a[1] + b[1]) * 0.5);
-        ctx.lineTo((c[0] + d[0]) * 0.5, (c[1] + d[1]) * 0.5);
-        ctx.moveTo((b[0] + c[0]) * 0.5, (b[1] + c[1]) * 0.5);
-        ctx.lineTo((d[0] + a[0]) * 0.5, (d[1] + a[1]) * 0.5);
-        ctx.stroke();
-      });
-
-      // Diagonal struts connecting outer & inner cubes
-      ctx.strokeStyle = "rgba(250, 204, 21, 0.32)";
-      ctx.lineWidth = 0.9;
-      for (let i = 0; i < 8; i++) {
-        ctx.beginPath();
-        ctx.moveTo(pOuter[i][0], pOuter[i][1]);
-        ctx.lineTo(pInner[i][0], pInner[i][1]);
-        ctx.stroke();
-      }
-
-      // Inner nested cube
-      ctx.strokeStyle = "rgba(253, 224, 71, 0.55)";
-      ctx.lineWidth = 1.1;
-      boxEdges.forEach(([a, b]) => {
-        ctx.beginPath();
-        ctx.moveTo(pInner[a][0], pInner[a][1]);
-        ctx.lineTo(pInner[b][0], pInner[b][1]);
-        ctx.stroke();
-      });
-
-      // Outer golden glowing cube + subdivision mid-lines
-      ctx.save();
-      ctx.strokeStyle = "#fde047";
-      ctx.lineWidth = 1.5;
-      ctx.shadowColor = "rgba(250, 204, 21, 0.7)";
-      ctx.shadowBlur = 7;
-      boxEdges.forEach(([a, b]) => {
-        ctx.beginPath();
-        ctx.moveTo(pOuter[a][0], pOuter[a][1]);
-        ctx.lineTo(pOuter[b][0], pOuter[b][1]);
-        ctx.stroke();
-      });
-      ctx.restore();
-
-      // Callout leader line to top-rightmost vertex
-      let targetPt = pOuter[0];
-      pOuter.forEach((pt) => {
-        if (pt[0] - pt[1] > targetPt[0] - targetPt[1]) targetPt = pt;
-      });
-      const labelX = Math.min(w - 14, targetPt[0] + 38);
-      const labelY = Math.max(18, targetPt[1] - 18);
-      ctx.strokeStyle = "rgba(253, 224, 71, 0.72)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(targetPt[0], targetPt[1]);
-      ctx.lineTo(targetPt[0] + 14, labelY);
-      ctx.lineTo(labelX, labelY);
-      ctx.stroke();
-
-      ctx.fillStyle = "#fef08a";
-      ctx.beginPath();
-      ctx.arc(targetPt[0], targetPt[1], 2.5, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.font = '700 8.5px "JetBrains Mono", monospace';
-      ctx.textAlign = "right";
-      ctx.textBaseline = "bottom";
-      ctx.fillStyle = "rgba(254, 240, 138, 0.85)";
-      ctx.fillText("NODE // CORE", labelX, labelY - 3);
-    }
-
-    // ----------------------------------------------------------------------
-    // 4. Telemetry HUD Updater & Animation Loop
+    // 2. Telemetry HUD Updater (Demand-Driven CSS Transitions Only)
     // ----------------------------------------------------------------------
     function applySegLevels(levels) {
       segCols.forEach((col, cIdx) => {
@@ -653,11 +278,12 @@
     applySegLevels([4, 6, 8, 7, 5]);
 
     function runSimulation(mode) {
-      activeMode = mode;
-      boostEnergy = 1;
-      scanSweep = 0;
-
-      if (coreCardEl) coreCardEl.classList.add("is-running");
+      if (coreCardEl) {
+        coreCardEl.dataset.mode = mode;
+        coreCardEl.classList.remove("is-running");
+        void coreCardEl.offsetWidth;
+        coreCardEl.classList.add("is-running");
+      }
 
       const nextLevels = segCols.map(() => 3 + Math.floor(Math.random() * 7));
       applySegLevels(nextLevels);
@@ -676,7 +302,8 @@
       if (gaugeValEl) gaugeValEl.textContent = `${pct}%`;
       if (gaugeStateEl) gaugeStateEl.textContent = mode === "TEST" ? "PASS" : mode === "INSTALL" ? "SYNC" : "READY";
 
-      setTimeout(() => {
+      clearTimeout(runTimer);
+      runTimer = setTimeout(() => {
         if (coreCardEl) coreCardEl.classList.remove("is-running");
       }, 1100);
     }
@@ -696,33 +323,6 @@
         showToast(currentLang === "th" ? "รันการทดสอบ QA เต็มรูปแบบแล้ว (99%)" : "Full QA Benchmark complete (99%)");
       });
     }
-
-    function renderTestFrame(nowMs) {
-      const timeSec = nowMs * 0.001;
-      if (boostEnergy > 0.005) {
-        boostEnergy *= 0.955;
-      } else {
-        boostEnergy = 0;
-      }
-      if (scanSweep >= 0) {
-        scanSweep += 0.024;
-        if (scanSweep > 1.05) scanSweep = -1;
-      }
-
-      drawCalibrationCore(timeSec);
-      drawWireframeBlueprint(timeSec);
-
-      if (!reducedMotion && !document.hidden) {
-        requestAnimationFrame(renderTestFrame);
-      }
-    }
-
-    requestAnimationFrame(renderTestFrame);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && !reducedMotion) {
-        requestAnimationFrame(renderTestFrame);
-      }
-    });
   }
 
   // ========================================================================
@@ -832,9 +432,9 @@
           th: "เครื่องมือประกอบอินเทอร์เฟซเชิงลึก 3 มิติ พร้อมคิวบ์แสงสีทองและระบบจัดเรียงเลเยอร์แบบ Perspective",
           en: "Spatial 3D interface composer featuring golden wireframe cubes and perspective layers.",
         },
-        specs: ["WEBGL2 / GLB", "LAYER STACK", "REALTIME LIGHT"],
+        specs: ["CSS 3D / GLB", "LAYER STACK", "REALTIME LIGHT"],
         manual: [
-          { step: "01", title: { th: "สร้างฉาก 3D", en: "Init Scene" }, desc: { th: "เปิด SpatialCanvas และเลือก Mesh", en: "Open SpatialCanvas & pick mesh" } },
+          { step: "01", title: { th: "สร้างฉาก 3D", en: "Init Scene" }, desc: { th: "เปิด SpatialStage และเลือก Mesh", en: "Open SpatialStage & pick mesh" } },
           { step: "02", title: { th: "ซ้อนเลเยอร์ HUD", en: "Stack Layers" }, desc: { th: "กำหนดค่าแกน Z และแสงขอบทอง", en: "Configure Z-depth & rim light" } },
           { step: "03", title: { th: "บันทึก GLB", en: "Export GLB" }, desc: { th: "บันทึกเป็น .glb หรือสคริปต์เว็บ", en: "Export .glb or web runtime" } },
         ],
@@ -853,7 +453,7 @@
             en: "Compose layered spatial panels and interactive wireframe scenes in seconds.",
           },
           metrics: [
-            { k: "ENGINE", v: "WEBGL2" },
+            { k: "ENGINE", v: "CSS / SVG" },
             { k: "SHADERS", v: "PBR" },
             { k: "LATENCY", v: "3.8ms" },
           ],
@@ -961,7 +561,7 @@
           th: "หน้าปัดมอนิเตอร์สัญญาณ Oscilloscope และกราฟ Telemetry แบบเรียลไทม์สำหรับตรวจสอบสถานะระบบ",
           en: "Real-time oscilloscope waveform monitor and multi-channel system telemetry dashboard.",
         },
-        specs: ["LIVE CANVAS", "WAVEFORM FX", "JSON STREAM"],
+        specs: ["SVG TELEMETRY", "WAVEFORM FX", "JSON STREAM"],
         manual: [
           { step: "01", title: { th: "เชื่อมสตรีม", en: "Bind Stream" }, desc: { th: "ชี้แหล่งข้อมูล WebSocket หรือ JSON", en: "Connect WebSocket or JSON feed" } },
           { step: "02", title: { th: "เลือกช่องสัญญาณ", en: "Select Ch" }, desc: { th: "เปิดแสดงกราฟคลื่นคู่และ Matrix", en: "Toggle dual wave & dot matrix" } },
@@ -1488,312 +1088,36 @@
   }
 
   // ========================================================================
-  // PAGE: CONTACT (3D Holo Beacon Hub, Contact Info, Clean Form)
+  // PAGE: CONTACT (SVG/CSS Holo Beacon Hub, Direct Contact Info)
   // ========================================================================
   if (pageKey === "contact") {
-    const hubCanvas = document.getElementById("holoBeaconCanvas");
     const hubCard = document.getElementById("contactHubCard");
     const networkCol = document.getElementById("contactNetworkCol");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let pulseEnergy = 0;
-    let ringWave = -1;
-
-    function syncContactCanvas(canvas, fallbackW, fallbackH) {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = canvas.clientWidth || fallbackW;
-      const h = canvas.clientHeight || fallbackH;
-      const targetW = Math.round(w * dpr);
-      const targetH = Math.round(h * dpr);
-      if (canvas.width !== targetW || canvas.height !== targetH) {
-        canvas.width = targetW;
-        canvas.height = targetH;
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      return { ctx, w, h };
-    }
-
-    // ----------------------------------------------------------------------
-    // 1. Left Panel: 3D Holographic Cube + Golden Core Orb + Projector Pad
-    // ----------------------------------------------------------------------
-    let hubDragX = 0;
-    let hubDragY = 0;
-    let isHubDragging = false;
-    let lastHubX = 0;
-    let lastHubY = 0;
-
-    if (hubCanvas) {
-      hubCanvas.addEventListener("pointerdown", (e) => {
-        isHubDragging = true;
-        lastHubX = e.clientX;
-        lastHubY = e.clientY;
-        hubCanvas.setPointerCapture(e.pointerId);
-      });
-      hubCanvas.addEventListener("pointermove", (e) => {
-        if (!isHubDragging) return;
-        const dx = e.clientX - lastHubX;
-        const dy = e.clientY - lastHubY;
-        lastHubX = e.clientX;
-        lastHubY = e.clientY;
-        hubDragY += dx * 0.01;
-        hubDragX = Math.max(-0.85, Math.min(0.85, hubDragX + dy * 0.01));
-      });
-      const stopHubDrag = () => { isHubDragging = false; };
-      hubCanvas.addEventListener("pointerup", stopHubDrag);
-      hubCanvas.addEventListener("pointercancel", stopHubDrag);
-    }
-
-    const holoVerts = [
-      [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-      [-1, -1, 1],  [1, -1, 1],  [1, 1, 1],  [-1, 1, 1],
-    ];
-    const holoEdges = [
-      [0, 1], [1, 2], [2, 3], [3, 0],
-      [4, 5], [5, 6], [6, 7], [7, 4],
-      [0, 4], [1, 5], [2, 6], [3, 7],
-    ];
-    const coreParticles = Array.from({ length: 34 }, (_, i) => ({
-      theta: (i / 34) * Math.PI * 2,
-      phi: ((i * 1.618) % 1) * Math.PI - Math.PI * 0.5,
-      rad: 0.24 + (i % 5) * 0.08,
-      speed: 0.55 + (i % 4) * 0.25,
-      size: 1.1 + (i % 3) * 0.65,
-    }));
-
-    function rot3D([x, y, z], rx, ry) {
-      const cy = Math.cos(ry);
-      const sy = Math.sin(ry);
-      const x1 = x * cy - z * sy;
-      const z1 = x * sy + z * cy;
-      const cx = Math.cos(rx);
-      const sx = Math.sin(rx);
-      const y2 = y * cx - z1 * sx;
-      const z2 = y * sx + z1 * cx;
-      return [x1, y2, z2];
-    }
-
-    function proj3D([x, y, z], cx, cy, scale) {
-      const p = scale / (5.6 + z);
-      return [cx + x * p, cy + y * p, z];
-    }
-
-    function drawHoloBeacon(timeSec) {
-      if (!hubCanvas) return;
-      const { ctx, w, h } = syncContactCanvas(hubCanvas, 340, 270);
-      ctx.clearRect(0, 0, w, h);
-
-      const cx = w * 0.5;
-      const padY = h * 0.82;
-      const cubeY = h * 0.42 + Math.sin(timeSec * 1.7) * 4;
-      const scale = Math.min(w, h) * 0.86;
-
-      // Subtle micro-HUD headers & telemetry flanking lines
-      ctx.font = '700 8px "JetBrains Mono", monospace';
-      ctx.textBaseline = "top";
-      ctx.textAlign = "left";
-      ctx.fillStyle = "rgba(253, 224, 71, 0.72)";
-      ctx.fillText("COMMUNICATION HUB", 8, 6);
-      ctx.textAlign = "right";
-      ctx.fillStyle = "rgba(229, 231, 235, 0.5)";
-      ctx.fillText("LINK // LIVE", w - 8, 6);
-
-      // Left & right micro-telemetry ticks flanking the cube
-      ctx.fillStyle = "rgba(253, 224, 71, 0.26)";
-      for (let i = 0; i < 6; i++) {
-        const ty = h * 0.24 + i * 13;
-        const lw = 14 + ((i * 11) % 18);
-        ctx.fillRect(10, ty, lw, 2.2);
-        ctx.fillRect(w - 10 - lw, ty + 5, lw, 2.2);
-      }
-
-      // Floor Emitter Glow & Volumetric Light Cone
-      const floorGlow = ctx.createRadialGradient(cx, padY, 4, cx, padY, w * 0.34);
-      floorGlow.addColorStop(0, `rgba(254, 240, 138, ${0.46 + pulseEnergy * 0.28})`);
-      floorGlow.addColorStop(0.45, `rgba(250, 204, 21, ${0.18 + pulseEnergy * 0.14})`);
-      floorGlow.addColorStop(1, "rgba(250, 204, 21, 0)");
-      ctx.fillStyle = floorGlow;
-      ctx.beginPath();
-      ctx.ellipse(cx, padY, w * 0.34, h * 0.14, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      const coneGrad = ctx.createLinearGradient(cx, padY, cx, cubeY - scale * 0.26);
-      coneGrad.addColorStop(0, `rgba(254, 240, 138, ${0.28 + pulseEnergy * 0.22})`);
-      coneGrad.addColorStop(0.55, `rgba(250, 204, 21, ${0.1 + pulseEnergy * 0.1})`);
-      coneGrad.addColorStop(1, "rgba(250, 204, 21, 0)");
-      ctx.fillStyle = coneGrad;
-      ctx.beginPath();
-      ctx.moveTo(cx - 42, padY);
-      ctx.lineTo(cx + 42, padY);
-      ctx.lineTo(cx + scale * 0.26, cubeY - scale * 0.22);
-      ctx.lineTo(cx - scale * 0.26, cubeY - scale * 0.22);
-      ctx.closePath();
-      ctx.fill();
-
-      // Concentric Golden Pedestal Rings
-      ctx.save();
-      ctx.strokeStyle = "rgba(250, 204, 21, 0.45)";
-      ctx.setLineDash([5, 5]);
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.ellipse(cx, padY, 74, 17, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
-
-      ctx.strokeStyle = "#fde047";
-      ctx.lineWidth = 1.8;
-      ctx.beginPath();
-      ctx.ellipse(cx, padY, 52, 12, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgba(254, 240, 138, 0.36)";
-      ctx.strokeStyle = "#fef08a";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.ellipse(cx, padY, 28, 6.5, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      // Rising signal pulse ring when triggered
-      if (ringWave >= 0) {
-        const ry = padY - ringWave * (padY - cubeY + 24);
-        const rr = 34 + ringWave * 38;
-        ctx.strokeStyle = `rgba(254, 240, 138, ${(1 - ringWave).toFixed(2)})`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.ellipse(cx, ry, rr, rr * 0.25, 0, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      // Inner Glowing Golden Core Orb
-      const orbR = scale * (0.14 + pulseEnergy * 0.04);
-      const orbGlow = ctx.createRadialGradient(cx, cubeY, 1, cx, cubeY, orbR * 2.2);
-      orbGlow.addColorStop(0, "rgba(255, 252, 230, 0.98)");
-      orbGlow.addColorStop(0.28, `rgba(253, 224, 71, ${0.78 + pulseEnergy * 0.2})`);
-      orbGlow.addColorStop(0.65, "rgba(250, 204, 21, 0.22)");
-      orbGlow.addColorStop(1, "rgba(250, 204, 21, 0)");
-      ctx.fillStyle = orbGlow;
-      ctx.beginPath();
-      ctx.arc(cx, cubeY, orbR * 2.2, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Rotating 3D Wireframe Cube + Swirling Core Particles
-      const rx = 0.44 + Math.sin(timeSec * 0.6) * 0.08 + hubDragX;
-      const ry = timeSec * 0.48 + hubDragY + pulseEnergy * 1.4;
-      const projVerts = holoVerts.map((v) => proj3D(rot3D(v, rx, ry), cx, cubeY, scale));
-
-      // Orbiting 3D particles inside the cube
-      coreParticles.forEach((p) => {
-        const a = p.theta + timeSec * p.speed;
-        const px = Math.cos(a) * Math.cos(p.phi) * p.rad;
-        const py = Math.sin(p.phi) * p.rad;
-        const pz = Math.sin(a) * Math.cos(p.phi) * p.rad;
-        const pt = proj3D(rot3D([px, py, pz], rx, ry), cx, cubeY, scale);
-        const alpha = Math.max(0.3, Math.min(1, 0.72 - pt[2] * 0.35 + pulseEnergy * 0.3));
-        ctx.fillStyle = `rgba(254, 240, 138, ${alpha.toFixed(2)})`;
-        ctx.beginPath();
-        ctx.arc(pt[0], pt[1], p.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Cube wireframe edges (depth-shaded)
-      ctx.save();
-      ctx.shadowColor = "rgba(250, 204, 21, 0.72)";
-      ctx.shadowBlur = 7;
-      holoEdges.forEach(([a, b]) => {
-        const pa = projVerts[a];
-        const pb = projVerts[b];
-        const avgZ = (pa[2] + pb[2]) * 0.5;
-        const alpha = Math.max(0.32, Math.min(0.98, 0.75 - avgZ * 0.28 + pulseEnergy * 0.25));
-        ctx.strokeStyle = `rgba(254, 240, 138, ${alpha.toFixed(2)})`;
-        ctx.lineWidth = avgZ < 0 ? 1.55 : 1.05;
-        ctx.beginPath();
-        ctx.moveTo(pa[0], pa[1]);
-        ctx.lineTo(pb[0], pb[1]);
-        ctx.stroke();
-      });
-      ctx.restore();
-
-      // Subtle wireframe cross-lattice + corner node dots
-      ctx.strokeStyle = "rgba(250, 204, 21, 0.22)";
-      ctx.lineWidth = 0.8;
-      ctx.setLineDash([2.5, 3.5]);
-      [
-        [0, 2], [1, 3], [4, 6], [5, 7],
-      ].forEach(([a, b]) => {
-        ctx.beginPath();
-        ctx.moveTo(projVerts[a][0], projVerts[a][1]);
-        ctx.lineTo(projVerts[b][0], projVerts[b][1]);
-        ctx.stroke();
-      });
-      ctx.setLineDash([]);
-
-      projVerts.forEach((pt) => {
-        ctx.fillStyle = pt[2] < 0 ? "#fef9c3" : "rgba(253, 224, 71, 0.65)";
-        ctx.beginPath();
-        ctx.arc(pt[0], pt[1], pt[2] < 0 ? 2.2 : 1.5, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
+    const sendSignalBtn = document.getElementById("sendSignalBtn");
+    let burstTimer = null;
 
     function triggerSignalBurst() {
-      pulseEnergy = 1;
-      ringWave = 0;
-
-      if (hubCard) hubCard.classList.add("is-pulsing");
-      if (networkCol) networkCol.classList.add("is-firing");
-
-      setTimeout(() => {
+      if (hubCard) {
+        hubCard.classList.remove("is-pulsing");
+        void hubCard.offsetWidth;
+        hubCard.classList.add("is-pulsing");
+      }
+      if (networkCol) {
+        networkCol.classList.remove("is-firing");
+        void networkCol.offsetWidth;
+        networkCol.classList.add("is-firing");
+      }
+      clearTimeout(burstTimer);
+      burstTimer = setTimeout(() => {
         if (hubCard) hubCard.classList.remove("is-pulsing");
         if (networkCol) networkCol.classList.remove("is-firing");
       }, 950);
     }
 
-    function renderContactFrame(nowMs) {
-      const timeSec = nowMs * 0.001;
-      if (pulseEnergy > 0.004) {
-        pulseEnergy *= 0.95;
-      } else {
-        pulseEnergy = 0;
-      }
-      if (ringWave >= 0) {
-        ringWave += 0.026;
-        if (ringWave > 1) ringWave = -1;
-      }
-
-      drawHoloBeacon(timeSec);
-
-      if (!reducedMotion && !document.hidden) {
-        requestAnimationFrame(renderContactFrame);
-      }
-    }
-
-    requestAnimationFrame(renderContactFrame);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && !reducedMotion) {
-        requestAnimationFrame(renderContactFrame);
-      }
-    });
-
-    const sendSignalBtn = document.getElementById("sendSignalBtn");
     if (sendSignalBtn) {
       sendSignalBtn.addEventListener("click", () => {
         triggerSignalBurst();
         showToast(currentLang === "th" ? "ส่งสัญญาณ Uplink สำเร็จ!" : "Signal uplink pinged!");
-      });
-    }
-
-    const contactForm = document.getElementById("contactForm");
-    if (contactForm) {
-      contactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        triggerSignalBurst();
-        contactForm.reset();
-        showToast(
-          currentLang === "th"
-            ? "ส่งข้อความเรียบร้อยแล้ว ขอบคุณที่ติดต่อ!"
-            : "Message transmitted! Thank you for reaching out."
-        );
       });
     }
   }

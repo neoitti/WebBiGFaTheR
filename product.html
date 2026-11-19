@@ -14,13 +14,24 @@
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png?v=3" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="styles.css?v=12" />
-  <link rel="stylesheet" href="subpage.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="subpage.css?v=13" />
 </head>
 <body class="is-subpage" data-page="product">
-  <!-- Identical Deep-Sinking Cyan Tunnel Background -->
+  <!-- Hardware-Accelerated Tunnel Background Video -->
   <div class="bg-stage bg-stage-fixed" aria-hidden="true">
-    <canvas class="bg-tunnel-canvas" id="tunnelCanvas"></canvas>
+    <video
+      class="bg-tunnel-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      poster="images/bg-tunnel.jpg"
+      aria-hidden="true"
+    >
+      <source src="images/bg-tunnel.webm" type="video/webm" />
+      <source src="images/bg-tunnel.mp4" type="video/mp4" />
+    </video>
     <div class="bg-vignette"></div>
   </div>
 
@@ -372,7 +383,6 @@
 
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="tunnel-bg.js?v=1"></script>
-  <script src="subpage.js?v=10"></script>
+  <script src="subpage.js?v=13"></script>
 </body>
 </html>
