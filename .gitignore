@@ -1,5 +1,6 @@
 imgSample/
 *.md
+*.bak
 .DS_Store
 Thumbs.db
 

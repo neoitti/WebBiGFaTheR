@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PRODUCT — BIGFATHER</title>
-  <meta name="description" content="BIGFATHER — รวมผลิตภัณฑ์และงานออกแบบ Interactive UI/UX คุณภาพสูง" />
+  <meta name="description" content="BIGFATHER — ผลิตภัณฑ์ที่พัฒนาจริง: A Sing A Song Music ระบบขอเพลงผ่าน QR ประจำโต๊ะ และ MoveAsGroup แอปเรดาร์ขบวนรถ 30 กม." />
   <meta name="theme-color" content="#121316" />
   <meta property="og:title" content="PRODUCT — BIGFATHER" />
-  <meta property="og:description" content="BIGFATHER — รวมผลิตภัณฑ์และงานออกแบบ Interactive UI/UX คุณภาพสูง" />
+  <meta property="og:description" content="BIGFATHER — ผลิตภัณฑ์ที่พัฒนาจริง: A Sing A Song Music และ MoveAsGroup" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og-preview.jpg?v=2" />
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
   <link rel="stylesheet" href="styles.css?v=16" />
-  <link rel="stylesheet" href="subpage.css?v=13" />
+  <link rel="stylesheet" href="subpage.css?v=18" />
 </head>
 <body class="is-subpage" data-page="product">
   <!-- Hardware-Accelerated Tunnel Background Video -->
@@ -75,20 +75,65 @@
 
     <!-- Main Product Showcase HUD -->
     <main class="subpage-main product-main">
-      <section class="product-grid">
-        <!-- Left / Center Column: Hero + Floating Devices Stage + Bottom Callout -->
-        <div class="product-stage-col">
-          <header class="page-hero product-hero">
-            <div class="page-hero-titles">
-              <h1 class="page-title">PRODUCT</h1>
-              <p class="page-subtitle" data-th="PORTFOLIO / ผลิตภัณฑ์และงานออกแบบ" data-en="PORTFOLIO / SHOWCASE">PORTFOLIO / ผลิตภัณฑ์และงานออกแบบ</p>
-            </div>
-          </header>
+      <!-- 1. Page Hero -->
+      <header class="page-hero product-hero">
+        <div class="page-hero-titles">
+          <h1 class="page-title">PRODUCT</h1>
+          <p class="page-subtitle" data-th="PORTFOLIO / ผลิตภัณฑ์ที่พัฒนาจริง" data-en="PORTFOLIO / SHIPPED PRODUCTS">PORTFOLIO / ผลิตภัณฑ์ที่พัฒนาจริง</p>
+        </div>
+      </header>
 
-          <div class="product-showcase-stage" id="productShowcaseStage" data-active-project="cyber-deck">
+      <!-- 2. Product Categories & Lineup (directly after Hero) -->
+      <section class="product-selector-section" aria-label="Product Categories and Lineup">
+        <div class="cyber-tags-block">
+          <span class="cyber-tags-heading" data-th="หมวดหมู่ผลิตภัณฑ์" data-en="PRODUCT CATEGORIES">หมวดหมู่ผลิตภัณฑ์</span>
+          <div class="cyber-tags product-cyber-tags">
+            <button type="button" class="cyber-tag is-active" data-filter="ALL" aria-pressed="true" data-th="ทั้งหมด" data-en="ALL">ทั้งหมด</button>
+            <button type="button" class="cyber-tag" data-filter="MUSIC" aria-pressed="false">MUSIC &amp; VENUE</button>
+            <button type="button" class="cyber-tag" data-filter="CONVOY" aria-pressed="false">TRAVEL &amp; CONVOY</button>
+          </div>
+        </div>
+
+        <article class="project-list-card">
+          <div class="panel-header">
+            <span class="project-list-kicker" data-th="รายการผลิตภัณฑ์" data-en="PRODUCT LINEUP">รายการผลิตภัณฑ์</span>
+            <span class="panel-badge" id="productCountBadge">02 APPS</span>
+          </div>
+
+          <div class="project-list" id="productList">
+            <button type="button" class="project-item is-active" data-project="asing-asong" data-tag="MUSIC">
+              <div class="project-item-copy">
+                <strong>A Sing A Song Music</strong>
+                <small data-th="ระบบขอเพลงผ่าน QR ประจำโต๊ะ &amp; คิวเวที" data-en="Table QR Music Request &amp; Stage Queue">ระบบขอเพลงผ่าน QR ประจำโต๊ะ &amp; คิวเวที</small>
+              </div>
+              <span class="project-item-right">
+                <span class="project-ver-tag">v1.11</span>
+                <span class="project-item-meta" aria-hidden="true">›</span>
+              </span>
+            </button>
+
+            <button type="button" class="project-item" data-project="move-as-group" data-tag="CONVOY">
+              <div class="project-item-copy">
+                <strong>MoveAsGroup</strong>
+                <small data-th="เรดาร์ติดตามขบวนรถ 30 กม. &amp; วิทยุ PTT" data-en="30-KM Convoy Radar &amp; Hands-Free PTT">เรดาร์ติดตามขบวนรถ 30 กม. &amp; วิทยุ PTT</small>
+              </div>
+              <span class="project-item-right">
+                <span class="project-ver-tag">v1.04</span>
+                <span class="project-item-meta" aria-hidden="true">›</span>
+              </span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- 3. 2-Column Showcase Stage & Key Highlights -->
+      <section class="product-grid">
+        <!-- Left / Center Column: Floating Devices Stage + Bottom Callout -->
+        <div class="product-stage-col">
+          <div class="product-showcase-stage" id="productShowcaseStage" data-active-project="asing-asong">
             <div class="featured-kicker-row">
-              <span class="featured-kicker" data-th="FEATURED WORKS" data-en="FEATURED WORKS">FEATURED WORKS</span>
-              <span class="stage-project-pill" id="activeProjectBadge">UI/UX · v3.2</span>
+              <span class="featured-kicker" id="productStageKicker">A SING A SONG MUSIC</span>
+              <span class="stage-project-pill" id="activeProjectBadge">MUSIC &amp; VENUE · v1.11</span>
             </div>
 
             <div class="device-cluster">
@@ -96,51 +141,18 @@
               <div class="mock-desktop" id="mockDesktopCard">
                 <div class="mock-topbar">
                   <div class="mock-brand-mark">
-                    <span class="mock-do">DO</span>
-                    <span class="mock-desktop-title" id="mockDesktopTitle">DECK ENGINE</span>
+                    <span class="mock-do" id="mockDesktopTag">HOST</span>
+                    <span class="mock-desktop-title" id="mockDesktopTitle">HOST STAGE · ANDROID</span>
                   </div>
                   <div class="mock-dots" aria-hidden="true"><span></span><span></span><span></span></div>
                 </div>
-                <div class="mock-desktop-body" aria-hidden="true">
-                  <!-- Col 1 -->
-                  <div class="mock-wire-card is-col-1">
-                    <div class="mw-head">
-                      <span class="mw-badge-dot"></span>
-                      <span class="mw-line" style="width:68%;"></span>
-                    </div>
-                    <div class="mw-orb"><span></span></div>
-                    <div class="mock-wire-x is-cyan"></div>
-                    <div class="mock-bars">
-                      <span style="width:88%;"></span>
-                      <span style="width:62%;"></span>
-                    </div>
-                    <div class="mw-pill-btn"></div>
-                  </div>
-                  <!-- Col 2 -->
-                  <div class="mock-wire-card is-col-2">
-                    <div class="mock-wire-x is-cyan"></div>
-                    <div class="mock-bars">
-                      <span style="width:94%;"></span>
-                      <span style="width:72%;"></span>
-                    </div>
-                    <div class="mw-cyan-block"></div>
-                    <div class="mw-mini-rows">
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </div>
-                  <!-- Col 3 -->
-                  <div class="mock-wire-card is-col-3">
-                    <div class="mw-head">
-                      <span class="mw-line" style="width:80%;"></span>
-                    </div>
-                    <div class="mw-split-boxes">
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div class="mock-wire-x"></div>
-                    <div class="mw-pill-btn is-gold"></div>
-                  </div>
+                <div class="mock-desktop-screen">
+                  <img
+                    id="mockDesktopImg"
+                    class="mock-desktop-img"
+                    src="images/apps/asingasong/screen-1-host.png"
+                    alt="A Sing A Song Music — Host Stage"
+                  />
                 </div>
               </div>
 
@@ -177,22 +189,17 @@
                 <!-- Left Phone -->
                 <div class="mock-phone is-left">
                   <div class="phone-notch"></div>
-                  <div class="phone-screen">
+                  <div class="phone-screen is-media-screen">
                     <div class="phone-app-bar">
-                      <span class="phone-back" aria-hidden="true">‹</span>
-                      <span class="phone-label">CARD HAND</span>
-                      <span class="phone-dot-btn" aria-hidden="true"></span>
+                      <span class="phone-label">ADD MUSIC</span>
                     </div>
-                    <div class="mock-wire-x phone-x-lg" aria-hidden="true"></div>
-                    <div class="mock-bars is-muted" aria-hidden="true">
-                      <span style="width:90%;"></span>
-                      <span style="width:72%;"></span>
-                      <span style="width:54%;"></span>
+                    <div class="phone-media-frame">
+                      <img
+                        class="phone-screen-img"
+                        src="images/apps/asingasong/screen-2-request.png"
+                        alt="Add Music screen"
+                      />
                     </div>
-                    <div class="phone-mini-grid" aria-hidden="true">
-                      <span></span><span></span><span></span><span></span>
-                    </div>
-                    <div class="phone-cta is-outline" aria-hidden="true"></div>
                   </div>
                 </div>
 
@@ -203,22 +210,16 @@
                     <span class="status-icons"><i></i><i></i><i></i></span>
                   </div>
                   <div class="phone-notch is-island"></div>
-                  <div class="phone-screen is-gold-screen">
+                  <div class="phone-screen is-gold-screen is-media-screen">
                     <div class="phone-app-bar">
-                      <span class="phone-avatar" aria-hidden="true"></span>
-                      <span class="phone-label">HUD CORE</span>
-                      <span class="phone-search" aria-hidden="true"></span>
+                      <span class="phone-label">MUSIC QUEUE</span>
                     </div>
-                    <div class="phone-hero-card">
-                      <div class="mock-wire-x" aria-hidden="true"></div>
-                      <div class="mock-bars" style="margin-top:6px;" aria-hidden="true">
-                        <span style="width:88%;"></span>
-                        <span style="width:62%;"></span>
-                      </div>
-                      <div class="phone-mini-tag" aria-hidden="true">ACTIVE</div>
-                    </div>
-                    <div class="phone-tab-bar" aria-hidden="true">
-                      <span class="is-on"></span><span></span><span></span><span></span>
+                    <div class="phone-media-frame">
+                      <img
+                        class="phone-screen-img"
+                        src="images/apps/asingasong/screen-3-queue.png"
+                        alt="Music Queue screen"
+                      />
                     </div>
                   </div>
                 </div>
@@ -226,155 +227,94 @@
                 <!-- Right Phone -->
                 <div class="mock-phone is-right">
                   <div class="phone-notch"></div>
-                  <div class="phone-screen">
+                  <div class="phone-screen is-media-screen">
                     <div class="phone-app-bar">
-                      <span class="phone-back" aria-hidden="true">‹</span>
-                      <span class="phone-label">TUNNEL FX</span>
-                      <span class="phone-dot-btn" aria-hidden="true"></span>
+                      <span class="phone-label">VOICE &amp; QR</span>
                     </div>
-                    <div class="phone-holo-banner" aria-hidden="true">
-                      <svg viewBox="0 0 80 42" width="66" height="34">
-                        <ellipse cx="40" cy="34" rx="26" ry="5" fill="rgba(250,204,21,0.22)" stroke="#facc15" stroke-width="1" />
-                        <polygon points="40,5 56,14 40,23 24,14" fill="rgba(253,224,71,0.26)" stroke="#fef08a" stroke-width="1.2" />
-                        <polygon points="24,14 40,23 40,34 24,25" fill="rgba(250,204,21,0.12)" stroke="#facc15" stroke-width="1" />
-                        <polygon points="56,14 40,23 40,34 56,25" fill="rgba(250,204,21,0.18)" stroke="#facc15" stroke-width="1" />
-                        <circle cx="40" cy="18" r="3" fill="#fef08a" />
-                      </svg>
+                    <div class="phone-media-frame">
+                      <img
+                        class="phone-screen-img"
+                        src="images/apps/asingasong/promo.jpg"
+                        style="object-position: 82% 52%;"
+                        alt="Voice Search and Venue"
+                      />
                     </div>
-                    <div class="phone-list-card" aria-hidden="true">
-                      <span class="plc-icon"></span>
-                      <div class="plc-lines">
-                        <span style="width:86%;"></span>
-                        <span style="width:58%;"></span>
-                      </div>
-                    </div>
-                    <div class="mock-bars is-muted" aria-hidden="true">
-                      <span style="width:82%;"></span>
-                      <span style="width:56%;"></span>
-                    </div>
-                    <div class="phone-cta is-solid" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Bottom-Left Typography Callout -->
+          <!-- Bottom-Left Product Overview & Tech Specs -->
           <div class="product-bottom-callout">
-            <span class="callout-kicker" data-th="FEATURED WORKS" data-en="FEATURED WORKS">FEATURED WORKS</span>
-            <h2 class="product-callout-title" data-th="Interactive UI/UX" data-en="Interactive UI/UX">Interactive UI/UX</h2>
-            <p class="product-callout-sub" data-th="งานออกแบบดิจิทัลและเทคโนโลยีเพื่อประสบการณ์ระดับพรีเมียม" data-en="Digital Art &amp; Tech Showcase">งานออกแบบดิจิทัลและเทคโนโลยีเพื่อประสบการณ์ระดับพรีเมียม</p>
+            <span class="callout-kicker" id="productCalloutKicker">MUSIC &amp; VENUE · ANDROID HOST + WEB APP</span>
+            <h2 class="product-callout-title" id="productCalloutTitle">A Sing A Song Music</h2>
+            <p class="product-callout-sub" id="productCalloutSub">
+              ระบบขอเพลงผ่าน QR Code ประจำโต๊ะและจัดการคิวเวทีอัจฉริยะ คุมทั้งร้านได้ด้วยมือถือหรือแท็บเล็ต Android เครื่องเดียว ลูกค้าสแกนขอเพลงผ่านเว็บได้ทันทีไม่ต้องลงแอป
+            </p>
+            <div class="product-spec-chips" id="productSpecChips">
+              <span class="product-spec-chip">Android Host APK (10.6 MB)</span>
+              <span class="product-spec-chip">เว็บลูกค้าไม่ต้องลงแอป</span>
+              <span class="product-spec-chip">Local-First SQLite</span>
+              <span class="product-spec-chip">Cloudflare Relay</span>
+              <span class="product-spec-chip">2 ภาษา TH / EN</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right Sidebar: 3D Hologram Trio + Featured Project List + Cyber Tags -->
+        <!-- Right Sidebar: Selected Product Key Highlights & Quick Stats -->
         <aside class="product-sidebar">
-          <!-- Top Hologram Trio Box -->
-          <article class="holo-trio-card" aria-label="3D Wireframe Hologram Trio">
-            <div class="holo-trio-sparkles" aria-hidden="true"></div>
-            <div class="holo-trio-grid" aria-hidden="true">
-              <!-- Holo 1: Isometric Stacked Architecture Tower -->
-              <svg class="holo-svg" viewBox="0 0 110 110" fill="none">
-                <defs>
-                  <radialGradient id="hGlow1" cx="50%" cy="55%" r="48%">
-                    <stop offset="0%" stop-color="#fde047" stop-opacity="0.45" />
-                    <stop offset="100%" stop-color="#facc15" stop-opacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="55" cy="56" r="44" fill="url(#hGlow1)" />
-                <polygon points="55,64 88,78 55,92 22,78" fill="rgba(250,204,21,0.1)" stroke="#facc15" stroke-width="1.2" />
-                <polygon points="55,46 86,59 55,72 24,59" fill="rgba(250,204,21,0.14)" stroke="#fde047" stroke-width="1.3" />
-                <polygon points="55,28 84,40 55,52 26,40" fill="rgba(253,224,71,0.18)" stroke="#fef08a" stroke-width="1.4" />
-                <rect x="46" y="14" width="18" height="58" rx="4" fill="rgba(254,240,138,0.14)" stroke="#fef08a" stroke-width="1.2" />
-                <line x1="55" y1="10" x2="55" y2="86" stroke="#fef08a" stroke-width="1.4" stroke-dasharray="3 3" />
-                <circle cx="34" cy="30" r="1.5" fill="#fef08a" />
-                <circle cx="78" cy="24" r="1.5" fill="#fde047" />
-              </svg>
-
-              <!-- Holo 2: Concentric Radial HUD Core -->
-              <svg class="holo-svg" viewBox="0 0 110 110" fill="none">
-                <defs>
-                  <radialGradient id="hGlow2" cx="50%" cy="50%" r="48%">
-                    <stop offset="0%" stop-color="#fef08a" stop-opacity="0.55" />
-                    <stop offset="65%" stop-color="#facc15" stop-opacity="0.16" />
-                    <stop offset="100%" stop-color="#facc15" stop-opacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="55" cy="55" r="44" fill="url(#hGlow2)" />
-                <rect x="18" y="18" width="74" height="74" rx="14" stroke="rgba(250,204,21,0.4)" stroke-width="1.2" />
-                <circle cx="55" cy="55" r="28" stroke="#facc15" stroke-width="1.5" stroke-dasharray="8 4" />
-                <circle cx="55" cy="55" r="20" stroke="#fde047" stroke-width="2" />
-                <circle cx="55" cy="55" r="11" fill="rgba(254,240,138,0.28)" stroke="#fef08a" stroke-width="1.4" />
-                <circle cx="55" cy="55" r="4.5" fill="#fef08a" />
-                <line x1="55" y1="22" x2="55" y2="31" stroke="#fef08a" stroke-width="1.5" />
-                <line x1="55" y1="79" x2="55" y2="88" stroke="#fef08a" stroke-width="1.5" />
-                <line x1="22" y1="55" x2="31" y2="55" stroke="#fef08a" stroke-width="1.5" />
-                <line x1="79" y1="55" x2="88" y2="55" stroke="#fef08a" stroke-width="1.5" />
-              </svg>
-
-              <!-- Holo 3: Isometric 3D Cluster Matrix -->
-              <svg class="holo-svg" viewBox="0 0 110 110" fill="none">
-                <defs>
-                  <radialGradient id="hGlow3" cx="50%" cy="55%" r="48%">
-                    <stop offset="0%" stop-color="#fde047" stop-opacity="0.48" />
-                    <stop offset="100%" stop-color="#facc15" stop-opacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="55" cy="56" r="44" fill="url(#hGlow3)" />
-                <polygon points="55,62 92,46 55,30 18,46" fill="rgba(250,204,21,0.12)" stroke="#facc15" stroke-width="1.2" />
-                <polygon points="55,90 92,72 55,54 18,72" fill="rgba(250,204,21,0.16)" stroke="#fde047" stroke-width="1.2" />
-                <!-- Center extruded prism -->
-                <polygon points="55,16 70,24 55,32 40,24" fill="rgba(254,240,138,0.45)" stroke="#fef08a" stroke-width="1.2" />
-                <polygon points="40,24 55,32 55,60 40,52" fill="rgba(250,204,21,0.22)" stroke="#fde047" stroke-width="1.2" />
-                <polygon points="70,24 55,32 55,60 70,52" fill="rgba(250,204,21,0.34)" stroke="#fde047" stroke-width="1.2" />
-                <!-- Side micro prisms -->
-                <polygon points="31,38 40,43 31,48 22,43" fill="rgba(254,240,138,0.35)" stroke="#fef08a" stroke-width="1" />
-                <polygon points="79,34 88,39 79,44 70,39" fill="rgba(254,240,138,0.35)" stroke="#fef08a" stroke-width="1" />
-                <circle cx="28" cy="24" r="1.5" fill="#fef08a" />
-                <circle cx="82" cy="22" r="1.8" fill="#fef08a" />
-              </svg>
-            </div>
-          </article>
-
-          <!-- Cyber Tags (placed before Featured Project List) -->
-          <div class="cyber-tags-block">
-            <span class="cyber-tags-heading" data-th="CYBER TAGS" data-en="CYBER TAGS">CYBER TAGS</span>
-            <div class="cyber-tags product-cyber-tags">
-              <button type="button" class="cyber-tag is-active" data-filter="ALL" aria-pressed="true">ALL</button>
-              <button type="button" class="cyber-tag" data-filter="UI/UX" aria-pressed="false">UI/UX</button>
-              <button type="button" class="cyber-tag" data-filter="3D" aria-pressed="false">3D</button>
-              <button type="button" class="cyber-tag" data-filter="SYSTEM" aria-pressed="false">SYSTEM</button>
-            </div>
-          </div>
-
-          <!-- Featured Project List Card -->
-          <article class="project-list-card">
+          <article class="product-detail-card" aria-label="Selected Product Key Highlights">
             <div class="panel-header">
-              <span class="project-list-kicker" data-th="FEATURED PROJECT LIST" data-en="FEATURED PROJECT LIST">FEATURED PROJECT LIST</span>
+              <span class="project-list-kicker" data-th="จุดเด่นและสถาปัตยกรรม" data-en="KEY HIGHLIGHTS">จุดเด่นและสถาปัตยกรรม</span>
+              <span class="panel-badge" id="productPlatformBadge">ANDROID + WEB</span>
             </div>
 
-            <div class="project-list">
-              <button type="button" class="project-item is-active" data-project="cyber-deck" data-tag="UI/UX">
-                <span>Futuristic Project</span>
-                <span class="project-item-meta" aria-hidden="true">›</span>
-              </button>
-              <button type="button" class="project-item" data-project="spatial-ui" data-tag="3D">
-                <span>3D Futuristic UI</span>
-                <span class="project-item-meta" aria-hidden="true">›</span>
-              </button>
-              <button type="button" class="project-item" data-project="holo-mockup" data-tag="UI/UX">
-                <span>Futuristic Mockup</span>
-                <span class="project-item-meta" aria-hidden="true">›</span>
-              </button>
-              <button type="button" class="project-item" data-project="proto-core" data-tag="SYSTEM">
-                <span>Futuristic Prototype</span>
-                <span class="project-item-meta" aria-hidden="true">›</span>
-              </button>
-            </div>
+            <ul class="product-feature-list" id="productHighlightsList">
+              <li class="product-feature-item">
+                <span class="pf-num">01</span>
+                <div class="pf-copy">
+                  <strong>สแกน QR ขอเพลงผ่านเว็บ (1 โต๊ะหลายเครื่อง)</strong>
+                  <span>ลูกค้าสแกน QR ประจำโต๊ะผ่านเบราว์เซอร์ทันที รองรับ Voice Search และคลัง YouTube Music โดยไม่ต้องลงแอป</span>
+                </div>
+              </li>
+              <li class="product-feature-item">
+                <span class="pf-num">02</span>
+                <div class="pf-copy">
+                  <strong>จัดคิวแฟร์ทุกโต๊ะ (Fair Round-Robin)</strong>
+                  <span>หมุนเวียนคิวเพลงให้ทุกโต๊ะอย่างเท่าเทียม หมดปัญหาโต๊ะดักคิว พร้อมแจ้งเวลารอเรียลไทม์และไม่ลบเพลงเมื่อลูกค้าปิดแท็บ</span>
+                </div>
+              </li>
+              <li class="product-feature-item">
+                <span class="pf-num">03</span>
+                <div class="pf-copy">
+                  <strong>เวทีเล่นต่อเนื่องไม่สะดุด (Local SQLite)</strong>
+                  <span>ข้อมูลเก็บในเครื่อง Host 100% เปิดจัดการโต๊ะ เคลียร์คิว หรือตั้งค่าได้โดยเพลงบนเวทีไม่หยุดเล่นแม้แต่วินาทีเดียว</span>
+                </div>
+              </li>
+              <li class="product-feature-item">
+                <span class="pf-num">04</span>
+                <div class="pf-copy">
+                  <strong>ไม่จำกัดโต๊ะ &amp; แพ็กเกจยืดหยุ่น (VIP 0–3)</strong>
+                  <span>เปิดใช้ได้ 1–100 โต๊ะทุกแพ็กเกจ เริ่มจากฟรี (2 เครื่อง) ถึง VIP 30–300 เครื่อง พร้อมชำระเงิน PromptPay / บัตรผ่าน Stripe</span>
+                </div>
+              </li>
+            </ul>
 
-            <a href="sample.html" class="btn-gold project-open-btn" id="openProjectBtn" data-th="เปิดดูตัวอย่าง" data-en="OPEN SAMPLE">
-              เปิดดูตัวอย่าง
-            </a>
+            <div class="product-meta-strip" id="productMetaStrip">
+              <div class="pm-stat">
+                <span class="pm-label">สถาปัตยกรรม</span>
+                <span class="pm-val">SQLite + Relay</span>
+              </div>
+              <div class="pm-stat">
+                <span class="pm-label">รองรับโต๊ะ</span>
+                <span class="pm-val">1–100 โต๊ะ</span>
+              </div>
+              <div class="pm-stat">
+                <span class="pm-label">แพ็กเกจ</span>
+                <span class="pm-val">ฟรี / เริ่ม ฿49</span>
+              </div>
+            </div>
           </article>
         </aside>
       </section>
@@ -383,6 +323,6 @@
 
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="subpage.js?v=13"></script>
+  <script src="subpage.js?v=15"></script>
 </body>
 </html>

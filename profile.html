@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PROFILE — BIGFATHER</title>
-  <meta name="description" content="BIGFATHER — ตัวตน วิสัยทัศน์ ทักษะ และเส้นทางผลงาน" />
+  <meta name="description" content="BIGFATHER — ตัวตน วิสัยทัศน์ และทักษะการพัฒนาซอฟต์แวร์" />
   <meta name="theme-color" content="#121316" />
   <meta property="og:title" content="PROFILE — BIGFATHER" />
-  <meta property="og:description" content="BIGFATHER — ตัวตน วิสัยทัศน์ ทักษะ และเส้นทางผลงาน" />
+  <meta property="og:description" content="BIGFATHER — ตัวตน วิสัยทัศน์ และทักษะการพัฒนาซอฟต์แวร์" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og-preview.jpg?v=2" />
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
   <link rel="stylesheet" href="styles.css?v=16" />
-  <link rel="stylesheet" href="subpage.css?v=13" />
+  <link rel="stylesheet" href="subpage.css?v=14" />
 </head>
 <body class="is-subpage" data-page="profile">
   <!-- Hardware-Accelerated Tunnel Background Video -->
@@ -90,7 +90,7 @@
 
       <section class="profile-grid">
         <!-- Left Panel: Identity Dossier -->
-        <article class="hud-panel is-accent">
+        <article class="hud-panel is-accent profile-identity-panel">
           <div class="panel-header">
             <span class="panel-kicker">IDENTITY DOSSIER</span>
             <span class="panel-badge">PR</span>
@@ -135,118 +135,384 @@
           </div>
         </article>
 
-        <!-- Center Panel: Interactive Vision / Tech Matrix / Timeline -->
-        <article class="hud-panel">
+        <!-- Right Panel: Core Architecture (Skills & Vision) -->
+        <article class="hud-panel profile-core-panel">
           <div class="panel-header">
             <span class="panel-kicker" data-th="CORE ARCHITECTURE" data-en="CORE ARCHITECTURE">CORE ARCHITECTURE</span>
             <div class="tab-switch" role="tablist">
-              <button type="button" class="tab-btn is-active" id="tabBtnSkills" role="tab" aria-selected="true" aria-controls="tabPaneSkills" data-tab="skills" data-th="ทักษะ" data-en="STACK">ทักษะ</button>
+              <button type="button" class="tab-btn is-active" id="tabBtnSkills" role="tab" aria-selected="true" aria-controls="tabPaneSkills" data-tab="skills" data-th="ทักษะ" data-en="SKILLS">ทักษะ</button>
               <button type="button" class="tab-btn" id="tabBtnVision" role="tab" aria-selected="false" aria-controls="tabPaneVision" data-tab="vision" data-th="วิสัยทัศน์" data-en="VISION">วิสัยทัศน์</button>
-              <button type="button" class="tab-btn" id="tabBtnTimeline" role="tab" aria-selected="false" aria-controls="tabPaneTimeline" data-tab="timeline" data-th="เส้นทาง" data-en="TIMELINE">เส้นทาง</button>
             </div>
           </div>
 
           <div class="profile-tab-pane is-active" id="tabPaneSkills" role="tabpanel" aria-labelledby="tabBtnSkills" data-pane="skills">
-            <div class="skill-row">
-              <div class="skill-top">
-                <span data-th="Interactive UI/UX &amp; Design Systems" data-en="Interactive UI/UX &amp; Design Systems">Interactive UI/UX &amp; Design Systems</span>
-                <span class="skill-pct">96%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-fill" style="width: 96%;"></div></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-top">
-                <span data-th="CSS 3D / SVG &amp; Hardware-Accelerated Motion" data-en="CSS 3D / SVG &amp; Hardware-Accelerated Motion">CSS 3D / SVG &amp; Hardware-Accelerated Motion</span>
-                <span class="skill-pct">94%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-fill" style="width: 94%;"></div></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-top">
-                <span data-th="Full-Stack Web &amp; App Engineering" data-en="Full-Stack Web &amp; App Engineering">Full-Stack Web &amp; App Engineering</span>
-                <span class="skill-pct">92%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-fill" style="width: 92%;"></div></div>
-            </div>
-            <div class="skill-row">
-              <div class="skill-top">
-                <span data-th="QA Testing &amp; System Optimization" data-en="QA Testing &amp; System Optimization">QA Testing &amp; System Optimization</span>
-                <span class="skill-pct">95%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
+            <div class="skill-filter-bar" role="group" aria-label="Skill categories">
+              <button type="button" class="skill-filter-btn is-active" data-cat="all" aria-pressed="true"><span data-th="ทั้งหมด (6)" data-en="ALL (6)">ทั้งหมด (6)</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="01" aria-pressed="false"><span class="sf-num">01</span><span data-th="Core Dev" data-en="Core Dev">Core Dev</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="02" aria-pressed="false"><span class="sf-num">02</span><span data-th="Frontend" data-en="Frontend">Frontend</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="03" aria-pressed="false"><span class="sf-num">03</span><span data-th="Backend &amp; API" data-en="Backend &amp; API">Backend &amp; API</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="04" aria-pressed="false"><span class="sf-num">04</span><span data-th="Database" data-en="Database">Database</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="05" aria-pressed="false"><span class="sf-num">05</span><span data-th="DevOps &amp; Cloud" data-en="DevOps &amp; Cloud">DevOps &amp; Cloud</span></button>
+              <button type="button" class="skill-filter-btn" data-cat="06" aria-pressed="false"><span class="sf-num">06</span><span data-th="Tools &amp; Soft" data-en="Tools &amp; Soft">Tools &amp; Soft</span></button>
             </div>
 
-            <div class="cyber-tags" style="margin-top: 6px;">
-              <span class="cyber-tag is-active">CSS 3D / SVG</span>
-              <span class="cyber-tag">TYPESCRIPT</span>
-              <span class="cyber-tag">3D UI/UX</span>
-              <span class="cyber-tag">SYSTEM QA</span>
+            <div class="skill-cat-grid" id="skillCatGrid">
+              <!-- 01: Programming & Core Development -->
+              <section class="skill-cat-card" data-cat="01">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">01 // CORE</span>
+                    <h3 class="skill-cat-title">Programming &amp; Core Development</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ภาษาโปรแกรม" data-en="Languages">ภาษาโปรแกรม</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">JavaScript/TypeScript</span>
+                      <span class="skill-chip">Java</span>
+                      <span class="skill-chip">PHP</span>
+                      <span class="skill-chip">VB.Net</span>
+                      <span class="skill-chip">PL/SQL</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="หลักการเขียนโค้ด" data-en="Coding Principles">หลักการเขียนโค้ด</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">OOP <em class="skill-note">(Object-Oriented Programming)</em></span>
+                      <span class="skill-chip">Data Structures &amp; Algorithms</span>
+                      <span class="skill-chip">Design Patterns</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="การทดสอบและแก้ไข" data-en="Testing &amp; Debugging">การทดสอบและแก้ไข</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Unit Testing</span>
+                      <span class="skill-chip">Integration Testing</span>
+                      <span class="skill-chip">Debugging</span>
+                      <span class="skill-chip">Code Review</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 02: Website & Web Application (Frontend) -->
+              <section class="skill-cat-card is-cyan" data-cat="02">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="16" rx="2" />
+                      <line x1="3" y1="9" x2="21" y2="9" />
+                      <line x1="9" y1="20" x2="9" y2="9" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">02 // FRONTEND</span>
+                    <h3 class="skill-cat-title">Website &amp; Web Application (Frontend)</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="โครงสร้างและสไตล์" data-en="Structure &amp; Styling">โครงสร้างและสไตล์</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">HTML5</span>
+                      <span class="skill-chip">CSS3</span>
+                      <span class="skill-chip">Tailwind CSS</span>
+                      <span class="skill-chip">Bootstrap</span>
+                      <span class="skill-chip">Responsive &amp; Mobile-First Design</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="Framework &amp; Library" data-en="Frameworks &amp; Libraries">Framework &amp; Library</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">React</span>
+                      <span class="skill-chip">Next.js</span>
+                      <span class="skill-chip">Vue.js</span>
+                      <span class="skill-chip">Nuxt.js</span>
+                      <span class="skill-chip">Angular</span>
+                      <span class="skill-chip">jQuery</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 03: Web Application (Backend & API) -->
+              <section class="skill-cat-card" data-cat="03">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="7" rx="2" />
+                      <rect x="2" y="14" width="20" height="7" rx="2" />
+                      <line x1="6" y1="6.5" x2="6.01" y2="6.5" />
+                      <line x1="6" y1="17.5" x2="6.01" y2="17.5" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">03 // BACKEND &amp; API</span>
+                    <h3 class="skill-cat-title">Web Application (Backend &amp; API)</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="Framework" data-en="Frameworks">Framework</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Node.js <em class="skill-note">(Express)</em></span>
+                      <span class="skill-chip">PHP</span>
+                      <span class="skill-chip">Java</span>
+                      <span class="skill-chip">.NET Core</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="การเชื่อมต่อระบบ" data-en="System Integration">การเชื่อมต่อระบบ</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">RESTful API</span>
+                      <span class="skill-chip">WebSockets</span>
+                      <span class="skill-chip">JSON/XML <em class="skill-note" data-th="(เช่น ระบบชำระเงิน, แผนที่, Login)" data-en="(e.g., Payment, Maps, Login)">(เช่น ระบบชำระเงิน, แผนที่, Login)</em></span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ความปลอดภัยและสิทธิ์การใช้งาน" data-en="Security &amp; Access Control">ความปลอดภัยและสิทธิ์การใช้งาน</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Authentication &amp; Authorization <em class="skill-note">(JWT, OAuth2, Session)</em></span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 04: Database Management & Data -->
+              <section class="skill-cat-card is-cyan" data-cat="04">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <ellipse cx="12" cy="5" rx="9" ry="3" />
+                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">04 // DATABASE</span>
+                    <h3 class="skill-cat-title">Database Management &amp; Data</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ฐานข้อมูลเชิงสัมพันธ์ (SQL)" data-en="Relational Databases (SQL)">ฐานข้อมูลเชิงสัมพันธ์ (SQL)</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">MySQL</span>
+                      <span class="skill-chip">PostgreSQL</span>
+                      <span class="skill-chip">Microsoft SQL Server</span>
+                      <span class="skill-chip">Oracle</span>
+                      <span class="skill-chip">SQLite</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ฐานข้อมูลไม่เชิงสัมพันธ์ (NoSQL)" data-en="Non-Relational Databases (NoSQL)">ฐานข้อมูลไม่เชิงสัมพันธ์ (NoSQL)</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">MongoDB</span>
+                      <span class="skill-chip">Firebase Firestore</span>
+                      <span class="skill-chip">Redis <em class="skill-note">(Caching)</em></span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="การออกแบบและบริหารจัดการ" data-en="Design &amp; Management">การออกแบบและบริหารจัดการ</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Database Design &amp; Normalization</span>
+                      <span class="skill-chip">ERD <em class="skill-note">(Entity-Relationship Diagram)</em></span>
+                      <span class="skill-chip">Complex SQL Queries</span>
+                      <span class="skill-chip">Stored Procedures</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ประสิทธิภาพและความปลอดภัยข้อมูล" data-en="Performance &amp; Data Safety">ประสิทธิภาพและความปลอดภัยข้อมูล</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Indexing</span>
+                      <span class="skill-chip">Query Optimization</span>
+                      <span class="skill-chip">Data Migration</span>
+                      <span class="skill-chip">Backup &amp; Recovery</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 05: DevOps, Cloud & Deployment -->
+              <section class="skill-cat-card" data-cat="05">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">05 // DEVOPS &amp; CLOUD</span>
+                    <h3 class="skill-cat-title">DevOps, Cloud &amp; Deployment</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="Version Control" data-en="Version Control">Version Control</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Git</span>
+                      <span class="skill-chip">GitHub <em class="skill-note" data-th="(การทำ Branching, Pull Request)" data-en="(Branching, Pull Requests)">(การทำ Branching, Pull Request)</em></span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="Server &amp; Container" data-en="Server &amp; Container">Server &amp; Container</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Docker</span>
+                      <span class="skill-chip">Nginx</span>
+                      <span class="skill-chip">Apache</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="Cloud &amp; Hosting" data-en="Cloud &amp; Hosting">Cloud &amp; Hosting</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">AWS</span>
+                      <span class="skill-chip">Google Cloud Platform (GCP)</span>
+                      <span class="skill-chip">Microsoft Azure</span>
+                      <span class="skill-chip">Vercel</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 06: IT Operations, Tools & Soft Skills -->
+              <section class="skill-cat-card is-cyan" data-cat="06">
+                <div class="skill-cat-head">
+                  <div class="skill-cat-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                  </div>
+                  <div class="skill-cat-title-wrap">
+                    <span class="skill-cat-index">06 // OPS &amp; TOOLS</span>
+                    <h3 class="skill-cat-title">IT Operations, Tools &amp; Soft Skills</h3>
+                  </div>
+                </div>
+                <div class="skill-subgroups">
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="เครื่องมือพัฒนา" data-en="Development Tools">เครื่องมือพัฒนา</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">VS Code</span>
+                      <span class="skill-chip">Postman <em class="skill-note" data-th="(ทดสอบ API)" data-en="(API Testing)">(ทดสอบ API)</em></span>
+                      <span class="skill-chip">DBeaver/phpMyAdmin <em class="skill-note" data-th="(จัดการฐานข้อมูล)" data-en="(DB Management)">(จัดการฐานข้อมูล)</em></span>
+                      <span class="skill-chip">Google Antigravity</span>
+                      <span class="skill-chip">Google Stitch</span>
+                      <span class="skill-chip">Google Flow</span>
+                      <span class="skill-chip">Oracle SQL Developer</span>
+                      <span class="skill-chip">Oracle Enterprise Manager (OEM)</span>
+                    </div>
+                  </div>
+                  <div class="skill-subgroup">
+                    <div class="skill-sub-label"><span class="skill-sub-dot" aria-hidden="true"></span><span data-th="ทักษะเสริม" data-en="Soft Skills">ทักษะเสริม</span></div>
+                    <div class="skill-chip-list">
+                      <span class="skill-chip">Problem-Solving</span>
+                      <span class="skill-chip">System Analysis <em class="skill-note" data-th="(วิเคราะห์ความต้องการระบบ)" data-en="(Requirements Analysis)">(วิเคราะห์ความต้องการระบบ)</em></span>
+                      <span class="skill-chip">Technical Documentation</span>
+                      <span class="skill-chip">Teamwork &amp; Communication</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
 
           <div class="profile-tab-pane" id="tabPaneVision" role="tabpanel" aria-labelledby="tabBtnVision" data-pane="vision">
-            <div class="vision-card">
-              <p class="vision-quote" data-th="“สร้างซอฟต์แวร์ที่ให้ความรู้สึกเหมือนงานศิลปะเชิงโต้ตอบ — รวดเร็ว คมชัด และใช้งานง่ายบนทุกหน้าจอ”" data-en="“Crafting software that feels like living interactive art — fast, sharp, and effortless across every screen.”">
-                “สร้างซอฟต์แวร์ที่ให้ความรู้สึกเหมือนงานศิลปะเชิงโต้ตอบ — รวดเร็ว คมชัด และใช้งานง่ายบนทุกหน้าจอ”
-              </p>
-              <div class="principle-grid">
-                <div class="principle-box">
-                  <strong>PERFORMANCE</strong>
-                  <span data-th="แอนิเมชันลื่นไหลและประหยัด GPU บนมือถือ" data-en="60fps fluidity with mobile GPU guardrails">แอนิเมชันลื่นไหลและประหยัด GPU บนมือถือ</span>
+            <div class="vision-shell">
+              <div class="vision-hero">
+                <div class="vision-eyebrow">
+                  <span class="vision-dot" aria-hidden="true"></span>
+                  <span data-th="AI-ACCELERATED FULL-STACK VISION" data-en="AI-ACCELERATED FULL-STACK VISION">AI-ACCELERATED FULL-STACK VISION</span>
                 </div>
-                <div class="principle-box">
-                  <strong>CLARITY</strong>
-                  <span data-th="คอนทราสต์คมชัด อ่านง่ายทุกสภาพแสง" data-en="High-contrast slate &amp; gold visual hierarchy">คอนทราสต์คมชัด อ่านง่ายทุกสภาพแสง</span>
+                <h3 class="vision-headline" data-th="เปลี่ยนไอเดียให้เป็น App Mobile/PC, Web Application ที่ใช้งานได้จริงด้วยพลัง AI" data-en="Turning Ideas into Production Web Applications with AI Acceleration">
+                  เปลี่ยนไอเดียให้เป็น app mobile/pc, Web Application ที่ใช้งานได้จริงด้วยพลัง AI
+                </h3>
+                <p class="vision-statement" data-th="นักพัฒนาซอฟต์แวร์สาย Full-Stack ที่ใช้ AI เป็นตัวเร่งความเร็วในการเปลี่ยนไอเดียให้เป็น App Mobile/PC, Web Applicationn ที่ใช้งานได้จริง ลดระยะเวลาการพัฒนาในส่วนงานซ้ำซ้อน เพื่อทุ่มเทเวลาให้กับการวิเคราะห์โจทย์ธุรกิจ การปรับแต่งประสิทธิภาพฐานข้อมูล และการสร้างประสบการณ์ที่ดีที่สุดให้แก่ผู้ใช้งาน" data-en="A Full-Stack software developer who leverages AI as an accelerator to turn ideas into real, production-ready Web Applications—cutting down repetitive development work to focus deeply on business analysis, database performance tuning, and delivering the best possible user experience.">
+                  นักพัฒนาซอฟต์แวร์สาย Full-Stack ที่ใช้ AI เป็นตัวเร่งความเร็วในการเปลี่ยนไอเดียให้เป็น App Mobile/PC, Web Application ที่ใช้งานได้จริง ลดระยะเวลาการพัฒนาในส่วนงานซ้ำซ้อน เพื่อทุ่มเทเวลาให้กับการวิเคราะห์โจทย์ธุรกิจ การปรับแต่งประสิทธิภาพฐานข้อมูล และการสร้างประสบการณ์ที่ดีที่สุดให้แก่ผู้ใช้งาน
+                </p>
+              </div>
+
+              <div class="vision-flow" aria-label="AI-Accelerated Workflow">
+                <div class="vision-flow-step">
+                  <span class="vision-flow-kicker">01 // IDEA</span>
+                  <strong data-th="ไอเดีย &amp; โจทย์ธุรกิจ" data-en="Business Ideas">ไอเดีย &amp; โจทย์ธุรกิจ</strong>
+                </div>
+                <span class="vision-flow-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </span>
+                <div class="vision-flow-step is-highlight">
+                  <span class="vision-flow-kicker">02 // AI ACCELERATOR</span>
+                  <strong data-th="ลดงานซ้ำซ้อน เร่งสปีดพัฒนา" data-en="Cut Boilerplate &amp; Ship Faster">ลดงานซ้ำซ้อน เร่งสปีดพัฒนา</strong>
+                </div>
+                <span class="vision-flow-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </span>
+                <div class="vision-flow-step">
+                  <span class="vision-flow-kicker">03 // PRODUCTION</span>
+                  <strong data-th="Web App ที่ใช้งานได้จริง" data-en="Production-Ready Web App">Web App ที่ใช้งานได้จริง</strong>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="profile-tab-pane" id="tabPaneTimeline" role="tabpanel" aria-labelledby="tabBtnTimeline" data-pane="timeline">
-            <div class="timeline-list">
-              <div class="timeline-item">
-                <div class="timeline-yr">2026 // CURRENT</div>
-                <div class="timeline-title">BIGFATHER Interactive Hub</div>
-                <div class="timeline-desc" data-th="เปิดตัวแพลตฟอร์มการ์ด 3 มิติพร้อมระบบ Subpage HUD เต็มรูปแบบ" data-en="Launched 3D card-deck platform with unified HUD subpage architecture.">เปิดตัวแพลตฟอร์มการ์ด 3 มิติพร้อมระบบ Subpage HUD เต็มรูปแบบ</div>
+              <div class="vision-pillars">
+                <article class="vision-pillar-card">
+                  <div class="vision-pillar-head">
+                    <span class="vision-pillar-num">01</span>
+                    <div class="vision-pillar-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h4 data-th="วิเคราะห์โจทย์ธุรกิจ" data-en="Business Analysis">วิเคราะห์โจทย์ธุรกิจ</h4>
+                  <p data-th="ทุ่มเทเวลาทำความเข้าใจความต้องการและกระบวนการธุรกิจ เพื่อออกแบบระบบที่แก้ปัญหาได้ตรงจุด" data-en="Dedicating time to understand real requirements and workflows so every system solves the right problem.">
+                    ทุ่มเทเวลาทำความเข้าใจความต้องการและกระบวนการธุรกิจ เพื่อออกแบบระบบที่แก้ปัญหาได้ตรงจุด
+                  </p>
+                </article>
+
+                <article class="vision-pillar-card is-cyan">
+                  <div class="vision-pillar-head">
+                    <span class="vision-pillar-num">02</span>
+                    <div class="vision-pillar-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3" />
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h4 data-th="ปรับแต่งประสิทธิภาพฐานข้อมูล" data-en="Database Optimization">ปรับแต่งประสิทธิภาพฐานข้อมูล</h4>
+                  <p data-th="ออกแบบโครงสร้างข้อมูล Indexing และปรับจูน Query ให้ระบบทำงานได้รวดเร็วและเสถียร" data-en="Structuring schemas, indexing, and optimizing queries for fast, reliable, scalable performance.">
+                    ออกแบบโครงสร้างข้อมูล Indexing และปรับจูน Query ให้ระบบทำงานได้รวดเร็วและเสถียร
+                  </p>
+                </article>
+
+                <article class="vision-pillar-card">
+                  <div class="vision-pillar-head">
+                    <span class="vision-pillar-num">03</span>
+                    <div class="vision-pillar-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l2.4 7.4h7.6l-6.1 4.5 2.3 7.4L12 16.8l-6.2 4.5 2.3-7.4L2 9.4h7.6z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h4 data-th="ประสบการณ์ที่ดีที่สุดของผู้ใช้" data-en="Best User Experience">ประสบการณ์ที่ดีที่สุดของผู้ใช้</h4>
+                  <p data-th="สร้างอินเทอร์เฟซที่ลื่นไหล คมชัด และใช้งานง่ายบนทุกอุปกรณ์เพื่อส่งมอบคุณค่าสูงสุด" data-en="Crafting fluid, clear, effortless interfaces across every device to deliver maximum user value.">
+                    สร้างอินเทอร์เฟซที่ลื่นไหล คมชัด และใช้งานง่ายบนทุกอุปกรณ์เพื่อส่งมอบคุณค่าสูงสุด
+                  </p>
+                </article>
               </div>
-              <div class="timeline-item">
-                <div class="timeline-yr">2024 // SUITE</div>
-                <div class="timeline-title">Modular Product &amp; QA Lab</div>
-                <div class="timeline-desc" data-th="พัฒนาระบบ UI Kit, App Installers และห้องทดลองประสิทธิภาพอัตโนมัติ" data-en="Built modular UI kits, installers, and automated telemetry QA labs.">พัฒนาระบบ UI Kit, App Installers และห้องทดลองประสิทธิภาพอัตโนมัติ</div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Right Panel: Hologram Identity Crest & Quick Actions -->
-        <article class="hud-panel">
-          <div class="panel-header">
-            <span class="panel-kicker" data-th="CAPABILITY MATRIX" data-en="CAPABILITY MATRIX">CAPABILITY MATRIX</span>
-            <span class="panel-badge">SYNCED</span>
-          </div>
-
-          <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
-            <svg viewBox="0 0 220 150" width="210" height="144" aria-hidden="true">
-              <defs>
-                <radialGradient id="profGlow" cx="50%" cy="76%" r="50%">
-                  <stop offset="0%" stop-color="rgba(250,204,21,0.45)" />
-                  <stop offset="100%" stop-color="rgba(250,204,21,0)" />
-                </radialGradient>
-              </defs>
-              <ellipse cx="110" cy="122" rx="84" ry="18" fill="url(#profGlow)" stroke="#facc15" stroke-width="1.6" />
-              <ellipse cx="110" cy="122" rx="56" ry="11" fill="none" stroke="rgba(56,226,255,0.65)" stroke-width="1" stroke-dasharray="4 4" />
-              <polygon points="110,20 154,46 154,94 110,120 66,94 66,46" fill="rgba(250,204,21,0.08)" stroke="#fde047" stroke-width="2" />
-              <polygon points="110,36 140,54 140,88 110,106 80,88 80,54" fill="rgba(56,226,255,0.12)" stroke="#38e2ff" stroke-width="1.4" />
-              <line x1="110" y1="20" x2="110" y2="120" stroke="rgba(250,204,21,0.45)" stroke-width="1" />
-              <line x1="66" y1="46" x2="154" y2="94" stroke="rgba(250,204,21,0.35)" stroke-width="1" />
-              <line x1="154" y1="46" x2="66" y2="94" stroke="rgba(250,204,21,0.35)" stroke-width="1" />
-              <circle cx="110" cy="70" r="8" fill="#fde047" />
-            </svg>
-
-            <div style="width:100%; display:flex; flex-direction:column; gap:8px;">
-              <a href="product.html" class="btn-outline" style="width:100%;" data-th="ดูผลงานทั้งหมด →" data-en="EXPLORE PRODUCTS →">
-                ดูผลงานทั้งหมด →
-              </a>
             </div>
           </div>
         </article>
@@ -268,6 +534,6 @@
 
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="subpage.js?v=13"></script>
+  <script src="subpage.js?v=14"></script>
 </body>
 </html>

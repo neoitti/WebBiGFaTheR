@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SAMPLE — BIGFATHER</title>
-  <meta name="description" content="BIGFATHER — ทดสอบประสิทธิภาพ QA Lab และมาตรฐานระบบจริง" />
+  <meta name="description" content="BIGFATHER — ทดลองใช้งานเว็บแอปพลิเคชันและระบบจริงแบบอินเทอร์แอคทีฟ (Live Demo)" />
   <meta name="theme-color" content="#121316" />
   <meta property="og:title" content="SAMPLE — BIGFATHER" />
-  <meta property="og:description" content="BIGFATHER — ทดสอบประสิทธิภาพ QA Lab และมาตรฐานระบบจริง" />
+  <meta property="og:description" content="BIGFATHER — ทดลองใช้งานเว็บแอปพลิเคชันและระบบจริงแบบอินเทอร์แอคทีฟ (Live Demo)" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og-preview.jpg?v=2" />
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=3" />
@@ -15,10 +15,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3" />
   <link rel="stylesheet" href="fonts/fonts.css" />
   <link rel="stylesheet" href="styles.css?v=16" />
-  <link rel="stylesheet" href="subpage.css?v=13" />
+  <link rel="stylesheet" href="subpage.css?v=17" />
 </head>
 <body class="is-subpage" data-page="sample">
-  <!-- Deep-Sinking Cyan Tunnel Background Video -->
+  <!-- Hardware-Accelerated Tunnel Background Video -->
   <div class="bg-stage bg-stage-fixed" aria-hidden="true">
     <video
       class="bg-tunnel-video"
@@ -67,199 +67,235 @@
           <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
         </div>
         <div class="deck-status">
-          <span class="status-label" data-th="กำลังดู" data-en="ACTIVE">กำลังดู</span>
+          <span class="status-label" data-th="ทดลองระบบ" data-en="LIVE DEMO">ทดลองระบบ</span>
           <span class="status-value">SAMPLE</span>
         </div>
       </div>
     </header>
 
-    <!-- Main Test Lab HUD -->
-    <main class="subpage-main test-main">
-      <section class="test-layout">
-        <!-- Top-Left Hero Title -->
-        <header class="page-hero test-hero">
-          <div class="page-hero-titles">
-            <h1 class="page-title">SAMPLE</h1>
-            <p class="page-subtitle" data-th="ตัวอย่างระบบและ QA LAB" data-en="LAB &amp; QA TESTING">ตัวอย่างระบบและ QA LAB</p>
-          </div>
-        </header>
-
-        <!-- Left Stage: Exploded 3D Calibration Cube + Floating Console Dock -->
-        <div class="test-center-col">
-          <div class="calibration-viewport-card" id="calibrationCore" data-mode="PLAY">
-            <div class="cal-stage" role="img" aria-label="Interactive 3D Calibration Cube Core">
-              <div class="cal-chamber-bg" aria-hidden="true"></div>
-              <svg class="cal-beams-svg" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="calBeamCyan" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="rgba(56, 232, 255, 0)" />
-                    <stop offset="50%" stop-color="rgba(56, 232, 255, 0.55)" />
-                    <stop offset="100%" stop-color="rgba(56, 232, 255, 0)" />
-                  </linearGradient>
-                  <linearGradient id="calBeamMagenta" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="rgba(255, 79, 216, 0)" />
-                    <stop offset="50%" stop-color="rgba(255, 79, 216, 0.45)" />
-                    <stop offset="100%" stop-color="rgba(255, 79, 216, 0)" />
-                  </linearGradient>
-                </defs>
-                <line x1="20" y1="20" x2="260" y2="180" stroke="url(#calBeamCyan)" stroke-width="1.2" />
-                <line x1="580" y1="20" x2="340" y2="180" stroke="url(#calBeamMagenta)" stroke-width="1.2" />
-                <line x1="20" y1="380" x2="260" y2="220" stroke="url(#calBeamMagenta)" stroke-width="1.2" />
-                <line x1="580" y1="380" x2="340" y2="220" stroke="url(#calBeamCyan)" stroke-width="1.2" />
-                <circle cx="300" cy="200" r="142" fill="none" stroke="rgba(56, 232, 255, 0.16)" stroke-dasharray="6 8" />
-                <circle cx="300" cy="200" r="176" fill="none" stroke="rgba(255, 79, 216, 0.12)" stroke-dasharray="3 9" />
-              </svg>
-              <div class="cal-lens-ring is-ring-1" aria-hidden="true"></div>
-              <div class="cal-lens-ring is-ring-2" aria-hidden="true"></div>
-              <div class="cal-lens-ring is-ring-3" aria-hidden="true"></div>
-              <div class="cal-lens-ring is-ring-4" aria-hidden="true"></div>
-              <div class="cal-cube-drag">
-                <div class="cal-cube-3d" aria-hidden="true">
-                  <div class="cal-face is-front"></div>
-                  <div class="cal-face is-back"></div>
-                  <div class="cal-face is-right"></div>
-                  <div class="cal-face is-left"></div>
-                  <div class="cal-face is-top"></div>
-                  <div class="cal-face is-bottom"></div>
-                  <div class="cal-core-orb"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="console-dock" role="group" aria-label="Test Console Controls">
-            <span class="console-label">CONSOLE</span>
-            <div class="console-buttons">
-              <button type="button" class="console-btn is-active" data-console-cmd="PLAY">PLAY</button>
-              <button type="button" class="console-btn" data-console-cmd="INSTALL">INSTALL</button>
-              <button type="button" class="console-btn" data-console-cmd="TEST">TEST</button>
-            </div>
-          </div>
+    <!-- Main Interactive Sample Showcase HUD -->
+    <main class="subpage-main download-main">
+      <!-- Top Hero Header -->
+      <section class="page-hero download-hero">
+        <div class="page-hero-titles">
+          <h1 class="page-title">SAMPLE</h1>
+          <p class="page-subtitle" data-th="LIVE DEMO / ตัวอย่างระบบจริง" data-en="LIVE DEMO / INTERACTIVE SAMPLES">LIVE DEMO / ตัวอย่างระบบจริง</p>
         </div>
+        <div class="page-hero-meta">
+          <span class="dl-resource-pill">
+            <span class="dl-pill-muted">LIVE DEMO /</span>
+            <span class="dl-pill-gold">SAMPLE CATALOG</span>
+          </span>
+        </div>
+      </section>
 
-        <!-- Middle-Right: 3D Wireframe Cube Card + System Telemetry Card -->
-        <div class="test-right-cards">
-          <article class="wireframe-card" aria-label="3D Wireframe Blueprint Scan">
-            <div class="wire-blueprint">
-              <ul class="wire-meta-list" aria-hidden="true">
-                <li><span>MESH //</span><strong>OCTA_NODE_04</strong></li>
-                <li><span>VERTICES //</span><strong>248 NODES</strong></li>
-                <li><span>TOPOLOGY //</span><strong>MANIFOLD_OK</strong></li>
-                <li><span>PIPELINE //</span><strong>CSS_3D / SVG</strong></li>
-                <li><span>AXIS_LOCK //</span><strong>X:35° Y:-45°</strong></li>
-                <li><span>RENDER //</span><strong>GPU_COMPOSITE</strong></li>
-                <li><span>STATE //</span><strong>LOCKED</strong></li>
+      <!-- 2-Column Main Stage (Tree View + 3 Cascading Frames, No Promo Frame) -->
+      <section class="download-grid is-no-promo">
+        <!-- Left Panel: Hierarchical Expandable Tree View -->
+        <aside class="dl-tree-card" aria-label="Sample Category Tree View">
+          <div class="dl-tree-header">
+            <svg class="dl-folder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 6.5C3 5.4 3.9 4.5 5 4.5H9.6L11.5 6.8H19C20.1 6.8 21 7.7 21 8.8V17.5C21 18.6 20.1 19.5 19 19.5H5C3.9 19.5 3 18.6 3 17.5V6.5Z" stroke="#facc15" stroke-width="1.6" stroke-linejoin="round" fill="rgba(250, 204, 21, 0.14)" />
+              <path d="M3 9.5H21" stroke="rgba(250, 204, 21, 0.5)" stroke-width="1.2" />
+            </svg>
+            <span class="dl-tree-heading" data-th="หมวดหมู่ตัวอย่างระบบ" data-en="SAMPLE CATEGORIES">หมวดหมู่ตัวอย่างระบบ</span>
+            <span class="dl-tree-count">1 APP</span>
+          </div>
+
+          <ul class="tv-root" id="appTreeView" role="tree" aria-label="Sample Application Categories">
+            <!-- Category 1: FinTech & Web App -->
+            <li class="tv-branch is-open" role="treeitem" aria-expanded="true">
+              <div class="tv-folder-row">
+                <button type="button" class="tv-toggle" aria-label="Toggle FinTech &amp; Web App">−</button>
+                <button type="button" class="tv-folder-btn">
+                  <svg class="tv-folder-ico" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M2.5 5.2C2.5 4.3 3.2 3.5 4.2 3.5H8L9.6 5.4H15.8C16.8 5.4 17.5 6.2 17.5 7.2V14.8C17.5 15.8 16.8 16.5 15.8 16.5H4.2C3.2 16.5 2.5 15.8 2.5 14.8V5.2Z" fill="rgba(250, 204, 21, 0.25)" stroke="#facc15" stroke-width="1.35" />
+                  </svg>
+                  <span class="tv-label">FinTech &amp; Web App</span>
+                </button>
+              </div>
+
+              <ul class="tv-children" role="group">
+                <li class="tv-leaf" role="treeitem">
+                  <button type="button" class="tv-product-btn is-active" data-app="ilotto">
+                    <svg class="tv-file-ico" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <path d="M4.5 2.5H10.5L13.5 5.5V14.8C13.5 15.2 13.2 15.5 12.8 15.5H4.5C4.1 15.5 3.8 15.2 3.8 14.8V3.2C3.8 2.8 4.1 2.5 4.5 2.5Z" fill="rgba(255,255,255,0.08)" stroke="currentColor" stroke-width="1.25" />
+                      <path d="M10.5 2.5V5.5H13.5" stroke="currentColor" stroke-width="1.25" />
+                    </svg>
+                    <span class="tv-product-name">iLotto</span>
+                    <span class="tv-product-meta">WEB APP</span>
+                  </button>
+                </li>
               </ul>
-              <svg class="wire-cube-svg" viewBox="0 0 180 180" role="img" aria-label="Wireframe Blueprint Cube">
-                <g class="wire-cube-geo" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
-                  <polygon points="90,22 146,54 146,118 90,150 34,118 34,54" opacity="0.92" />
-                  <polyline points="34,54 90,86 146,54" opacity="0.95" />
-                  <line x1="90" y1="86" x2="90" y2="150" opacity="0.95" />
-                  <polyline points="34,118 90,86 146,118" stroke-dasharray="3 3" opacity="0.45" />
-                  <line x1="90" y1="22" x2="90" y2="86" stroke-dasharray="3 3" opacity="0.45" />
-                  <polygon points="90,48 122,67 122,105 90,124 58,105 58,67" opacity="0.68" />
-                  <circle cx="90" cy="86" r="4.5" fill="currentColor" stroke="none" />
-                </g>
-                <text x="90" y="170" text-anchor="middle" class="wire-cube-label">NODE // CORE</text>
-              </svg>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Right Column: 3 Cascading Frames (Top: 5-Card Previews, Middle: Demo Guide, Bottom: System Overview) -->
+        <div class="cascade-stage" id="cascadeStage" aria-label="Selected Sample Previews, Guide, and Overview">
+          <!-- Frame 1 (Top): Fanned Playing-Card App Preview Screens (5 Cards) -->
+          <article class="cascade-win is-cards" id="cardsWin" role="region" aria-label="App Preview Screen Cards">
+            <div class="win-cards-header">
+              <div class="win-cards-title-group">
+                <span class="win-mini-icon" aria-hidden="true">♠</span>
+                <span class="win-cards-kicker" data-th="ตัวอย่างหน้าจอระบบ" data-en="APP PREVIEW DECK">ตัวอย่างหน้าจอระบบ</span>
+                <span class="win-cards-count">5 CARDS</span>
+              </div>
+              <div class="win-cards-actions">
+                <span class="win-cards-hint" id="activeCardLabel">DEPOSIT WALLET</span>
+                <button type="button" class="win-action-btn" id="shuffleCardsBtn" data-th="สลับไพ่" data-en="SHUFFLE">สลับไพ่</button>
+              </div>
+            </div>
+
+            <div class="preview-card-hand" id="previewCardHand">
+              <!-- 5 cards populated & updated per selected sample by subpage.js -->
             </div>
           </article>
 
-          <article class="telemetry-card" aria-label="System Telemetry">
-            <div class="telemetry-header">
-              <span class="telemetry-title" data-th="สถานะระบบเรียลไทม์" data-en="SYSTEM TELEMETRY">สถานะระบบเรียลไทม์</span>
+          <!-- Frame 2 (Middle): Interactive Demo Quick Guide -->
+          <article class="cascade-win is-manual" id="manualWin" role="region" aria-label="Demo Quick Guide">
+            <div class="win-topbar">
+              <div class="win-tag">
+                <span class="win-mini-icon" aria-hidden="true">▤</span>
+                <span id="appManualTag" data-th="คู่มือทดลองใช้งาน" data-en="DEMO // QUICK GUIDE">คู่มือทดลองใช้งาน</span>
+              </div>
+              <div class="win-topbar-right">
+                <span class="win-ver-badge" id="appManualBadge">3 STEPS</span>
+              </div>
             </div>
 
-            <div class="telemetry-hud-grid">
-              <!-- Left: Segmented Vertical Equalizer Columns -->
-              <div class="seg-eq" id="telemetrySegEq" aria-hidden="true">
-                <div class="seg-col" data-level="4">
-                  <div class="seg-stack">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <span class="seg-num">15</span>
-                </div>
-                <div class="seg-col" data-level="6">
-                  <div class="seg-stack">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <span class="seg-num">10</span>
-                </div>
-                <div class="seg-col" data-level="8">
-                  <div class="seg-stack">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <span class="seg-num">70</span>
-                </div>
-                <div class="seg-col" data-level="7">
-                  <div class="seg-stack">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <span class="seg-num">65</span>
-                </div>
-                <div class="seg-col" data-level="5">
-                  <div class="seg-stack">
-                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                  </div>
-                  <span class="seg-num">18</span>
+            <div class="win-manual-body" id="appManualSteps">
+              <!-- 3 demo steps populated by subpage.js -->
+            </div>
+          </article>
+
+          <!-- Frame 3 (Bottom/Front): System Overview -->
+          <article class="cascade-win is-overview is-focused" id="overviewWin" role="region" aria-label="Selected System Details">
+            <div class="win-topbar">
+              <div class="win-tag">
+                <span class="win-mini-icon" aria-hidden="true">◫</span>
+                <span id="appOverviewTag">WEB APP // ILOTTO</span>
+              </div>
+              <div class="win-topbar-right">
+                <span class="win-ver-badge" id="appVersionBadge">v1.0</span>
+                <div class="win-dots" aria-hidden="true">
+                  <span></span><span></span><span></span>
                 </div>
               </div>
+            </div>
 
-              <!-- Center: Multi-Ring Radial Telemetry Gauge -->
-              <div class="radial-gauge-wrap" id="telemetryGauge">
-                <svg class="radial-gauge-svg" viewBox="0 0 110 110" aria-hidden="true">
-                  <circle class="rg-track" cx="55" cy="55" r="44" />
-                  <circle class="rg-ticks" cx="55" cy="55" r="49" />
-                  <circle class="rg-arc" id="telemetryArc" cx="55" cy="55" r="44" />
-                  <circle class="rg-inner-ring" cx="55" cy="55" r="33" />
-                </svg>
-                <div class="radial-gauge-center">
-                  <span class="radial-gauge-pct" id="telemetryPct">98%</span>
-                  <span class="radial-gauge-state" id="telemetryState">READY</span>
-                </div>
+            <div class="win-overview-body">
+              <div class="app-overview-head">
+                <h2 class="win-gold-title" id="appOverviewTitle">iLotto</h2>
+                <span class="app-cat-pill" id="appCategoryPill">FINTECH · 3-TIER</span>
               </div>
-
-              <!-- Right: Horizontal Progress Bars + Mini Spectrum Histogram -->
-              <div class="telemetry-right-stack" aria-hidden="true">
-                <div class="h-bars">
-                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:76%;"></div></div></div>
-                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:92%;"></div></div></div>
-                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:64%;"></div></div></div>
-                  <div class="h-bar-row"><span class="h-bar-dot"></span><div class="h-bar-track"><div class="h-bar-fill" style="width:85%;"></div></div></div>
-                </div>
-                <div class="mini-spectrum" id="telemetrySpectrum">
-                  <span style="height:45%;"></span>
-                  <span style="height:70%;"></span>
-                  <span style="height:38%;"></span>
-                  <span style="height:82%;"></span>
-                  <span style="height:56%;"></span>
-                  <span style="height:94%;"></span>
-                  <span style="height:66%;"></span>
-                  <span style="height:50%;"></span>
-                  <span style="height:88%;"></span>
-                  <span style="height:72%;"></span>
-                  <span style="height:42%;"></span>
-                  <span style="height:78%;"></span>
-                  <span style="height:60%;"></span>
-                  <span style="height:90%;"></span>
-                  <span style="height:52%;"></span>
-                  <span style="height:68%;"></span>
-                </div>
+              <p class="app-overview-desc" id="appOverviewDesc">
+                แพลตฟอร์มสลากดิจิทัล (หวยไทย–ลาว) และระบบร่วมลงทุน 3 ระดับ (Client · Host · Center) แยกกระเป๋าเงินฝาก–เงินรางวัลเด็ดขาด มีเงินค้ำประกัน Center 100% พร้อมคุมความเสี่ยงเรียลไทม์และโอนจ่ายรางวัลอัตโนมัติ 1-Click
+              </p>
+              <div class="app-spec-chips" id="appSpecChips">
+                <span class="app-spec-chip">3 บทบาท Client·Host·Center</span>
+                <span class="app-spec-chip">หวยไทย TH · หวยลาว LA</span>
+                <span class="app-spec-chip">แยก 2 กระเป๋า · ค้ำ 100%</span>
+                <span class="app-spec-chip">2 ภาษา TH / EN</span>
               </div>
             </div>
           </article>
         </div>
+      </section>
 
-        <!-- Bottom-Right: Primary TEST NOW CTA -->
-        <div class="test-cta-row">
-          <button type="button" class="btn-gold test-now-btn" id="testNowBtn" data-th="เริ่มทดสอบเลย" data-en="TEST NOW">เริ่มทดสอบเลย</button>
+      <!-- Bottom Callout, Sample Metadata & Primary Demo CTA Strip -->
+      <section class="dl-bottom-bar">
+        <!-- Bottom-Left: Callout Title + Primary Try Demo Pill -->
+        <div class="dl-callout-block">
+          <span class="callout-kicker" id="dlCategoryKicker">FINTECH &amp; WEB APP // LIVE DEMO</span>
+          <h2 class="dl-callout-title" id="dlCalloutTitle">iLotto</h2>
+          <a
+            class="btn-gold dl-get-assets-btn"
+            id="tryDemoBtn"
+            href="https://ilotto.neoitti.workers.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-th="ทดลอง"
+            data-en="TRY DEMO"
+          >ทดลอง</a>
+        </div>
+
+        <!-- Bottom-Right: Clean Sample Metadata Readout -->
+        <div class="dl-stats-readout" aria-label="Sample Metadata">
+          <div class="dl-stat-line">
+            <span class="dl-stat-key">PLATFORM:</span>
+            <span class="dl-stat-val" id="dlPlatformLabel">WEB APP (PWA)</span>
+          </div>
+          <div class="dl-stat-line">
+            <span class="dl-stat-key">TIERS:</span>
+            <span class="dl-stat-val" id="dlTiersLabel">CLIENT · HOST · CENTER</span>
+          </div>
+          <div class="dl-stat-line">
+            <span class="dl-stat-key">HOST:</span>
+            <span class="dl-stat-val" id="dlHostLabel">CLOUDFLARE WORKERS</span>
+          </div>
         </div>
       </section>
     </main>
   </div>
 
+  <!-- Centered Enlarged Screen Preview Lightbox (Not Fullscreen; Close Button + Mobile Slide + Back) -->
+  <div
+    class="screen-lightbox-backdrop"
+    id="screenLightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightboxTitle"
+    aria-hidden="true"
+  >
+    <div class="screen-lightbox-dialog" id="screenLightboxDialog">
+      <div class="lightbox-drag-handle" aria-hidden="true"><span></span></div>
+      <div class="screen-lightbox-header">
+        <div class="screen-lightbox-meta">
+          <span class="screen-lightbox-app" id="lightboxAppName">iLotto</span>
+          <h3 class="screen-lightbox-title" id="lightboxTitle">Deposit Wallet</h3>
+        </div>
+        <div class="screen-lightbox-actions">
+          <span class="screen-lightbox-counter" id="lightboxCounter">1 / 5</span>
+          <button
+            type="button"
+            class="screen-lightbox-close"
+            id="lightboxCloseBtn"
+            aria-label="ปิดภาพตัวอย่าง"
+            title="ปิด / Close"
+          >×</button>
+        </div>
+      </div>
+      <div class="screen-lightbox-media">
+        <img class="screen-lightbox-img" id="lightboxImg" src="" alt="" draggable="false" />
+      </div>
+      <div class="screen-lightbox-footer">
+        <button
+          type="button"
+          class="lightbox-nav-btn"
+          id="lightboxPrevBtn"
+          aria-label="ภาพก่อนหน้า"
+          title="Previous"
+        >‹</button>
+        <span
+          class="lightbox-hint"
+          id="lightboxHint"
+          data-th="ปัดเพื่อปิด • กด Back หรือ × เพื่อปิด"
+          data-en="Slide, press Back, or tap × to close"
+        >ปัดเพื่อปิด • กด Back หรือ × เพื่อปิด</span>
+        <button
+          type="button"
+          class="lightbox-nav-btn"
+          id="lightboxNextBtn"
+          aria-label="ภาพถัดไป"
+          title="Next"
+        >›</button>
+      </div>
+    </div>
+  </div>
+
   <div class="selection-toast" id="selectionToast" role="status" aria-live="polite"></div>
 
-  <script src="subpage.js?v=13"></script>
+  <script src="subpage.js?v=17"></script>
 </body>
 </html>
